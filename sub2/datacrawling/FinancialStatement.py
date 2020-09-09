@@ -1,6 +1,8 @@
-import requests
 import re
 import pandas as pd
+from bs4 import BeautifulSoup
+import requests
+
 
 class FinancialStatement:
     def __init__(self,code):
@@ -41,6 +43,17 @@ class FinancialStatement:
         financial_statement.set_index(financial_statement.columns[0], inplace=True)
 
         self.finalcial_statement = financial_statement
+        url = 'https://finance.naver.com/item/main.nhn?code='+code
+        result = requests.get(url)
+        bs_obj = BeautifulSoup(result.content, 'html.parser')
+
+        # 시가총액
+        market_sum = bs_obj.find('em', {'id': '_market_sum'})
+        self.market_sum = int(
+            market_sum.text.replace(" ", "").replace("\t", "").replace("\n", "").replace("조", "").replace(",",
+                                                                                                          "").strip()) * 100000000
+        self.cur_price = bs_obj.find('em', {'class': 'no_down'}).find('span', {'class': 'blind'}).text.replace(",", "")
+        self.finalcial_statement.to_csv("F.csv")
 
     def get_all(self):
         return self.financial_statement
@@ -56,3 +69,13 @@ class FinancialStatement:
 
     def get_ROE(self):
         return self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['ROE(%)']
+        
+    def get_PCR(self):
+        return self.market_sum / self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['영업활동현금흐름']
+
+    def get_PSR(self):
+        income = int(self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['매출액']) * 100000000
+        stock_num = int(self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['발행주식수(보통주)'])
+        sps = income/stock_num
+        return self.cur_price / sps
+
