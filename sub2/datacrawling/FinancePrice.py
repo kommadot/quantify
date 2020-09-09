@@ -3,37 +3,19 @@
 import pandas as pd
 from tabulate import tabulate
 
-cnt = 0
 
-while cnt <= 2369:
+def get_url(item_name, code_df):
+    code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False)
+    url = 'http://finance.naver.com/item/sise_day.nhn?code={code}'.format(code=code.strip())
+    return url
 
-    code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0]
 
-    # 종목코드가 6자리이기 때문에 6자리를 맞춰주기 위해 설정해줌
-    code_df.종목코드 = code_df.종목코드.map('{:06d}'.format)
+code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0]
+code_df.종목코드 = code_df.종목코드.map('{:06d}'.format)
+code_df = code_df[['회사명', '종목코드']]
+code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
 
-    # 우리가 필요한 것은 회사명과 종목코드이기 때문에 필요없는 column들은 제외해준다.
-    code_df = code_df[['회사명', '종목코드']]
-
-    # 한글로된 컬럼명을 영어로 바꿔준다.
-    code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
-    # code_df.head()
-    # print(code_df.head())
-    # print(tabulate(code_df.head(), headers='keys', tablefmt='psql'))
-    # print(tabulate(code_df, headers='keys', tablefmt='psql'))
-
-    # itme_name = code_df[['name']].loc[cnt]
-    # print(code_df[['name']].loc[cnt])
-    # print(len(code_df))
-    
-
-    # 종목 이름을 입력하면 종목에 해당하는 코드를 불러와 네이버 금융(http://finance.naver.com)에 넣어줌
-    def get_url(item_name, code_df):
-        code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False)
-        url = 'http://finance.naver.com/item/sise_day.nhn?code={code}'.format(code=code.strip())
-        # print("요청 URL = {}".format(url))
-        return url
-
+for cnt in range(len(code_df)):
     item_name = code_df.loc[cnt, 'name']
     print(item_name)
     cnt += 1
@@ -63,4 +45,4 @@ while cnt <= 2369:
 
     print(tabulate(df, headers='keys', tablefmt='psql'))
 
-    df.to_csv('./FinancePrice.csv')
+    # df.to_csv('./FinancePrice.csv')
