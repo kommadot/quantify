@@ -1,10 +1,8 @@
-import requests
 import re
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests
-import re
-import pandas as pd
+
 
 class FinancialStatement:
     def __init__(self,code):
@@ -56,6 +54,7 @@ class FinancialStatement:
                                                                                                           "").strip()) * 100000000
         self.cur_price = bs_obj.find('em', {'class': 'no_down'}).find('span', {'class': 'blind'}).text.replace(",", "")
         self.finalcial_statement.to_csv("F.csv")
+
     def get_all(self):
         return self.financial_statement
 
@@ -70,7 +69,7 @@ class FinancialStatement:
 
     def get_ROE(self):
         return self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['ROE(%)']
-
+        
     def get_PCR(self):
         return self.market_sum / self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['영업활동현금흐름']
 
@@ -79,3 +78,4 @@ class FinancialStatement:
         stock_num = int(self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['발행주식수(보통주)'])
         sps = income/stock_num
         return self.cur_price / sps
+
