@@ -1,10 +1,7 @@
-import requests
 import re
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests
-import re
-import pandas as pd
 import datetime
 
 class FinancialStatement:
@@ -85,3 +82,4 @@ class FinancialStatement:
         stock_num = int(self.finalcial_statement[self.cur_index].loc['발행주식수(보통주)'])
         sps = income/stock_num
         return self.cur_price / sps
+
