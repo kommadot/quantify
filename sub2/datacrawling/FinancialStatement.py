@@ -81,5 +81,5 @@ class FinancialStatement:
         income = int(self.finalcial_statement[self.cur_index].loc['매출액']) * 100000000
         stock_num = int(self.finalcial_statement[self.cur_index].loc['발행주식수(보통주)'])
         sps = income/stock_num
-        return self.cur_price / sps
+        return int(self.cur_price) / sps
 
