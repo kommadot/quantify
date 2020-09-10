@@ -49,7 +49,8 @@ class FinancialStatement:
         financial_statement.set_index(financial_statement.columns[0], inplace=True)
 
         self.finalcial_statement = financial_statement
-
+        self.finalcial_statement[self.cur_index]
+        self.finalcial_statement[self.past_index]
         while True:
             url = 'https://finance.naver.com/item/main.nhn?code='+code
             result = requests.get(url)
@@ -73,11 +74,8 @@ class FinancialStatement:
             except AttributeError:
                 continue
 
-            self.finalcial_statement.to_csv("F.csv")
-
             # 2018/12를 key로 가지고 있는지 판단 
-            self.finalcial_statement[self.cur_index]
-            self.finalcial_statement[self.past_index]
+
             print(code)
             break
     
