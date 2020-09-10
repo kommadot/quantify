@@ -10,8 +10,8 @@ code_df.종목코드 = code_df.종목코드.map('{:06d}'.format)
 code_df = code_df[['회사명', '종목코드']]
 code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
 
-# value_df = pd.DataFrame(columns=['종목', 'PER', 'PBR', 'PCR', 'PSR'])
-value_df = pd.DataFrame(columns=['종목', 'PER', 'PBR'])
+value_df = pd.DataFrame(columns=['종목', 'PER', 'PBR', 'PCR', 'PSR'])
+# value_df = pd.DataFrame(columns=['종목', 'PER', 'PBR'])
 
 for cnt in range(5):
     item_name = code_df.loc[cnt, 'name']
@@ -21,9 +21,16 @@ for cnt in range(5):
     value_df.loc[cnt, ['종목']] = item_name
     value_df.loc[cnt, ['PER']] = fs.get_PER()
     value_df.loc[cnt, ['PBR']] = fs.get_PBR()
-    # value_df.loc[cnt, ['PCR']] = fs.get_PCR()
-    # value_df.loc[cnt, ['PSR']] = fs.get_PSR()
+    value_df.loc[cnt, ['PCR']] = fs.get_PCR()
+    value_df.loc[cnt, ['PSR']] = fs.get_PSR()
 
 value_df['PER'] = value_df['PER'].rank(axis=0)
 value_df['PBR'] = value_df['PBR'].rank(axis=0)
+value_df['PCR'] = value_df['PCR'].rank(axis=0)
+value_df['PSR'] = value_df['PSR'].rank(axis=0)
+# print(tabulate(value_df, headers='keys', tablefmt='psql'))
+
+value_df['RANK'] = value_df.apply(lambda row: (row['PER'] + row['PBR'] + row['PCR'] + row['PSR']),axis=1)
+# value_df['RANK'] = value_df[['PER', 'PBR', 'PCR', 'PSR']].sum(axis=1)
+value_df = value_df.sort_values(by=["RANK"], ascending=[True])
 print(tabulate(value_df, headers='keys', tablefmt='psql'))

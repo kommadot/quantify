@@ -8,13 +8,16 @@ class FinancialStatement:
     def __init__(self,code):
         self.now = datetime.datetime.now()
         self.cur_index = str(self.now.year-1) + "/12"
+        self.past_index = str(self.now.year-2) + "/12"
         self.url="https://navercomp.wisereport.co.kr/v2/company/c1010001.aspx?cmp_cd="
 
         result = requests.get(self.url + code)
         pattern_enc = re.compile("encparam: '(.+)'", re.IGNORECASE)
         pattern_id = re.compile("id: '(.+?)'", re.IGNORECASE)
-
         target_text = result.text
+        self.test1 = pattern_enc.search(target_text)
+        if not self.test1:
+            raise KeyError
         encparam = pattern_enc.search(target_text).groups()[0]
         id_ = pattern_id.search(target_text).groups()[0]
 
@@ -46,19 +49,37 @@ class FinancialStatement:
         financial_statement.set_index(financial_statement.columns[0], inplace=True)
 
         self.finalcial_statement = financial_statement
-        url = 'https://finance.naver.com/item/main.nhn?code='+code
-        result = requests.get(url)
-        bs_obj = BeautifulSoup(result.content, 'html.parser')
 
-        # 시가총액
-        market_sum = bs_obj.find('em', {'id': '_market_sum'})
-        self.market_sum = int(
-            market_sum.text.replace(" ", "").replace("\t", "").replace("\n", "").replace("조", "").replace(",",
-                                                                                                          "").strip()) * 100000000
+        while True:
+            url = 'https://finance.naver.com/item/main.nhn?code='+code
+            result = requests.get(url)
+            bs_obj = BeautifulSoup(result.content, 'html.parser')
 
-        self.cur_price = bs_obj.find('p', {'class': 'no_today'}).text.replace(",", "").split()[0]
-        self.finalcial_statement.to_csv("F.csv")
+            # 시가총액
+            market_sum = bs_obj.find('em', {'id': '_market_sum'})
+            # self.market_sum = int(
+            #     market_sum.text.replace(" ", "").replace("\t", "").replace("\n", "").replace("조", "").replace(",",
+            #                                                                                                   "").strip()) * 100000000
+            try:
+                self.market_sum = int(
+                        market_sum.text.replace(" ", "").replace("\t", "").replace("\n", "").replace("조", "").replace(",",
+                                                                                                            "").strip()) * 100000000
+            except AttributeError:
+                continue
 
+            # 현재가
+            try:
+                self.cur_price = bs_obj.find('p', {'class': 'no_today'}).text.replace(",", "").split()[0]
+            except AttributeError:
+                continue
+
+            self.finalcial_statement.to_csv("F.csv")
+
+            # 2018/12를 key로 가지고 있는지 판단 
+            self.finalcial_statement[self.cur_index]
+            print(code)
+            break
+    
     def get_all(self):
         return self.financial_statement
 
@@ -83,3 +104,14 @@ class FinancialStatement:
         sps = income/stock_num
         return int(self.cur_price) / sps
 
+    def get_CFO(self):
+        return self.finalcial_statement[self.cur_index].loc['영업활동현금흐름'] / self.finalcial_statement[self.cur_index].loc['자산총계']
+
+    def get_ROA_DIFF(self):
+        return self.finalcial_statement[self.cur_index].loc['ROA(%)'] - self.finalcial_statement[self.past_index].loc['ROA(%)']
+
+    def get_EQ_OFFER(self):
+        return self.finalcial_statement[self.cur_index].loc['발행주식수(보통주)'] - self.finalcial_statement[self.past_index].loc['발행주식수(보통주)']
+
+    def get_TURN(self):
+        return self.finalcial_statement[self.cur_index].loc['매출액'] / self.finalcial_statement[self.cur_index].loc['자산총계'] - self.finalcial_statement[self.past_index].loc['매출액'] / self.finalcial_statement[self.past_index].loc['자산총계']
