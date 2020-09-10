@@ -5,10 +5,14 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import pandas as pd
+import datetime
 
 class FinancialStatement:
     def __init__(self,code):
+        self.now = datetime.datetime.now()
+        self.cur_index = str(self.now.year-1) + "/12"
         self.url="https://navercomp.wisereport.co.kr/v2/company/c1010001.aspx?cmp_cd="
+
         result = requests.get(self.url + code)
         pattern_enc = re.compile("encparam: '(.+)'", re.IGNORECASE)
         pattern_id = re.compile("id: '(.+?)'", re.IGNORECASE)
@@ -54,28 +58,30 @@ class FinancialStatement:
         self.market_sum = int(
             market_sum.text.replace(" ", "").replace("\t", "").replace("\n", "").replace("조", "").replace(",",
                                                                                                           "").strip()) * 100000000
-        self.cur_price = bs_obj.find('em', {'class': 'no_down'}).find('span', {'class': 'blind'}).text.replace(",", "")
+
+        self.cur_price = bs_obj.find('p', {'class': 'no_today'}).text.replace(",", "").split()[0]
         self.finalcial_statement.to_csv("F.csv")
+
     def get_all(self):
         return self.financial_statement
 
     def get_PER(self):
-        return self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['PER(배)']
+        return self.finalcial_statement[self.cur_index].loc['PER(배)']
 
     def get_PBR(self):
-        return self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['PBR(배)']
+        return self.finalcial_statement[self.cur_index].loc['PBR(배)']
 
     def get_ROA(self):
-        return self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['ROA(%)']
+        return self.finalcial_statement[self.cur_index].loc['ROA(%)']
 
     def get_ROE(self):
-        return self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['ROE(%)']
+        return self.finalcial_statement[self.cur_index].loc['ROE(%)']
 
     def get_PCR(self):
-        return self.market_sum / self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['영업활동현금흐름']
+        return self.market_sum / self.finalcial_statement[self.cur_index].loc['영업활동현금흐름']
 
     def get_PSR(self):
-        income = int(self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['매출액']) * 100000000
-        stock_num = int(self.finalcial_statement[self.finalcial_statement.columns[-1]].loc['발행주식수(보통주)'])
+        income = int(self.finalcial_statement[self.cur_index].loc['매출액']) * 100000000
+        stock_num = int(self.finalcial_statement[self.cur_index].loc['발행주식수(보통주)'])
         sps = income/stock_num
         return self.cur_price / sps
