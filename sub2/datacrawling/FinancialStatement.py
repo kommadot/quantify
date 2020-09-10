@@ -77,6 +77,7 @@ class FinancialStatement:
 
             # 2018/12를 key로 가지고 있는지 판단 
             self.finalcial_statement[self.cur_index]
+            self.finalcial_statement[self.past_index]
             print(code)
             break
     
