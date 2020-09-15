@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     'users.apps.UsersConfig',
+    'simulations',
 ]
 
 MIDDLEWARE = [
