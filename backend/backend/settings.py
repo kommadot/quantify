@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'strategy',
 
     'users.apps.UsersConfig',
+    'simulations',
 ]
 
 MIDDLEWARE = [
@@ -89,8 +90,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo',
+        'NAME': 'testdb',
+        'CLIENT': {
+           'host': '127.0.0.1:27017',
+        }
     }
 }
 
