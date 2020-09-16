@@ -8,6 +8,9 @@ from rest_framework import status
 from rest_framework import mixins
 from rest_framework import generics
 from django.db import transaction
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 # Create your views here.
 class SimulationList(mixins.ListModelMixin,
@@ -17,7 +20,9 @@ class SimulationList(mixins.ListModelMixin,
     serializer_class = SimulationSerializer
     def get(self, request, *args, **kwargs):
         return self.list(request,*args,**kwargs)
-    
+
+    @permission_classes((IsAuthenticated, ))
+    @authentication_classes((JSONWebTokenAuthentication,))
     def post(self, request, *args, **kwargs):
         return self.create(request,*args,**kwargs)
     
@@ -41,6 +46,9 @@ class SimulationDetail(mixins.RetrieveModelMixin,
         simulationbreakdown.save()
         simuation.delete()
         return Response(SimulationBreakdownSerializer(simulationbreakdown).data,status=status.HTTP_200_OK)
+
+    def put(self,request,*args, **kwargs):
+        return self.update(request,*args,**kwargs)
     
 class SimulationBreakdownList(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
