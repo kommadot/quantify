@@ -91,9 +91,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'testdb',
+        'NAME': 'quantify',
         'CLIENT': {
-           'host': '127.0.0.1:27017',
+           'host': 'j3a105.p.ssafy.io',
         }
     }
 }

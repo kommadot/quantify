@@ -14,3 +14,16 @@ class Momentum(models.Model):
 class RiskMomentum(models.Model):
     name = models.CharField(max_length=200)
     risk_momentum = models.FloatField()
+
+
+class Value(models.Model):
+    name = models.CharField(max_length=200)
+    per = models.FloatField()
+    pbr = models.FloatField()
+    psr = models.FloatField()
+    rank = models.IntegerField()
+
+
+class Quality(models.Model):
+    name = models.CharField(max_length=200)
+    sum = models.IntegerField()

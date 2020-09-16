@@ -6,21 +6,17 @@
           :link="{
             name: '주식추천필터',
             icon: 'ni ni-bold-down text-primary',
-            path: '/dashboard'
+            path: '/'
           }"
         />
 
-        <sidebar-item :link="{name: '저변동성전략', icon: 'ni ni-planet text-blue', path: '/lowvar'}" />
-        <sidebar-item :link="{name: '모멘텀전략', icon: 'ni ni-pin-3 text-orange', path: '/momentum'}" />
+        <sidebar-item :link="{name: '저변동성전략', icon: 'ni ni-sound-wave text-red', path: '/lowvar'}" />
         <sidebar-item
-          :link="{name: '밸류전략', icon: 'ni ni-single-02 text-yellow', path: '/profile'}"
+          :link="{name: '모멘텀전략', icon: 'ni ni-money-coins text-yellow', path: '/momentum'}"
         />
+        <sidebar-item :link="{name: '밸류전략', icon: 'ni ni-building text-blue', path: '/value'}" />
         <sidebar-item
-          :link="{name: '퀄리티전략', icon: 'ni ni-bullet-list-67 text-red', path: '/tables'}"
-        />
-        <sidebar-item :link="{name: 'Login', icon: 'ni ni-key-25 text-info', path: '/login'}" />
-        <sidebar-item
-          :link="{name: 'Register', icon: 'ni ni-circle-08 text-pink', path: '/register'}"
+          :link="{name: '퀄리티전략', icon: 'ni ni-chart-bar-32 text-green', path: '/quality'}"
         />
       </template>
     </side-bar>

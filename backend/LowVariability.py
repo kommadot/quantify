@@ -101,7 +101,7 @@ print(df_records)
 model_instances = [LowVariability(
     name=record['종목'],
     variability=record['변동성'],
-) for idx, record in enumerate(df_records)]
+) for record in df_records]
 
 LowVariability.objects.all().delete()
 LowVariability.objects.bulk_create(model_instances)
