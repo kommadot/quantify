@@ -1,9 +1,8 @@
-from django.contrib.auth.models import AbstractUser
-from django.db import models
+from djongo import models
 
 
-class User(AbstractUser):
-    photo = models.URLField(blank=True)
-
-    def __str__(self):
-        return self.username
+class User(models.Model):
+    nickname = models.CharField(max_length=20)
+    social_id = models.CharField(max_length=30)
+    platform = models.CharField(max_length=10)
+    budget = models.FloatField(default=10000000)

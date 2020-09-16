@@ -32,10 +32,13 @@ INSTALLED_APPS = [
     'django.contrib.sites',  # don't forget
 
     'corsheaders',
+
     'rest_framework',
     'rest_framework.authtoken',
+
     'rest_auth',
     'rest_auth.registration',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -91,9 +94,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'testdb',
+        'NAME': 'quantify',
         'CLIENT': {
-           'host': '127.0.0.1:27017',
+           'host': 'j3a105.p.ssafy.io',
         }
     }
 }
@@ -122,8 +125,6 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-AUTH_USER_MODEL = 'users.User'
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -146,12 +147,24 @@ STATIC_URL = '/static/'
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
+#ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = False
+
+#ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+REST_USE_JWT = True
+ACCOUNT_LOGOUT_ON_GET = True
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
