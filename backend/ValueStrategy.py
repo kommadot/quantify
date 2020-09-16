@@ -4,6 +4,13 @@ import requests
 from bs4 import BeautifulSoup
 from tabulate import tabulate
 
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', "backend.settings") 
+import django 
+django.setup()
+
+from strategy.models import Value
+
 
 code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0]
 code_df.종목코드 = code_df.종목코드.map('{:06d}'.format)
@@ -12,11 +19,15 @@ code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
 
 value_df = pd.DataFrame(columns=['종목', 'PER', 'PBR', 'PSR'])
 
-for cnt in range(5):
+for cnt in range(20):
     item_name = code_df.loc[cnt, 'name']
     code = code_df.loc[cnt, 'code']
-    fs = FS(code)
+    try:
+        fs = FS(code)
+    except KeyError:
+        continue
     cnt += 1
+    print(item_name)
     value_df.loc[cnt, ['종목']] = item_name
     value_df.loc[cnt, ['PER']] = fs.get_PER()
     value_df.loc[cnt, ['PBR']] = fs.get_PBR()
@@ -32,4 +43,19 @@ value_df['RANK'] = value_df.apply(lambda row: (row['PERRANK'] + row['PBRRANK'] +
 # value_df['RANK'] = value_df[['PER', 'PBR', 'PSR']].sum(axis=1)
 value_df = value_df.sort_values(by=["RANK"], ascending=[True])
 value_df = value_df[['종목', 'PER', 'PBR', 'PSR','RANK']]
-print(tabulate(value_df, headers='keys', tablefmt='psql'))
+
+
+df_records = value_df.head(10).to_dict('records')
+
+print(df_records)
+
+model_instances = [Value(
+    name=record['종목'],
+    per=record['PER'],
+    pbr=record['PBR'],
+    psr=record['PSR'],
+    rank=record['RANK']
+) for record in df_records]
+
+Value.objects.all().delete()
+Value.objects.bulk_create(model_instances)

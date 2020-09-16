@@ -22,23 +22,23 @@ export default new Router({
         },
         {
           path: '/lowvar',
-          name: '저변동성이란',
+          name: 'LowVariability',
           component: () => import(/* webpackChunkName: "demo" */ './views/LowVariability.vue')
         },
         {
-          path: '/profile',
-          name: 'profile',
-          component: () => import(/* webpackChunkName: "demo" */ './views/UserProfile.vue')
+          path: '/value',
+          name: 'ValueStrategy',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Value.vue')
         },
         {
           path: '/momentum',
-          name: '모멘텀이란',
+          name: 'Momentum',
           component: () => import(/* webpackChunkName: "demo" */ './views/Momentum.vue')
         },
         {
-          path: '/tables',
-          name: 'tables',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Tables.vue')
+          path: '/quality',
+          name: 'QualityStrategy',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Quality.vue')
         }
       ]
     },
