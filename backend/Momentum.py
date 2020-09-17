@@ -32,7 +32,7 @@ accum_profit = pd.DataFrame(columns=['종목', '누적수익률'])
 risk_adj = pd.DataFrame(columns=['종목', '위험조정수익률'])
 
 # for cnt in range(len(code_df)):
-for cnt in range(20):
+for cnt in range(2370):
     item_name = code_df.loc[cnt, 'name']
     print(item_name)
     cnt += 1
@@ -109,9 +109,9 @@ risk_adj = risk_adj.sort_values(by=["위험조정수익률"], ascending=[False])
 print(risk_adj)
 
 
-df_records = accum_profit.head(10).to_dict('records')
+df_records = accum_profit.to_dict('records')
 
-df_records2 = risk_adj.head(10).to_dict('records')
+df_records2 = risk_adj.to_dict('records')
 
 
 model_instances = [Momentum(

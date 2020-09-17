@@ -79,10 +79,18 @@ class FS:
 
 
     def get_LIQUID_cur(self):
-        return self.fs_list1_JS[self.cur_index].loc['유동자산계산에 참여한 계정 펼치기'] / self.fs_list1_JS[self.cur_index].loc['유동부채계산에 참여한 계정 펼치기']
+        try:
+            res = self.fs_list1_JS[self.cur_index].loc['유동자산계산에 참여한 계정 펼치기'] / self.fs_list1_JS[self.cur_index].loc['유동부채계산에 참여한 계정 펼치기']
+        except:
+            res = 0
+        return res
     
     def get_LIQUID_past(self):
-        return self.fs_list1_JS[self.past_index].loc['유동자산계산에 참여한 계정 펼치기'] / self.fs_list1_JS[self.past_index].loc['유동부채계산에 참여한 계정 펼치기']
+        try:
+            res = self.fs_list1_JS[self.past_index].loc['유동자산계산에 참여한 계정 펼치기'] / self.fs_list1_JS[self.past_index].loc['유동부채계산에 참여한 계정 펼치기']
+        except:
+            res = 0
+        return res
 
 
     # def get_EQ_OFFER(self):
@@ -90,18 +98,40 @@ class FS:
 
 
     def get_MARGIN_cur(self):
-        return self.fs_list1_PS[self.cur_index].loc['매출총이익'] / self.fs_list1_PS[self.cur_index].loc['매출액']
+        try:
+            res = self.fs_list1_PS[self.cur_index].loc['매출총이익'] / self.fs_list1_PS[self.cur_index].loc['매출액']
+        except:
+            res = 0
+        return res
+        
 
     def get_MARGIN_past(self):
-        return self.fs_list1_PS[self.past_index].loc['매출총이익'] / self.fs_list1_PS[self.past_index].loc['매출액']
+        try:
+            res = self.fs_list1_PS[self.past_index].loc['매출총이익'] / self.fs_list1_PS[self.past_index].loc['매출액']
+        except:
+            res = 0
+        return res
 
 
     def get_TURN_cur(self):
-        return self.fs_list1_PS[self.cur_index].loc['매출액'] / self.fs_list1_JS[self.cur_index].loc['자산']
+        try:
+            res = self.fs_list1_PS[self.cur_index].loc['매출액'] / self.fs_list1_JS[self.cur_index].loc['자산']
+        except:
+            res = 0
+        return res
+
 
     def get_TURN_past(self):
-        return self.fs_list1_PS[self.past_index].loc['매출액'] / self.fs_list1_JS[self.past_index].loc['자산']
+        try:
+            res = self.fs_list1_PS[self.past_index].loc['매출액'] / self.fs_list1_JS[self.past_index].loc['자산']
+        except:
+            res = 0
+        return res
 
 
     def get_ROE(self):
-        return self.fs_list2_FH[self.cur_index].loc['ROE']
+        try:
+            res = self.fs_list2_FH[self.cur_index].loc['ROE']
+        except:
+            res = 0
+        return res

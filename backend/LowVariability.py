@@ -30,7 +30,7 @@ accum_profit = pd.DataFrame(columns=['종목', '누적수익률'])
 risk_adj = pd.DataFrame(columns=['종목', '위험조정수익률'])
 
 # for cnt in range(len(code_df)):
-for cnt in range(20):
+for cnt in range(2370):
     item_name = code_df.loc[cnt, 'name']
     print(item_name)
     cnt += 1
@@ -94,7 +94,7 @@ for cnt in range(20):
 vari = vari.sort_values(by=["변동성"], ascending=[True])
 
 
-df_records = vari.head(10).to_dict('records')
+df_records = vari.to_dict('records')
 
 print(df_records)
 
