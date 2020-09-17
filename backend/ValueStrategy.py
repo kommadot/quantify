@@ -19,19 +19,19 @@ code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
 
 value_df = pd.DataFrame(columns=['종목', 'PER', 'PBR', 'PSR'])
 
-for cnt in range(20):
+for cnt in range(2370):
     item_name = code_df.loc[cnt, 'name']
     code = code_df.loc[cnt, 'code']
     try:
         fs = FS(code)
-    except KeyError:
+        cnt += 1
+        print(item_name)
+        value_df.loc[cnt, ['종목']] = item_name
+        value_df.loc[cnt, ['PER']] = fs.get_PER()
+        value_df.loc[cnt, ['PBR']] = fs.get_PBR()
+        value_df.loc[cnt, ['PSR']] = fs.get_PSR()
+    except:
         continue
-    cnt += 1
-    print(item_name)
-    value_df.loc[cnt, ['종목']] = item_name
-    value_df.loc[cnt, ['PER']] = fs.get_PER()
-    value_df.loc[cnt, ['PBR']] = fs.get_PBR()
-    value_df.loc[cnt, ['PSR']] = fs.get_PSR()
 
 
 value_df['PERRANK'] = value_df['PER'].rank(axis=0)
@@ -45,7 +45,7 @@ value_df = value_df.sort_values(by=["RANK"], ascending=[True])
 value_df = value_df[['종목', 'PER', 'PBR', 'PSR','RANK']]
 
 
-df_records = value_df.head(10).to_dict('records')
+df_records = value_df.to_dict('records')
 
 print(df_records)
 
