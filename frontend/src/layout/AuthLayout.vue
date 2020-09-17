@@ -7,7 +7,7 @@
       expand
     >
       <router-link slot="brand" class="navbar-brand" to="/" height="50px">
-        <img src="img/brand/green.png" width="auto" height="100%" />
+        <img src="img/brand/green.png" class="rounded-pill" style="width: auto; min-height: 50px;" />
       </router-link>
 
       <template v-slot="{closeMenu}">
@@ -16,7 +16,11 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <router-link to="/">
-                <img src="img/brand/green.png" />
+                <img
+                  src="img/brand/green.png"
+                  class="rounded-pill"
+                  style="width: auto; min-height: 50px;"
+                />
               </router-link>
             </div>
             <div class="col-6 collapse-close">
@@ -56,20 +60,7 @@
       </template>
     </base-nav>
     <!-- Header -->
-    <div class="header bg-gradient-success py-7 py-lg-8">
-      <div class="container">
-        <div class="header-body text-center mb-7">
-          <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
-              <h1 class="text-white">Welcome!</h1>
-              <p class="text-lead text-white">
-                Use these awesome forms to login or create new account in
-                your project for free.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="header bg-gradient-success py-8 py-lg-8">
       <div class="separator separator-bottom separator-skew zindex-100">
         <svg
           x="0"
@@ -89,7 +80,7 @@
         <router-view></router-view>
       </slide-y-up-transition>
     </div>
-    <footer class="py-5">
+    <footer class="py-6">
       <div class="container">
         <div class="row align-items-center justify-content-xl-between">
           <div class="col-xl-6">
