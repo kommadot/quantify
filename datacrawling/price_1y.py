@@ -34,7 +34,6 @@ def get_price_1y(item_name, i):
     pg_url = '{url}&page=1'.format(url=url)
     result = requests.get(pg_url)
     bs_obj = BeautifulSoup(result.content, 'html.parser')
-    # print(bs_obj)
     page_cnt = str(bs_obj.find('td', {'class': 'pgRR'}))
     start_idx = page_cnt.find('page') + 5
     end_idx = page_cnt.find('맨뒤') - 2
