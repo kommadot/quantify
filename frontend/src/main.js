@@ -18,6 +18,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+
+import Vuex from 'vuex'
+import store from "./store";
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
 import GSignInButton from 'vue-google-signin-button'
@@ -25,6 +28,7 @@ import GSignInButton from 'vue-google-signin-button'
 Vue.config.productionTip = false
 
 Vue.use(GSignInButton)
+Vue.use(Vuex)
 
 Vue.use(ArgonDashboard)
 new Vue({
@@ -32,6 +36,7 @@ new Vue({
     Kakao.init('e4263be1d8a351bad145638cb6ade0bd')
   },
   router,
+  store,
   render: h => h(App),
 
 }).$mount('#app')

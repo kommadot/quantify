@@ -13,7 +13,8 @@
     <ul class="navbar-nav align-items-center d-none d-md-flex">
       <!-- Navbar items -->
       <!-- 로그인 안했을 때 -->
-      <ul class="navbar-nav ml-auto">
+      <!-- <ul class="navbar-nav ml-auto"> -->
+      <ul class="navbar-nav ml-auto" v-if="!token">
         <li class="nav-item">
           <router-link class="nav-link nav-link-icon" to="/register">
             <i class="ni ni-circle-08"></i>
@@ -28,33 +29,19 @@
         </li>
       </ul>
       <!-- 로그인 했을 때 -->
-      <!-- <li class="nav-item dropdown">
-        <base-dropdown class="nav-link pr-0">
-          <div class="media align-items-center" slot="title">
-            <i class="ni ni-single-02"></i>
-            <span class="nav-link-inner--text">Profile</span>
-          </div>
-
-          <template>
-            <div class="dropdown-header noti-title">
-              <h6 class="text-overflow m-0">퀀티파이</h6>
-            </div>
-            <router-link to="/profile" class="dropdown-item">
-              <i class="ni ni-single-02"></i>
-              <span>My profile</span>
-            </router-link>
-            <div class="dropdown-divider"></div>
-            <router-link to="/profile" class="dropdown-item">
-              <i class="ni ni-user-run"></i>
-              <span>Logout</span>
-            </router-link>
-          </template>
-        </base-dropdown>
-      </li>-->
+      <!-- <ul class="navbar-nav ml-auto"> -->
+      <ul class="navbar-nav ml-auto" v-if="token">
+        <li class="nav-item">
+          <i class="ni ni-key-25"></i>
+          <span class="nav-link-inner--text" @click="logout">로그아웃</span>
+        </li>
+      </ul>
     </ul>
   </base-nav>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -73,6 +60,10 @@ export default {
     toggleMenu() {
       this.showMenu = !this.showMenu;
     },
+    ...mapActions(["logout"]),
+  },
+  computed: {
+    ...mapState(["token"]),
   },
 };
 </script>
