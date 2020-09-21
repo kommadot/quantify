@@ -43,7 +43,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import http from "@/util/http-common";
 
 export default {
   name: "value-table",
@@ -56,8 +56,8 @@ export default {
     valuelist: function () {
       const self = this;
       let idx = 1;
-      axios
-        .get("http://localhost:8000/api/getvalue")
+      http
+        .get("/strategy/getvalue")
         .then(function (res) {
           self.tableData = [];
           for (let i of res.data) {

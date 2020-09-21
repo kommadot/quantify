@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import http from "@/util/http-common";
 
 export default {
   name: "quality-table",
@@ -50,8 +50,8 @@ export default {
     qualitylist: function () {
       const self = this;
       let idx = 1;
-      axios
-        .get("http://localhost:8000/api/getquality")
+      http
+        .get("/strategy/getquality")
         .then(function (res) {
           self.tableData = [];
           for (let i of res.data) {

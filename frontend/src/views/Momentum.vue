@@ -68,7 +68,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import http from "@/util/http-common";
 
 export default {
   name: "momentum-table",
@@ -82,8 +82,8 @@ export default {
     momenlist: function () {
       const self = this;
       let idx = 1;
-      axios
-        .get("http://localhost:8000/api/getmomen")
+      http
+        .get("/strategy/getmomen")
         .then(function (res) {
           self.tableData = [];
           for (let i of res.data) {

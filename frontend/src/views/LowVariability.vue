@@ -37,47 +37,21 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import http from "@/util/http-common";
 
 export default {
   name: "low-variability-table",
   data: () => {
     return {
-      tableData: [
-        {
-          rank: "1",
-          name: "GS글로벌",
-          variability: "0.457956",
-        },
-        {
-          rank: "2",
-          name: "HDC현대산업개발",
-          variability: "0.54078",
-        },
-        {
-          rank: "3",
-          name: "DSR",
-          variability: "0.545236",
-        },
-        {
-          rank: "4",
-          name: "LG이노텍",
-          variability: "0.565614",
-        },
-        {
-          rank: "5",
-          name: "KEC",
-          variability: "0.605653",
-        },
-      ],
+      tableData: [],
     };
   },
   methods: {
     lowvarlist: function () {
       const self = this;
       let idx = 1;
-      axios
-        .get("http://localhost:8000/api/getlowvar")
+      http
+        .get("/strategy/getlowvar")
         .then(function (res) {
           self.tableData = [];
           for (let i of res.data) {
