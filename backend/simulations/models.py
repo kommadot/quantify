@@ -1,9 +1,9 @@
 from django.utils import timezone
-from django.db import models
+from djongo import models
 from datetime import datetime
 
 class Simulation(models.Model):
-    id = models.IntegerField(primary_key=True)
+    _id = models.ObjectIdField(primary_key=True)
     # user_id = models.ForeignKey('user.id',on_delete=models.CASCADE)
     user_id = models.IntegerField()
     item_code = models.CharField(max_length=6)
@@ -14,7 +14,7 @@ class Simulation(models.Model):
     
 
 class SimulationBreakdown(models.Model):
-    id = models.IntegerField(primary_key=True)
+    _id = models.ObjectIdField(primary_key=True)
     # user_id = models.ForeignKey('user.id',on_delete=models.CASCADE)
     user_id = models.IntegerField()
     item_code = models.CharField(max_length=6)

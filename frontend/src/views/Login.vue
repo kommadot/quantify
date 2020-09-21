@@ -48,7 +48,7 @@ export default {
     onGoogleSignInSuccess(resp) {
       const token = resp.getAuthResponse(true).access_token;
       axios
-        .post("http://localhost:8000/auth/google", {
+        .post("http://localhost:8000/api/auth/google", {
           access_token: token,
         })
         .then((resp) => {
@@ -72,7 +72,7 @@ export default {
           console.log(res);
           const token = res.access_token;
           axios
-            .post("http://localhost:8000/auth/kakao", {
+            .post("http://localhost:8000/api/auth/kakao", {
               access_token: token,
             })
             .then((res) => {
