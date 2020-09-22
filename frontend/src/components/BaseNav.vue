@@ -34,9 +34,9 @@
         </div>
       </div>
     </nav>
-    <div v-if="$route.name=='LowVariability'">
+    <!-- <div v-if="$route.name=='LowVariability'">
       <div class="px-5">
-        <h4 class="text-white">변동성이 적은 주식은 장기적으로 시장에 영향을 많이 받는 주식들보다 수익률이 좋고 보다 안정적인 수익을 기대할 수 있습니다.</h4>
+        <h6 class="text-white">변동성이 적은 주식은 장기적으로 시장에 영향을 많이 받는 주식들보다 수익률이 좋고 보다 안정적인 수익을 기대할 수 있습니다.</h6>
       </div>
     </div>
     <div v-else-if="$route.name=='Momentum'">
@@ -62,7 +62,7 @@
           <br />수익성, 수익의 안정성, 기업 구조, 수익의 성장성, 회계적 우량성, 배당, 투자등의 가치를 종합적으로 분석합니다.
         </h4>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 <script>
