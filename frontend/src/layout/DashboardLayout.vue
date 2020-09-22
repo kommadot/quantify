@@ -6,7 +6,7 @@
           :link="{
             name: '주식추천필터',
             icon: 'ni ni-bold-down text-primary',
-            path: '/'
+            path: '/mainfilter'
           }"
         />
 
