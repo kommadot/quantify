@@ -1,63 +1,54 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import DashboardLayout from '@/layout/DashboardLayout'
-import AuthLayout from '@/layout/AuthLayout'
+
 Vue.use(Router)
 
 export default new Router({
-  linkExactActiveClass: 'active',
+  mode: 'hash',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
-      redirect: 'lowvar',
-      component: DashboardLayout,
+      component: () => import('@/views/dashboard/Index'),
       children: [
+        // Dashboard
         {
-          path: '/dashboard',
-          name: 'dashboard',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
+          name: 'Dashboard',
+          path: '',
+          component: () => import('@/views/dashboard/Dashboard'),
+        },
+        // Pages
+        {
+          name: 'User Profile',
+          path: 'pages/user',
+          component: () => import('@/views/dashboard/pages/UserProfile'),
         },
         {
-          path: '/lowvar',
-          name: 'LowVariability',
-          component: () => import(/* webpackChunkName: "demo" */ './views/LowVariability.vue')
+          name: 'Notifications',
+          path: 'components/notifications',
+          component: () => import('@/views/dashboard/component/Notifications'),
         },
         {
-          path: '/value',
-          name: 'ValueStrategy',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Value.vue')
+          name: 'Icons',
+          path: 'components/icons',
+          component: () => import('@/views/dashboard/component/Icons'),
         },
         {
-          path: '/momentum',
-          name: 'Momentum',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Momentum.vue')
+          name: 'Typography',
+          path: 'components/typography',
+          component: () => import('@/views/dashboard/component/Typography'),
         },
+        // Tables
         {
-          path: '/quality',
-          name: 'QualityStrategy',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Quality.vue')
-        }
-      ]
+          name: 'Regular Tables',
+          path: 'tables/regular-tables',
+          component: () => import('@/views/dashboard/tables/RegularTables'),
+        },
+        // Maps
+
+        // Upgrade
+
+      ],
     },
-    {
-      path: '/',
-      redirect: 'login',
-      component: AuthLayout,
-      children: [
-        {
-          path: '/login',
-          name: 'login',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Login.vue')
-        },
-        {
-          path: '/register',
-          name: 'register',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Register.vue')
-        }
-      ]
-    }
-  ]
+  ],
 })

@@ -13,7 +13,7 @@ SECRET_KEY = '9%6_$*&g9^l$z899si5euq8ps!=*4kjl=zv@y327__*ut5oe7m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
 

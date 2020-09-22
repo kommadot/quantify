@@ -1,26 +1,55 @@
-# [Vue Argon Dashboard](https://demos.creative-tim.com/vue-argon-dashboard/?ref=ada-github-readme) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/home?status=Vue%20Argon%20Dashboard%20is%20a%20Free%20Bootstrap%20and%Vue.js%20Dashboard%20made%20using%vue-cli%20%E2%9D%A4%EF%B8%8F%0Ahttps%3A//demos.creative-tim.com/vue-argon-dashboard%20%vue.js%20%23vue-cli%20%23argon%20%23argondesign%20%23angulardashboard%20%23argonvue%20%23vuedesign%20%23bootstrap%20%23design%20%23uikit%20%23freebie%20%20via%20%40CreativeTim)
+# [Vuetify Material Dashboard](https://www.creative-tim.com/product/vuetify-material-dashboard?ref=vtymdp-readme) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/share?url=https%3A%2F%2Fwww.creative-tim.com%2Fvuetify-material-dashboard&text=Vuetify%20Material%20Dashboard%20PRO%20by%20Creative%20Tim&via=CreativeTim&hashtags=vuejs%20%23vuex%20%23vuetify%20%23material)
 
 
+![version](https://img.shields.io/badge/version-2.1.0-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/ct-vuetify-material-dashboard.svg)](https://github.com/creativetimofficial/ct-vuetify-material-dashboard/issues?q=is%3Aopen+is%3Aissue) [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/creativetimofficial/ct-vuetify-material-dashboard.svg?maxAge=259200)](https://github.com/creativetimofficial/ct-vuetify-material-dashboard/issues?q=is%3Aissue+is%3Aclosed) [![Join the chat at https://gitter.im/NIT-dgp/General](https://badges.gitter.im/NIT-dgp/General.svg)](https://gitter.im/creative-tim/material-dashboard) [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/E4aHAQy)
 
- ![version](https://img.shields.io/badge/version-1.0.0-blue.svg)  ![license](https://img.shields.io/badge/license-MIT-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/vue-argon-dashboard.svg?maxAge=2592000)](https://github.com/creativetimofficial/vue-argon-dashboard/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/vue-argon-dashboard.svg?maxAge=2592000)](https://github.com/creativetimofficial/vue-argon-dashboard/issues?q=is%3Aissue+is%3Aclosed) [![Join the chat at https://gitter.im/NIT-dgp/General](https://badges.gitter.im/NIT-dgp/General.svg)](https://gitter.im/creative-tim-general/Lobby) [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/E4aHAQy)
+![Product Gif](https://s3.amazonaws.com/creativetim_bucket/products/207/original/opt_mdp_vuetify_thumbnail.jpg?1566575158)
+
+**Vuetify Material Dashboard** is a beautiful resource built over [Vuetify](https://vuetifyjs.com/en/), [Vuex](https://vuex.vuejs.org/installation.html) and [Vuejs](https://vuejs.org/). It will help you get started developing dashboards in no time. Vuetify Material Dashboard is the official Vuejs version of the Original [Material Dashboard PRO](https://www.creative-tim.com/product/material-dashboard). Using the Dashboard is pretty simple but requires basic knowledge of Javascript, [Vuejs](https://vuejs.org/v2/guide/) and [Vue-Router](https://router.vuejs.org/en/).
+
+We have created it thinking about things you actually need in a dashboard. **Vuetify Material Dashboard**  contains handpicked and optimized Vuejs plugins. Everything is designed to fit with one another. As you will be able to see, the dashboard you can access on [Creative Tim](https://www.creative-tim.com) is a customization of this product.
+
+**Vuetify** is developed exactly according to Material Design spec. Every component is handcrafted to bring you the best possible UI tools to your next great app. The development doesn't stop at the core components outlined in Google's spec. Through the support of community members and sponsors, additional components will be designed and made available for everyone to enjoy.
+
+**Vuex** is a state management pattern + library for **Vue.js** applications. It serves as a centralized store for all the components in an application, with rules ensuring that the state can only be mutated in a predictable fashion. It also integrates with Vue's official devtools extension to provide advanced features such as zero-config time-travel debugging and state snapshot export/import.
+
+Let us know what you think and what we can improve below. And good luck with development!
+
+## Getting Started
+- Install Nodejs from [Nodejs Official Page](https://nodejs.org/en/)
+- Open your terminal
+- Navigate to the project
+- Run `npm install` or `yarn install` if you use [Yarn](https://yarnpkg.com/en/)
+- Run `npm run dev` or `yarn serve` to start a local development server
+- A new tab will be opened in your browser
+
+You can also run additional npm tasks such as
+- `npm run build` to build your app for production
+- `npm run lint` to run linting.
+
+## Vuetify
+Vuetify is developed exactly according to Material Design spec. Every component is hand crafted to bring you the best possible UI tools to your next great app. The development doesn't stop at the core components outlined in Google's spec. Through the support of community members and sponsors, additional components will be designed and made available for everyone to enjoy.
 
 
-![Product Gif](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/vue-argon-dashboard/vue-argon-dashboard.gif)
+## Vuex
 
-**Fully Coded Components**
+Vuex is a state management pattern + library for Vue.js applications. It serves as a centralized store for all the components in an application, with rules ensuring that the state can only be mutated in a predictable fashion. It also integrates with Vue's official [devtools](https://github.com/vuejs/vue-devtools) extension to provide advanced features such as zero-config time-travel debugging and state snapshot export / import.
 
-Vue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.
-You will save a lot of time going from prototyping to full-functional code, because all elements are implemented. This Dashboard is coming with pre-built examples, so the development process is seamless, switching from our pages to the real website is very easy to be done.
-Every element has multiple states for colors, styles, hover, focus, that you can easily access and use.
+## Vue-cli
 
-**Complex Documentation**
+We used the latest 3.x [Vue CLI](https://github.com/vuejs/vue-cli) which aims to reduce project configuration
+to as little as possible. Almost everything is inside `package.json` + some other related files such as
+`.babel.config.js`, `.eslintrc.js` and `.postcssrc.js`.
 
-Each element is well presented in a very complex documentation. You can read more about the idea behind this [dashboard here](https://demos.creative-tim.com/vue-argon-dashboard/documentation/#/tutorial?ref=ada-github-readme). You can check the [components here](https://demos.creative-tim.com/vue-argon-dashboard/documentation/#/alerts?ref=ada-github-readme) and the [foundation here](https://demos.creative-tim.com/vue-argon-dashboard/documentation/#/colors?ref=ada-github-readme).
+Let us know what you think and what we can improve below. And good luck with development!
 
-**Example Pages**
 
-If you want to get inspiration or just show something directly to your clients, you can jump start your development with our pre-built example pages. You will be able to quickly set up the basic structure for your web project.
+#### Special thanks
+During the development of this dashboard, we have used many existing resources from awesome developers. We want to thank them for providing their tools open source:
+- [Vuetify](https://vuetifyjs.com/en/) for the wonderful framework
 
+
+Let us know your thoughts below. And good luck with development!
 
 ## Table of Contents
 
@@ -32,190 +61,190 @@ If you want to get inspiration or just show something directly to your clients, 
 * [Browser Support](#browser-support)
 * [Resources](#resources)
 * [Reporting Issues](#reporting-issues)
+* [Technical Support or Questions](#technical-support-or-questions)
 * [Licensing](#licensing)
 * [Useful Links](#useful-links)
 
+
 ## Versions
 
-[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/vue-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/vue-argon-dashboard)[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/html-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/argon-dashboard)[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/react-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/argon-dashboard-react)[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/angular-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/vue-argon-dashboard)[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/nodejs-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/argon-dashboard-nodejs)[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/laravel_logo.png" width="60" height="60" style="background:white"/>](https://www.creative-tim.com/product/argon-dashboard-laravel)[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/sketch-logo.jpg" width="60" height="60" />](https://github.com/creativetimofficial/argon-dashboard/tree/sketch)
 
 
+[<img src="https://pbs.twimg.com/profile_images/900908683927982080/GWykKJ7r_400x400.jpg" width="60" height="60" />](https://www.creative-tim.com/product/vuetify-material-dashboard-pro?ref=vtymdp-readme)
+[<img src="https://s3.amazonaws.com/creativetim_bucket/github/html.png" width="60" height="60" />](https://www.creative-tim.com/product/material-dashboard-pro?ref=vtymdp-readme)
+[<img src="https://s3.amazonaws.com/creativetim_bucket/github/react.svg" width="60" height="60" />](https://www.creative-tim.com/product/material-dashboard-pro-react?ref=vtymdp-readme)
+[<img src="https://s3.amazonaws.com/creativetim_bucket/github/vuejs.png" width="60" height="60" />](https://www.creative-tim.com/product/vue-material-dashboard-pro?ref=vtymdp-readme)
+[<img src="https://s3.amazonaws.com/creativetim_bucket/github/angular.png" width="60" height="60" />](https://www.creative-tim.com/product/material-dashboard-pro-angular2?ref=vtymdp-readme)
 
-|Vue | HTML | React | Angular  |
-| --- | --- | ---  | --- |
-[![Vue Argon Dashboard](https://github.com/creativetimofficial/public-assets/blob/master/vue-argon-dashboard/vue-argon-dashboard.jpg?raw=true)](https://www.creative-tim.com/product/vue-argon-dashboard?ref=ada-github-readme) | [![Argon Dashboard HTML](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/argon-dashboard.jpg?raw=true)](https://www.creative-tim.com/product/vue-argon-dashboard?ref=ada-github-readme) | [![Argon Dashboard React](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard-react/argon-dashboard-react.jpg?raw=true)](https://www.creative-tim.com/product/argon-dashboard-react?ref=ada-github-readme) | [![Argon Dashboard Angular](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard-angular/argon-dashboard-angular.jpg?raw=true)](https://www.creative-tim.com/product/argon-dashboard-angular?ref=ada-github-readme)
 
-| NodeJS | Laravel |
-| ---  | --- |
-| [![Argon Dashboard NodeJS](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard-nodejs/argon-dashboard-nodejs.jpg?raw=true)](https://www.creative-tim.com/product/argon-dashboard-nodejs?ref=ada-github-readme) | [![Argon Dashboard Laravel](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard-laravel/argon-dashboard-laravel.jpg?raw=true)](https://www.creative-tim.com/product/argon-dashboard-laravel?ref=ada-github-readme) |
+Vuetify | Vue | React | Angular | HTML |
+| --- | --- | --- | --- | --- |
+| [![Vuetify Material Dashboard PRO](https://s3.amazonaws.com/creativetim_bucket/products/207/original/opt_mdp_vuetify_thumbnail.jpg)](https://www.creative-tim.com/product/vuetify-material-dashboard-pro?ref=vtymdp-readme) | [![Vue Material Dashboard PRO](https://s3.amazonaws.com/creativetim_bucket/products/87/original/opt_mdp_vue_thumbnail.jpg)](https://www.creative-tim.com/product/vue-material-dashboard-pro?ref=vtymdp-readme) | [![Material Dashboard PRO React](https://s3.amazonaws.com/creativetim_bucket/products/80/original/opt_mdp_react_thumbnail.jpg)](https://www.creative-tim.com/product/material-dashboard-pro-react?ref=vtymdp-readme)  | [![Material Dashboard PRO Angular](https://s3.amazonaws.com/creativetim_bucket/products/55/original/opt_mdp_angular_thumbnail.jpg)](https://www.creative-tim.com/product/material-dashboard-angular2?ref=vtymdp-readme) | [![Material Dashboard PRO HTML](https://s3.amazonaws.com/creativetim_bucket/products/51/original/opt_mdp_thumbnail.jpg)](https://www.creative-tim.com/product/material-dashboard-pro/examples/dashboard.html?ref=vtymdp-readme)
 
 ## Demo
 
-| Dashboard Page | Icons Page | User Profile Page  | Tables Page | Login Page | Register Page  |
-| --- | --- | ---  | --- | --- | ---  |
-| [![Dashboard Page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/vue-argon-dashboard/dashboard.png)](https://demos.creative-tim.com/vue-argon-dashboard/#/dashboard?ref=ada-github-readme)  | [![Icons Page](https://github.com/creativetimofficial/public-assets/blob/master/vue-argon-dashboard/icons.png?raw=true)](https://demos.creative-tim.com/vue-argon-dashboard/#/icons?ref=ada-github-readme)  | [![User Profile Page](https://github.com/creativetimofficial/public-assets/blob/master/vue-argon-dashboard/user.png?raw=true)](https://demos.creative-tim.com/vue-argon-dashboard/#/profile?ref=ada-github-readme)  | [![Tables Page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/vue-argon-dashboard/tables.png)](https://demos.creative-tim.com/vue-argon-dashboard/#/tables?ref=ada-github-readme)  | [![Login Page](https://github.com/creativetimofficial/public-assets/blob/master/vue-argon-dashboard/login.png?raw=true)](https://demos.creative-tim.com/vue-argon-dashboard/#/login?ref=ada-github-readme)  | [![Register Page](https://github.com/creativetimofficial/public-assets/blob/master/vue-argon-dashboard/register.png?raw=true)](https://demos.creative-tim.com/vue-argon-dashboard/#/register?ref=ada-github-readme)  
+- [Start page](https://demos.creative-tim.com/vuetify-material-dashboard?ref=vtymdp-readme)
+- [Notifications page](https://demos.creative-tim.com/vuetify-material-dashboard/#/components/notifications?ref=vtymdp-readme)
 
-[View More](https://demos.creative-tim.com/vue-argon-dashboard/#/dashboard)
+[View More](https://demos.creative-tim.com/vuetify-material-dashboard-pro?ref=vtymdp-readme).
 
 
 ## Quick start
 
-- [Download from Github](https://github.com/creativetimofficial/vue-argon-dashboard/archive/master.zip).
-- [Download from Creative Tim](https://www.creative-tim.com/product/vue-argon-dashboard?ref=ada-github-readme).
-- Clone the repo: `git clone https://github.com/creativetimofficial/vue-argon-dashboard.git`.
+Quick start options:
+
+- Download from [Creative Tim](https://www.creative-tim.com/product/vuetify-material-dashboard?ref=vtymdp-readme)
 
 
 ## Documentation
-The documentation for the Vue Argon Dashboard is hosted at our [website](https://demos.creative-tim.com/vue-argon-dashboard/documentation/#/tutorial?ref=ada-github-readme).
+The documentation for the **Vuetify Material Dashboard** is hosted on vuetify [website](https://vuetifyjs.com/en/components/api-explorer).
 
 
 ## File Structure
+
 Within the download you'll find the following directories and files:
 
 ```
-|-- Vue Argon Dashboard
-    |-- .gitignore
-    |-- CHANGELOG.md
-    |-- ISSUES_TEMPLATE.md
-    |-- LICENSE.md
-    |-- README.md
-    |-- babel.config.js
-    |-- package.json
-    |-- public
-    |   |-- favicon.ico
-    |   |-- index.html
-    |   |-- manifest.json
-    |   |-- robots.txt
-    |   |-- img
-    |-- src
-        |-- App.vue
-        |-- main.js
-        |-- registerServiceWorker.js
-        |-- router.js
-        |-- assets
-        |   |-- logo.png
-        |   |-- scss
-        |   |   |-- argon.scss
-        |   |-- vendor
-        |       |-- @fortawesome
-        |       |-- nucleo
-        |-- components
-        |   |-- Badge.vue
-        |   |-- BaseAlert.vue
-        |   |-- BaseButton.vue
-        |   |-- BaseCheckbox.vue
-        |   |-- BaseDropdown.vue
-        |   |-- BaseHeader.vue
-        |   |-- BaseInput.vue
-        |   |-- BaseNav.vue
-        |   |-- BasePagination.vue
-        |   |-- BaseProgress.vue
-        |   |-- BaseRadio.vue
-        |   |-- BaseSlider.vue
-        |   |-- BaseSwitch.vue
-        |   |-- BaseTable.vue
-        |   |-- Card.vue
-        |   |-- CloseButton.vue
-        |   |-- Modal.vue
-        |   |-- NavbarToggleButton.vue
-        |   |-- StatsCard.vue
-        |   |-- stringUtils.js
-        |   |-- Charts
-        |   |   |-- BarChart.js
-        |   |   |-- DoughnutChart.js
-        |   |   |-- LineChart.js
-        |   |   |-- PieChart.js
-        |   |   |-- config.js
-        |   |   |-- globalOptionsMixin.js
-        |   |   |-- optionHelpers.js
-        |   |-- SidebarPlugin
-        |   |   |-- SideBar.vue
-        |   |   |-- SidebarItem.vue
-        |   |   |-- index.js
-        |   |-- Tabs
-        |       |-- PillsLayout.vue
-        |       |-- Tab.vue
-        |       |-- TabPane.vue
-        |       |-- Tabs.vue
-        |       |-- TabsLayout.vue
-        |-- directives
-        |   |-- click-ouside.js
-        |-- layout
-        |   |-- AuthLayout.vue
-        |   |-- Content.vue
-        |   |-- ContentFooter.vue
-        |   |-- DashboardLayout.vue
-        |   |-- DashboardNavbar.vue
-        |   |-- LoadingMainPanel.vue
-        |-- plugins
-        |   |-- argon-dashboard.js
-        |   |-- globalComponents.js
-        |   |-- globalDirectives.js
-        |-- views
-            |-- Dashboard.vue
-            |-- Icons.vue
-            |-- Login.vue
-            |-- Maps.vue
-            |-- Register.vue
-            |-- Tables.vue
-            |-- UserProfile.vue
-            |-- Dashboard
-            |   |-- PageVisitsTable.vue
-            |   |-- SocialTrafficTable.vue
-            |-- Tables
-                |-- ProjectsTable.vue
+vuetify-material-dashboard
+├── README.md
+├── CHANGELOG.md
+├── babel.config.js
+├── cypress.json
+├── jest.config.js
+├── now.json
+├── package.json
+├── postcss.config.js
+├── public
+│   ├── favicon.ico
+│   └── index.html
+├── src
+│   ├── App.vue
+│   ├── assets
+│   │   └── vuetify.svg
+│   ├── components
+│   │   └── base
+│   │       ├── Card.vue
+│   │       ├── Item.vue
+│   │       ├── ItemGroup.vue
+│   │       ├── ItemSubGroup.vue
+│   │       ├── MaterialAlert.vue
+│   │       ├── MaterialCard.vue
+│   │       ├── MaterialChartCard.vue
+│   │       ├── MaterialSnackbar.vue
+│   │       ├── MaterialStatsCard.vue
+│   │       ├── MaterialTabs.vue
+│   │       ├── MaterialTestimony.vue
+│   │       ├── Subheading.vue
+│   │       └── VComponent.vue
+│   ├── i18n.js
+│   ├── locales
+│   │   └── en.json
+│   ├── main.js
+│   ├── plugins
+│   │   ├── base.js
+│   │   ├── chartist.js
+│   │   ├── vee-validate.js
+│   │   └── vuetify.js
+│   ├── router.js
+│   ├── sass
+│   │   ├── main.scss
+│   │   ├── overrides.sass
+│   │   └── vuetify-material
+│   │       └── _sidebar.sass
+│   ├── store.js
+│   └── views
+│       └── dashboard
+│           ├── Charts.vue
+│           ├── Dashboard.vue
+│           ├── Index.vue
+│           ├── Widgets.vue
+│           ├── component
+│           │   ├── Buttons.vue
+│           │   ├── Grid.vue
+│           │   ├── Icons.vue
+│           │   ├── Notifications.vue
+│           │   ├── Tabs.vue
+│           │   └── Typography.vue
+│           ├── components
+│           │   └── core
+│           │       ├── AppBar.vue
+│           │       ├── Drawer.vue
+│           │       ├── Footer.vue
+│           │       ├── Settings.vue
+│           │       └── View.vue
+│           ├── maps
+│           │   └── GoogleMaps.vue
+│           ├── pages
+│           │   └── UserProfile.vue
+│           └── tables
+│               └── RegularTables.vue
+├── tests
+│   ├── e2e
+│   │   ├── plugins
+│   │   │   └── index.js
+│   │   ├── specs
+│   │   │   └── test.js
+│   │   └── support
+│   │       ├── commands.js
+│   │       └── index.js
+│   └── unit
+│       └── example.spec.js
+├── vue.config.js
 ```
-
 
 ## Browser Support
 
 At present, we officially aim to support the last two versions of the following browsers:
 
-<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/chrome-logo.png?raw=true" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/firefox-logo.png" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/edge-logo.png" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/safari-logo.png" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/opera-logo.png" width="64" height="64">
-
+<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64">
 
 
 ## Resources
-- Demo: <https://demos.creative-tim.com/vue-argon-dashboard/#/dashboard?ref=ada-github-readme>
-- Download Page: <https://www.creative-tim.com/product/vue-argon-dashboard?ref=ada-github-readme>
-- Documentation: <https://demos.creative-tim.com/vue-argon-dashboard/documentation/#/tutorial?ref=ada-github-readme>
-- License Agreement: <https://www.creative-tim.com/license?ref=ada-github-readme>
-- Support: <https://www.creative-tim.com/contact-us?ref=ada-github-readme>
-- Issues: [Github Issues Page](https://github.com/creativetimofficial/vue-argon-dashboard/issues?ref=ada-github-readme)
+- [Live Preview](https://demos.creative-tim.com/vuetify-material-dashboard?ref=vtymdp-readme)
+- Download Page: [Download](https://www.creative-tim.com/product/vuetify-material-dashboard?ref=vtymdp-readme)
+- Documentation is [Here](https://vuetifyjs.com/en/components/api-explorer)
+- License Agreement: [License](https://www.creative-tim.com/license)
+- Support: [Contact](https://www.creative-tim.com/contact-us)
+- Issues: [Github Issues Page](https://github.com/creativetimofficial/ct-vuetify-material-dashboard/issues)
+- Vue Material Dashboard PRO - [Demo](https://www.creative-tim.com/product/vue-material-dashboard-pro?ref=vtymdp-readme)
+- For Front End Development - [Material Kit Pro ](https://www.creative-tim.com/product/material-kit-pro?ref=vtymdp-readme)
 
 ## Reporting Issues
+We use GitHub Issues as the official bug tracker for the **Vuetify Material Dashboard**. Here are some advices for our users that want to report an issue:
 
-We use GitHub Issues as the official bug tracker for the Material Kit. Here are some advices for our users that want to report an issue:
-
-1. Make sure that you are using the latest version of the Material Kit. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/?ref=ada-github-readme).
+1. Make sure that you are using the latest version of the **Vuetify Material Dashboard**. Check the **CHANGELOG** from your dashboard on our [website](https://www.creative-tim.com/).
 2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
 3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
 
+## Technical Support or Questions
+
+If you have questions or need help integrating the product please [contact us](https://www.creative-tim.com/contact-us) instead of opening an issue.
+
 ## Licensing
 
-- Copyright 2018 Creative Tim (https://www.creative-tim.com/?ref=ada-github-readme)
-
-- Licensed under MIT (https://github.com/creativetimofficial/vue-argon-dashboard/blob/master/LICENSE.md)
+- Copyright 2018 Creative Tim (https://www.creative-tim.com)
+- Creative Tim [license](https://www.creative-tim.com/license)
 
 ## Useful Links
 
-- [Tutorials](https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w?ref=creativetim)
-- [Affiliate Program](https://www.creative-tim.com/affiliates/new?ref=ada-github-readme) (earn money)
-- [Blog Creative Tim](http://blog.creative-tim.com/?ref=ada-github-readme)
-- [Free Products](https://www.creative-tim.com/bootstrap-themes/free?ref=ada-github-readme) from Creative Tim
-- [Premium Products](https://www.creative-tim.com/bootstrap-themes/premium?ref=ada-github-readme) from Creative Tim
-- [React Products](https://www.creative-tim.com/bootstrap-themes/react-themes?ref=ada-github-readme) from Creative Tim
-- [Angular Products](https://www.creative-tim.com/bootstrap-themes/angular-themes?ref=ada-github-readme) from Creative Tim
-- [VueJS Products](https://www.creative-tim.com/bootstrap-themes/vuejs-themes?ref=ada-github-readme) from Creative Tim
-- [More products](https://www.creative-tim.com/bootstrap-themes?ref=ada-github-readme) from Creative Tim
-- Check our Bundles [here](https://www.creative-tim.com/bundles?ref=ada-github-readme)
+- [More products](https://www.creative-tim.com/bootstrap-themes) from Creative Tim
 
-### Social Media
+- [Vue products](https://www.creative-tim.com/bootstrap-themes/vuejs-themes) from Creative Tim
 
-Twitter: <https://twitter.com/CreativeTim?ref=creativetim>
+- [Tutorials](https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w)
 
-Facebook: <https://www.facebook.com/CreativeTim?ref=creativetim>
+- [Freebies](https://www.creative-tim.com/bootstrap-themes/free) from Creative Tim
 
-Dribbble: <https://dribbble.com/creativetim?ref=creativetim>
+- [Affiliate Program](https://www.creative-tim.com/affiliates/new) (earn money)
 
-Instagram: <https://www.instagram.com/CreativeTimOfficial?ref=creativetim>
+##### Social Media
+
+Twitter: <https://twitter.com/CreativeTim>
+
+Facebook: <https://www.facebook.com/CreativeTim>
+
+Dribbble: <https://dribbble.com/creativetim>
+
+Google+: <https://plus.google.com/+CreativetimPage>
+
+Instagram: <https://instagram.com/creativetimofficial>
