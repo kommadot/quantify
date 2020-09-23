@@ -9,16 +9,7 @@ import './plugins/vee-validate'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
 import GSignInButton from 'vue-google-signin-button'
-<<<<<<< HEAD
-=======
 
-// bootstrap
-import { BootstrapVue } from "bootstrap-vue";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-Vue.use(BootstrapVue);
-
->>>>>>> 5746b483d70fb726c9134645ab12761ddac98904
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(GSignInButton)
