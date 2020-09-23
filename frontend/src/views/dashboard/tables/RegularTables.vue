@@ -1,188 +1,141 @@
 <template>
-  <v-container
-    id="regular-tables"
-    fluid
-    tag="section"
-  >
-    <base-v-component
-      heading="Simple Tables"
-      link="components/simple-tables"
-    />
-
-    <base-material-card
-      icon="mdi-clipboard-text"
-      title="Simple Table"
-      class="px-5 py-3"
-    >
-      <v-simple-table>
-        <thead>
-          <tr>
-            <th class="primary--text">
-              ID
-            </th>
-            <th class="primary--text">
-              Name
-            </th>
-            <th class="primary--text">
-              Country
-            </th>
-            <th class="primary--text">
-              City
-            </th>
-            <th class="text-right primary--text">
-              Salary
-            </th>
-          </tr>
-        </thead>
-
+  <v-container id="regular-tables" fluid tag="section">
+    <base-material-card color="success" dark icon="mdi-chart-line" title="모의투자현황" class="px-5 py-3">
+      <v-simple-table class="my-3" style="border: 1px solid green;">
         <tbody>
           <tr>
-            <td>1</td>
-            <td>Dakota Rice</td>
-            <td>Niger</td>
-            <td>Oud-Turnhout</td>
-            <td class="text-right">
-              $36,738
-            </td>
-          </tr>
+            <td style="font-size: 130%;">총평가금액</td>
+            <td style="font-size: 130%;">{{ EvaluatedPrice }}</td>
 
-          <tr>
-            <td>2</td>
-            <td>Minverva Hooper</td>
-            <td>Curaçao</td>
-            <td>Sinaas-Waas</td>
-            <td class="text-right">
-              $23,789
-            </td>
-          </tr>
+            <td style="font-size: 130%; border-left: 1px solid green;">총평가손익</td>
+            <td
+              v-if="EvaluatedProfitLoss > 0"
+              class="red--text"
+              style="font-size: 130%;"
+            >{{ EvaluatedProfitLoss }}</td>
+            <td v-if="EvaluatedProfitLoss == 0" style="font-size: 130%;">{{ EvaluatedProfitLoss }}</td>
+            <td
+              v-if="EvaluatedProfitLoss < 0"
+              class="blue--text"
+              style="font-size: 130%;"
+            >{{ EvaluatedProfitLoss }}</td>
 
-          <tr>
-            <td>3</td>
-            <td>Sage Rodriguez</td>
-            <td>Netherlands</td>
-            <td>Baileux</td>
-            <td class="text-right">
-              $56,142
-            </td>
-          </tr>
-
-          <tr>
-            <td>4</td>
-            <td>Philip Chaney</td>
-            <td>Korea, South</td>
-            <td>Overland Park</td>
-            <td class="text-right">
-              $38,735
-            </td>
-          </tr>
-
-          <tr>
-            <td>5</td>
-            <td>Doris Greene</td>
-            <td>Malawi</td>
-            <td>Feldkirchen in Kärnten</td>
-            <td class="text-right">
-              $63,542
-            </td>
-          </tr>
-
-          <tr>
-            <td>6</td>
-            <td>Mason Porter</td>
-            <td>Chile</td>
-            <td>Gloucester</td>
-            <td class="text-right">
-              $78,615
-            </td>
+            <td style="font-size: 130%; border-left: 1px solid green;">수익률</td>
+            <td
+              v-if="EarningsRate > 0"
+              class="red--text"
+              style="font-size: 130%;"
+            >{{ EarningsRate | DecimalPoint3 }}%</td>
+            <td
+              v-if="EarningsRate == 0"
+              style="font-size: 130%;"
+            >{{ EarningsRate | DecimalPoint3 }}%</td>
+            <td
+              v-if="EarningsRate < 0"
+              class="blue--text"
+              style="font-size: 130%;"
+            >{{ EarningsRate | DecimalPoint3 }}%</td>
           </tr>
         </tbody>
       </v-simple-table>
-    </base-material-card>
 
-    <div class="py-3" />
-
-    <base-material-card
-      color="success"
-      dark
-      icon="mdi-clipboard-plus"
-      title="Table on Dark Background"
-      class="px-5 py-3"
-    >
       <v-simple-table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Country</th>
-            <th>City</th>
-            <th class="text-right">
-              Salary
-            </th>
+            <th style="font-size: 130%;">종목명</th>
+            <th class="text-right" style="font-size: 130%;">평가손익</th>
+            <th class="text-right" style="font-size: 130%;">수익률</th>
+            <th class="text-right" style="font-size: 130%;">평가금액</th>
+            <th class="text-right" style="font-size: 130%;">보유수량</th>
+            <th class="text-right" style="font-size: 130%;">매수단가</th>
+            <th class="text-right" style="font-size: 130%;">현재가</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Dakota Rice</td>
-            <td>Niger</td>
-            <td>Oud-Turnhout</td>
-            <td class="text-right">
-              $36,738
-            </td>
-          </tr>
-
-          <tr>
-            <td>2</td>
-            <td>Minverva Hooper</td>
-            <td>Curaçao</td>
-            <td>Sinaas-Waas</td>
-            <td class="text-right">
-              $23,789
-            </td>
-          </tr>
-
-          <tr>
-            <td>3</td>
-            <td>Sage Rodriguez</td>
-            <td>Netherlands</td>
-            <td>Baileux</td>
-            <td class="text-right">
-              $56,142
-            </td>
-          </tr>
-
-          <tr>
-            <td>4</td>
-            <td>Philip Chaney</td>
-            <td>Korea, South</td>
-            <td>Overland Park</td>
-            <td class="text-right">
-              $38,735
-            </td>
-          </tr>
-
-          <tr>
-            <td>5</td>
-            <td>Doris Greene</td>
-            <td>Malawi</td>
-            <td>Feldkirchen in Kärnten</td>
-            <td class="text-right">
-              $63,542
-            </td>
-          </tr>
-
-          <tr>
-            <td>6</td>
-            <td>Mason Porter</td>
-            <td>Chile</td>
-            <td>Gloucester</td>
-            <td class="text-right">
-              $78,615
-            </td>
+          <tr v-for="item in stocks" :key="item.종목명">
+            <td>{{ item.종목명 }}</td>
+            <td v-if="item.평가손익 > 0" class="text-right red--text">{{ item.평가손익 }}</td>
+            <td v-if="item.평가손익 == 0" class="text-right">{{ item.평가손익 }}</td>
+            <td v-if="item.평가손익 < 0" class="text-right blue--text">{{ item.평가손익 }}</td>
+            <td v-if="item.수익률 > 0" class="text-right red--text">{{ item.수익률 | DecimalPoint3 }}%</td>
+            <td v-if="item.수익률 == 0" class="text-right">{{ item.수익률 | DecimalPoint3 }}%</td>
+            <td v-if="item.수익률 < 0" class="text-right blue--text">{{ item.수익률 | DecimalPoint3 }}%</td>
+            <td class="text-right">{{ item.평가금액 }}</td>
+            <td class="text-right">{{ item.보유수량 }}</td>
+            <td class="text-right">{{ item.매수단가 }}</td>
+            <td class="text-right">{{ item.현재가 }}</td>
           </tr>
         </tbody>
       </v-simple-table>
     </base-material-card>
   </v-container>
 </template>
+<script>
+export default {
+  name: "",
+  data() {
+    return {
+      stocks: [
+        {
+          종목명: "삼성전자",
+          평가손익: (58000 - 48000) * 10,
+          수익률: ((58000 - 48000) / 48000) * 100,
+          평가금액: 58000 * 10,
+          보유수량: 10,
+          매수단가: 48000,
+          현재가: 58000,
+        },
+        {
+          종목명: "카카오",
+          평가손익: (360000 - 340000) * 20,
+          수익률: ((360000 - 340000) / 340000) * 100,
+          평가금액: 7200000,
+          보유수량: 20,
+          매수단가: 340000,
+          현재가: 360000,
+        },
+        {
+          종목명: "현대차",
+          평가손익: (180000 - 190000) * 15,
+          수익률: ((180000 - 190000) / 190000) * 100,
+          평가금액: 2700000,
+          보유수량: 15,
+          매수단가: 190000,
+          현재가: 180000,
+        },
+      ],
+    };
+  },
+  computed: {
+    EvaluatedPrice() {
+      let cnt = 0;
+      this.stocks.forEach((el) => {
+        cnt += el.평가금액;
+      });
+      return cnt;
+    },
+    EvaluatedProfitLoss() {
+      let cnt = 0;
+      this.stocks.forEach((el) => {
+        cnt += el.평가손익;
+      });
+      return cnt;
+    },
+    EarningsRate() {
+      let a = 0;
+      let b = 0;
+      this.stocks.forEach((el) => {
+        a += el.평가손익;
+        b += el.매수단가 * el.보유수량;
+      });
+      return (a / b) * 100;
+    },
+  },
+  filters: {
+    DecimalPoint3(value) {
+      return value.toFixed(3);
+    },
+  },
+};
+</script>
