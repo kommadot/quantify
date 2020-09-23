@@ -61,10 +61,10 @@ class SimulationDetail(mixins.RetrieveModelMixin,
     serializer_class = SimulationSerializer
 
     
-    def get(self, request,oid):
+    def get(self, request, oid):
         print("===================================================================================")
         print(oid)
-        simulation  = Simulation.objects.get(_id = ObjectId(oid))
+        simulation = Simulation.objects.get(_id = ObjectId(oid))
         return Response(self.serializer_class(simulation).data,status=status.HTTP_200_OK)
 
 
