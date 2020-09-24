@@ -1,35 +1,44 @@
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, JsonResponse
 from .models import LowVariability, Momentum, RiskMomentum, Value, Quality
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
-# Create your views here.
-@csrf_exempt
-def lowvarlist(request):
-    if request.method == 'GET':
-        post = list(LowVariability.objects.values())
-        return JsonResponse(post, safe=False)
+import json
+from .serializers import MomentumSerializer, LowVariabilitySerializer, RiskMomentumSerializer, ValueSerializer, QualitySerializer
 
-@csrf_exempt
-def momenlist(request):
-    if request.method == 'GET':
-        post = list(Momentum.objects.values())
-        return JsonResponse(post, safe=False)
 
-@csrf_exempt
-def riskmomenlist(request):
-    if request.method == 'GET':
-        post = list(RiskMomentum.objects.values())
-        return JsonResponse(post, safe=False)
+@permission_classes((AllowAny,))
+class MomentumView(APIView):
+    def get(self,request):
+        momentum = Momentum.objects.all()
+        return Response(MomentumSerializer(momentum,many=True).data,status=status.HTTP_200_OK)
 
-@csrf_exempt
-def valuelist(request):
-    if request.method == 'GET':
-        post = list(Value.objects.values())
-        return JsonResponse(post, safe=False)
 
-@csrf_exempt
-def qualitylist(request):
-    if request.method == 'GET':
-        post = list(Quality.objects.values())
-        return JsonResponse(post, safe=False)
+@permission_classes((AllowAny,))
+class QualityView(APIView):
+    def get(self,request):
+        quality = Quality.objects.all()
+        return Response(QualitySerializer(quality,many=True).data,status=status.HTTP_200_OK)
+
+
+@permission_classes((AllowAny,))
+class RiskMomentumView(APIView):
+    def get(self,request):
+        riskMomentum = RiskMomentum.objects.all()
+        return Response(RiskMomentumSerializer(riskMomentum,many=True).data,status=status.HTTP_200_OK)
+
+
+@permission_classes((AllowAny,))
+class ValueView(APIView):
+    def get(self,request):
+        value = Value.objects.all()
+        return Response(ValueSerializer(value,many=True).data,status=status.HTTP_200_OK)
+
+
+@permission_classes((AllowAny,))
+class LowVariabilityView(APIView):
+    def get(self,request):
+        lowVariability = LowVariability.objects.all()
+        return Response(LowVariabilitySerializer(lowVariability,many=True).data,status=status.HTTP_200_OK)
