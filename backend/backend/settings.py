@@ -46,10 +46,8 @@ INSTALLED_APPS = [
 
     'strategy',
     'api',
-
     'users.apps.UsersConfig',
     'simulations',
-    
 ]
 
 MIDDLEWARE = [
