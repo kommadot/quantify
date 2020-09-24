@@ -15,6 +15,7 @@ from users.models import User
 from django.db.models import Q
 from django.forms.models import model_to_dict
 from bson.objectid import ObjectId
+from users.serializers import UserSerializer
 @permission_classes((IsAuthenticated,))
 @authentication_classes((JSONWebTokenAuthentication,))
 class SimulationList(APIView):
@@ -24,8 +25,10 @@ class SimulationList(APIView):
 
     def get(self, request):
         user = request.user
-        # simulations = Simulation.objects.filter(user_id = user.id)
-        simulations = Simulation.objects.all()
+        simulations = Simulation.objects.filter(user_id = user.user_id)
+        # simulations = Simulation.objects.all()
+        print(user.user_id)
+        # return Response(UserSerializer(user).data,status=status.HTTP_200_OK)
         return Response(self.serializer_class(simulations,many=True).data,status=status.HTTP_200_OK)
 
 
@@ -33,12 +36,13 @@ class SimulationList(APIView):
         user = request.user
         code = request.data['code']
         name = request.data['name']
+        
         quantity = int(request.data['quantity'])
         price = int(request.data['price'])
-        temp_simulation = Simulation.objects.filter(Q(user_id = user.id) & Q(item_code = code)).first()
+        temp_simulation = Simulation.objects.filter(Q(user_id = user.user_id) & Q(item_code = code)).first()
 
         if not temp_simulation:
-            simulation = Simulation(user_id = user.id, item_code = code, item_name = name, price = price, quantity = quantity)
+            simulation = Simulation(user_id = user.user_id, item_code = code, item_name = name, price = price, quantity = quantity)
             simulation.save()
 
         else:
@@ -62,17 +66,16 @@ class SimulationDetail(mixins.RetrieveModelMixin,
 
     
     def get(self, request, oid):
-        print("===================================================================================")
-        print(oid)
+
         simulation = Simulation.objects.get(_id = ObjectId(oid))
         return Response(self.serializer_class(simulation).data,status=status.HTTP_200_OK)
 
 
     @transaction.atomic
-    def delete(self,request,pk,format=None):
+    def delete(self,request,oid,format=None):
         user =  request.user
         
-        simuation = Simulation.objects.get(id=pk)
+        simulation = Simulation.objects.get(_id = ObjectId(oid))
         sell_price = request.data['sell_price']
 
         user.budget += sell_price * simuation.quantity
@@ -95,7 +98,7 @@ class SimulationBreakdownList(mixins.ListModelMixin,
     
     def get(self, request, *args, **kwargs):
         user = request.user
-        simulations = SimulationBreakdown.objects.filter(user_id = user.id)
+        simulations = SimulationBreakdown.objects.filter(user_id = user.user_id)
         return Response(serializer_class(simulations).data,status=status.HTTP_200_OK)
 
 @permission_classes((IsAuthenticated,))
@@ -106,7 +109,7 @@ class SimulationBreakdownDetail(mixins.RetrieveModelMixin,
     queryset = SimulationBreakdown.objects.all()
     serializer_class = SimulationBreakdownSerializer
     
-    def get(self, request, *args, **kwargs):
+    def get(self, request,oid):
         user = request.user
-        simulationBreakdown = SimulationBreakdown.objects.get(id = pk)
+        simulationBreakdown = SimulationBreakdown.objects.get(_id = ObjectId(oid))
         return Response(serializer_class(simulationBreakdown).data,status=status.HTTP_200_OK)

@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 
     'rest_auth',
     'rest_auth.registration',
-
+    'rest_framework_mongoengine' ,
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

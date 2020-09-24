@@ -5,7 +5,7 @@ from datetime import datetime
 class Simulation(models.Model):
     _id = models.ObjectIdField(primary_key=True)
     # user_id = models.ForeignKey('user.id',on_delete=models.CASCADE)
-    user_id = models.IntegerField()
+    user_id = models.CharField(max_length=64)
     item_code = models.CharField(max_length=6)
     item_name = models.CharField(max_length=20)
     price = models.IntegerField()
@@ -16,7 +16,7 @@ class Simulation(models.Model):
 class SimulationBreakdown(models.Model):
     _id = models.ObjectIdField(primary_key=True)
     # user_id = models.ForeignKey('user.id',on_delete=models.CASCADE)
-    user_id = models.IntegerField()
+    user_id = models.CharField(max_length=64)
     item_code = models.CharField(max_length=6)
     item_name = models.CharField(max_length=20)
     price = models.IntegerField()
