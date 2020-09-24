@@ -13,17 +13,12 @@
           style="width:100%; border-radius:5px"
         >
           <!-- Report Condition Check Boxes -->
-          <div class="col-12 col-lg-5 text-left text-light mt-3 mb-3">
-            <b-form-checkbox-group
-              v-model="selected"
-              :options="options"
-              class="mx-0"
-              value-field="item"
-              text-field="name"
-              disabled-field="notEnabled"
-              @input="optionController"
-            ></b-form-checkbox-group>
-          </div>
+          <v-row justify="space-around">
+            <v-checkbox v-model="lowval" class="mx-2" label="저변동성 전략"></v-checkbox>
+            <v-checkbox v-model="momentum" class="mx-2" label="모멘텀 전략"></v-checkbox>
+            <v-checkbox v-model="value" class="mx-2" label="밸류 전략"></v-checkbox>
+            <v-checkbox v-model="quality" class="mx-2" label="퀄리티 전략"></v-checkbox>
+          </v-row>
 
           <!-- find term calendar -->
           <div class="col-9 col-lg-5 d-flex">
