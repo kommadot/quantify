@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'simulations',
-    'api',
+    
 ]
 
 MIDDLEWARE = [
