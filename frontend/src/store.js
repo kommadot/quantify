@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import http from "@/util/http-common";
 
 Vue.use(Vuex);
 
@@ -87,10 +88,11 @@ export default new Vuex.Store({
     },
 
     getSimulationList(context) {
+      console.log(context.state.token)
       http
         .get('/simulations/simulation', {
           headers: {
-            Authorization: "JWT " + this.token
+            Authorization: "JWT " + context.state.token
           },
         })
         .then(({ data }) => {
@@ -98,11 +100,11 @@ export default new Vuex.Store({
         });
     },
 
-    getSimulationDetail(context) {
+    getSimulationDetail(context, oid) {
       http
-        .get('/simulations/(?P<oid>[a-zA-Z0-9]+)', {
+        .get(`/simulations/${oid}`, {
           headers: {
-            Authorization: "JWT " + this.token
+            Authorization: "JWT " + context.state.token
           },
         })
         .then(({ data }) => {
@@ -111,9 +113,9 @@ export default new Vuex.Store({
     },
     deleteSimulationDetail() {
       http
-        .delete('/simulations/(?P<oid>[a-zA-Z0-9]+)', {
+        .delete('/simulations/oid', {
           headers: {
-            Authorization: "JWT " + this.token
+            Authorization: "JWT " + context.state.token
           },
         })
         .then();
@@ -123,7 +125,7 @@ export default new Vuex.Store({
       http
         .get('/simulations/simulationbreakdown', {
           headers: {
-            Authorization: "JWT " + this.token
+            Authorization: "JWT " + context.state.token
           },
         })
         .then(({ data }) => {
@@ -133,9 +135,9 @@ export default new Vuex.Store({
 
     getSimulationBreakdownDetail(context) {
       http
-        .get('/simulations/(?P<oid>[a-zA-Z0-9]+)', {
+        .get('/simulations/oid', {
           headers: {
-            Authorization: "JWT " + this.token
+            Authorization: "JWT " + context.state.token
           },
         })
         .then(({ data }) => {
