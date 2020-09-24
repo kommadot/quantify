@@ -4,12 +4,15 @@
       <v-icon v-if="value">mdi-view-quilt</v-icon>
 
       <v-icon v-else>mdi-dots-vertical</v-icon>
-    </v-btn> -->
+    </v-btn>-->
 
     <v-spacer />
 
-    <!-- <v-autocomplete
+    <v-autocomplete
+      v-model="searchModel"
       :items="items"
+<<<<<<< HEAD
+=======
       v-model="item"
       :get-label="getLabel"
       :component-item="template"
@@ -19,6 +22,7 @@
     <v-autocomplete
       v-model="searchModel"
       :items="items"
+>>>>>>> cab93380d5c301b706e59fdb3f4f1016a19ed0b5
       :search-input.sync="search"
       hide-no-data
       hide-selected
@@ -31,42 +35,21 @@
     <div class="mx-3" />
 
     <!-- login -->
-    <v-btn
-      v-if="!this.isLoggedIn"
-      class="ml-2"
-      min-width="0"
-      text
-      @click="login"
-      dark
-    >
+    <v-btn v-if="!this.isLoggedIn" class="ml-2" min-width="0" text @click="login" dark>
       <!-- <v-icon>mdi-account</v-icon> -->
       login
     </v-btn>
     <login-form :dialog="dialog" @closeForm="dialog = false" />
 
     <!-- profile -->
-    <v-btn
-      v-if="this.isLoggedIn"
-      class="ml-2"
-      min-width="0"
-      text
-      @click="login"
-      dark
-    >
+    <v-btn v-if="this.isLoggedIn" class="ml-2" min-width="0" text @click="login" dark>
       <!-- <v-icon>mdi-account</v-icon> -->
       profile
     </v-btn>
     <login-form :dialog="dialog" @closeForm="dialog = false" />
 
     <!-- logout -->
-    <v-btn
-      v-if="this.isLoggedIn"
-      class="ml-2"
-      min-width="0"
-      text
-      @click="logout2"
-      dark
-    >
+    <v-btn v-if="this.isLoggedIn" class="ml-2" min-width="0" text @click="logout2" dark>
       <!-- <v-icon>mdi-account-off</v-icon> -->
       logout
     </v-btn>
