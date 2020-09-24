@@ -1,6 +1,9 @@
 from rest_framework import serializers
+
 from rest_framework_jwt.settings import api_settings
 from .models import User
+from bson import ObjectId
+from rest_framework_mongoengine.serializers import DocumentSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -32,4 +35,5 @@ class UserSerializerWithToken(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('token', 'username', 'first_name', 'last_name', 'email', 'password','social_id','platform')
+        fields = ('token', 'user_id','username', 'first_name', 'last_name', 'email', 'password','social_id','platform')
+        # fields= '__all__'
