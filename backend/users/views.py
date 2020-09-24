@@ -10,6 +10,8 @@ from .models import User
 import json
 import jwt
 from .serializers import UserSerializer,UserSerializerWithToken
+import hashlib
+
 # from rest_framework.decorators import api_view, permission_classes, authentication_classes
 # from rest_framework.permissions import IsAuthenticated
 # from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -29,12 +31,16 @@ class GoogleLogin(SocialLoginView):
         json_data = json.loads(google_response.text)
         u = User.objects.filter(social_id=json_data['sub'])
         if not u:
-            user = User(username=json_data['email'].split('@')[0], social_id=json_data['sub'], platform='google',password=json_data['sub'])
+            enc = hashlib.md5()
+            enc.update(json_data['sub'].encode('utf-8'))
+            encText = enc.hexdigest()
+            user = User(user_id=encText,username=json_data['email'].split('@')[0], social_id=json_data['sub'], platform='google',password=json_data['sub'])
             serializer = UserSerializerWithToken(data = model_to_dict(user))
+            
             if serializer.is_valid():
                 serializer.save()
             return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
-        user = User.objects.get(pk = u[0].id)
+        user = User.objects.get(user_id = u[0].user_id)
         user.social_id = 0
         return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
 
@@ -46,12 +52,15 @@ class KakaoLogin(SocialLoginView):
         json_data = json.loads(requests.get(url,headers={'Authorization':'Bearer '+request.data['access_token']}).text)
         u = User.objects.filter(social_id=json_data['id'])
         if not u:
-            user = User(username=json_data['properties']['nickname'], social_id=json_data['id'], platform='kakao',password=json_data['id'])
+            enc = hashlib.md5()
+            enc.update(json_data['id'].encode('utf-8'))
+            encText = enc.hexdigest()
+            user = User(user_id = encText, username=json_data['properties']['nickname'], social_id=json_data['id'], platform='kakao',password=json_data['id'])
             serializer = UserSerializerWithToken(data = model_to_dict(user))
             if serializer.is_valid():
                 serializer.save()
             return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
-        user = User.objects.get(pk = u[0].id)
+        user = User.objects.get(user_id = u[0].user_id)
         user.social_id = 0
         return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
     

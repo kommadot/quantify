@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 
     'rest_auth',
     'rest_auth.registration',
-
+    'rest_framework_mongoengine' ,
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -104,7 +104,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'quantify',
+        'NAME': 'quantify2',
         'CLIENT': {
            'host': 'j3a105.p.ssafy.io',
         }
