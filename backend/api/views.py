@@ -18,11 +18,12 @@ class Price(APIView):
 
 
 @permission_classes((AllowAny,))
-class StockAllPrice(APIView):
-    def get(self,request):
-        sp = StockPrice.objects.all()
-        return Response(StockPriceSerializer(sp,many=True).data,status=status.HTTP_200_OK)
+class StockPriceDetail(APIView):
+    def get(self,request,code):
+        sp = StockPrice.objects.get(code=code)
+        return Response(StockPriceSerializer(sp).data,status=status.HTTP_200_OK)
         
+
 @permission_classes((AllowAny,))
 class CompanyAll(APIView):
     def get(self,request):

@@ -41,8 +41,8 @@ def get_price_1y(item_name,i):
     #일자/시가/고가/저가/종가/거래량
     df_col = ['date','s','e','u','r','q']
     rows = []
-    file_data = OrderedDict()
-    daterows = OrderedDict()
+    file_data = {}
+    daterows = []
     
     for node in a.find_all('item'):
         rows.append(node['data'].split("|"))
@@ -55,17 +55,20 @@ def get_price_1y(item_name,i):
             # print(line)
             # str(line)close,diff,open,high,low,volume
             date = line[0][:4] + '-' + line[0][4:6] + '-' + line[0][6:]
-            daterows[date] = {"open": line[1], "high":line[2], "low": line[3], "close": line[4], "volume": line[5]}
+            # daterows[date] = {"open": line[1], "high":line[2], "low": line[3], "close": line[4], "volume": line[5]}
+            daterows.append({"time": date, "open": line[1], "high":line[2], "low": line[3], "close": line[4], "volume": line[5]})
         file_data['data'] = daterows
         file_data["code"] = code
         file_data['id']=i
+        # print(file_data)
         json.dump(file_data, make_file, ensure_ascii=False, indent="\t")
     with open('as.json') as json_file:
         json_data = json.load(json_file)
     # json_object = json_data["2020-09-16"]
-    mycol.insert_one(json_data)
+    mycol.insert_one(file_data)
 
 
-for i in range(len(code_df)):
+# for i in range(len(code_df)):
+for i in range(10):
     # print(i)
     get_price_1y(code_df.name[i], i)
