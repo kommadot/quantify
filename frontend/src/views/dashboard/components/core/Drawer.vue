@@ -78,22 +78,22 @@ export default {
       {
         icon: "mdi-view-dashboard",
         title: "전략필터",
-        to: "/dashboard",
+        to: "/Strategy",
       },
       {
         title: "모의투자",
         icon: "mdi-chart-line",
-        to: "/tables/regular-tables",
+        to: "/Simulation",
       },
       {
         title: "백테스트",
         icon: "mdi-format-font",
-        to: "/components/typography",
+        to: "/BackTest",
       },
       {
         title: "커뮤니티",
         icon: "mdi-chart-bubble",
-        to: "/components/icons",
+        to: "/Community",
       },
     ],
   }),
