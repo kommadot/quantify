@@ -8,7 +8,20 @@
 
     <v-spacer />
 
-    <v-text-field :label="$t('search')" color="primary" hide-details style="max-width: 500px;">
+    <!-- <v-autocomplete
+      :items="items"
+      v-model="item"
+      :get-label="getLabel"
+      :component-item="template"
+      @update-items="updateItems"
+    ></v-autocomplete>-->
+    <v-text-field
+      :label="$t('기업 검색')"
+      color="primary"
+      v-model="search"
+      hide-details
+      style="max-width: 500px;"
+    >
       <template v-if="$vuetify.breakpoint.mdAndUp" v-slot:append-outer>
         <v-btn class="mt-n2" elevation="1" fab small>
           <v-icon>mdi-magnify</v-icon>
@@ -43,6 +56,7 @@
 <script>
 import LoginForm from "@/components/base/LoginForm.vue";
 import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
+import UserApi from "../../../../api/CompanyApi";
 
 export default {
   name: "DashboardCoreAppBar",
@@ -59,11 +73,48 @@ export default {
     return {
       dialog: false,
       login_profile: "login",
+      keyword: "",
+      users: [],
+      items: [],
+      active: [],
+      temp: [],
+      open: [1, 2],
+      search: null,
     };
+  },
+  created() {
+    let data = {
+      token: localStorage.getItem("token"),
+    };
+
+    CompanyApi.findComAll(
+      data,
+      (res) => {
+        this.temp = res.data;
+        for (var i = 0; i < this.temp.length; i++) {
+          this.items.push({
+            id: i + 1,
+            name: this.temp[i].userId,
+          });
+        }
+      },
+      (error) => {
+        alert(error);
+      }
+    );
   },
   computed: {
     ...mapState(["drawer"]),
     ...mapGetters(["isLoggedIn"]),
+    filter() {
+      return this.caseSensitive
+        ? (item, search, textKey) => item[textKey].indexOf(search) > -1
+        : undefined;
+    },
+    selected() {
+      // 여기 눌리면 오는 곳
+      return "안녕하세요";
+    },
   },
 
   methods: {
@@ -86,6 +137,43 @@ export default {
         this.$router.push("/");
       }
     },
+    // getLabel(item) {
+    //   return item.name;
+    // },
+    // updateItems(text) {
+    //   yourGetItemsMethod(text).then((response) => {
+    //     this.items = response;
+    //   });
+    // },
+    onChange(selection) {
+      var userId = null;
+
+      for (var i = 0; i < this.items.length; i++) {
+        if (this.items[i].id === selection[0]) {
+          userId = this.items[i].name;
+          break;
+        }
+      }
+      this.$router.push("/ItemTemplate/");
+    },
+  },
+  watch: {
+    keyword: function (v) {
+      if (v.length > 0) {
+        CompanyApi.findComBykeyword(
+          v,
+          (response) => {
+            this.users = response.data;
+          },
+          (error) => {
+            alert("기업 목록 조회에 실패했습니다.");
+          }
+        );
+      } else {
+        this.users = [];
+      }
+    },
+    selected: "randomAvatar",
   },
 };
 </script>

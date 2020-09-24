@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     'strategy',
+    'api',
 
     'users.apps.UsersConfig',
     'simulations',
@@ -104,7 +105,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'quantify',
+        'NAME': 'quantify2',
         'CLIENT': {
            'host': 'j3a105.p.ssafy.io',
         }

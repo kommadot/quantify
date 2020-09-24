@@ -7,5 +7,7 @@ urlpatterns = [
     path('strategy/', include('strategy.urls')),
     path('simulations/',include('simulations.urls')),
     path('login/', obtain_jwt_token),
-    re_path(r'^price/(?P<code>[0-9]+)$',views.StockPrice.as_view())
+    re_path(r'^price/(?P<code>[0-9]+)$',views.StockPrice.as_view()),
+    path('company/', views.Companylist),
+    path('{keyword}/', views.findCompany),
 ]
