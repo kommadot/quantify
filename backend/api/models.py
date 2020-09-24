@@ -6,9 +6,20 @@ class Stock(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=6)
 
+class StockRow(models.Model):
+    time = models.CharField(max_length=100)
+    open = models.IntegerField()
+    high = models.IntegerField()
+    low = models.IntegerField()
+    close = models.IntegerField()
+    volume = models.IntegerField()
+
+    class Meta:
+        abstract = True
+
 class StockPrice(models.Model):
     code = models.CharField(max_length=6)
-    data = models.JSONField()
+    data = models.ArrayField(model_container=StockRow)
 
 class Company(models.Model):
     name = models.CharField(max_length=200)
