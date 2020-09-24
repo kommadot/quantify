@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import Chart from '@/views/dashboard/component/Chart'
 Vue.use(Router)
 
 export default new Router({
@@ -45,7 +45,11 @@ export default new Router({
           component: () => import('@/views/dashboard/tables/RegularTables'),
         },
         // Maps
-
+        {
+          name:"Chart",
+          path:'chart/:code',
+          component:Chart,
+        }
         // Upgrade
 
       ],

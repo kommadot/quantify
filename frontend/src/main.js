@@ -14,7 +14,8 @@ Vue.use(Vuex)
 Vue.use(GSignInButton)
 new Vue({
   created() {
-    Kakao.init('e4263be1d8a351bad145638cb6ade0bd')
+    Kakao.init('e4263be1d8a351bad145638cb6ade0bd'),
+    this.$store.dispatch("getCompany")
   },
   router,
   store,
