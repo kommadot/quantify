@@ -9,7 +9,8 @@
     app
     width="260"
     v-bind="$attrs"
-    permanent="true"
+    
+    permanent
   >
     <template v-slot:img="props">
       <v-img :gradient="`to bottom, ${barColor}`" v-bind="props" />
@@ -29,7 +30,7 @@
 
     <v-divider class="mb-2" />
 
-    <v-list expand nav>
+    <v-list expand nav >
       <!-- Style cascading bug  -->
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
@@ -40,6 +41,7 @@
             v-if="item.children"
             :key="`group-${i}`"
             :item="item"
+            
           >
             <!--  -->
           </base-item-group>

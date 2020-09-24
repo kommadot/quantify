@@ -2,11 +2,10 @@
   <v-container id="user-profile" fluid tag="section">
     <v-row justify="center">
       <v-col cols="12">
-        <base-material-card>
+        <base-material-card color="#1F4E70">
           <template v-slot:heading>
-            <div class="display-2 font-weight-light">Edit Profile</div>
+            <div class="display-2 font-weight-light">Profile</div>
 
-            <div class="subtitle-1 font-weight-light">Complete your profile</div>
           </template>
 
           <v-form>
@@ -21,6 +20,8 @@
                     class="purple-input"
                     label="User Name"
                     v-model="userProfile.username"
+                    color="#1F4E70"
+                    readonly
                   />
                 </v-col>
 
@@ -29,11 +30,13 @@
                     class="purple-input"
                     label="Login Platform"
                     v-model="userProfile.platform"
+                    readonly
+                    color="#1F4E70"
                   />
                 </v-col>
 
                 <v-col cols="12">
-                  <v-text-field class="purple-input" label="Budget" v-model="userProfile.budget" />
+                  <v-text-field class="purple-input" label="Budget" v-model="userProfile.budget" color="#1F4E70" readonly/>
                 </v-col>
 
                 <!-- <v-col cols="12" md="6">
@@ -65,7 +68,7 @@
                 </v-col>-->
 
                 <v-col cols="12" class="text-right">
-                  <v-btn color="success" class="mr-0">Update Profile</v-btn>
+                  <v-btn color="#1F4E70" class="mr-0">Update Profile</v-btn>
                 </v-col>
               </v-row>
             </v-container>

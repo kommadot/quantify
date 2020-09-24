@@ -47,7 +47,7 @@
 <script>
 import LoginForm from "@/components/base/LoginForm.vue";
 import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
-import UserApi from "../../../../api/CompanyApi";
+
 
 export default {
   name: "DashboardCoreAppBar",
@@ -69,25 +69,7 @@ export default {
     };
   },
   created() {
-    let data = {
-      token: localStorage.getItem("token"),
-    };
 
-    CompanyApi.findComAll(
-      data,
-      (res) => {
-        this.temp = res.data;
-        for (var i = 0; i < this.temp.length; i++) {
-          this.items.push({
-            id: i + 1,
-            name: this.temp[i].userId,
-          });
-        }
-      },
-      (error) => {
-        alert(error);
-      }
-    );
   },
   computed: {
     ...mapState(["drawer", "company"]),

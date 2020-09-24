@@ -92,7 +92,7 @@ export default new Vuex.Store({
     },
 
     getSimulationList(context) {
-      console.log(context.state.token)
+
       http
         .get('/simulations/simulation', {
           headers: {

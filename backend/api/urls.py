@@ -10,4 +10,5 @@ urlpatterns = [
     re_path(r'^price/(?P<code>[0-9]+)$',views.Price.as_view()),
     re_path(r'^stockprice/(?P<code>[\w\-]+)$',views.StockPriceDetail.as_view()),
     path('company',views.CompanyAll.as_view())
+    
 ]

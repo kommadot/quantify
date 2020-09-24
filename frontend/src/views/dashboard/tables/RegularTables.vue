@@ -102,11 +102,7 @@
         </tbody>
       </v-simple-table>
     </base-material-card>
-    <v-btn small @click="getSimulationList">list</v-btn>
-    <v-btn small @click="sadf">update</v-btn>
-    <div v-for="s in simulationlist" :key="s._id">
-      <p>{{ s }}</p>
-    </div>
+
   </v-container>
 </template>
 <script>
@@ -154,6 +150,9 @@ export default {
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
+  },
+  created(){
+    this.getSimulationList()
   },
   /*
           item_name: "",
@@ -218,7 +217,7 @@ export default {
           this.stocks.push(a);
         });
       });
-      console.log(this.stocks);
+
     },
   },
 };

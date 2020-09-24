@@ -22,7 +22,7 @@ export default {
       lineSeries: null,
       // lineSeries: [],
       //   code1: "155660",
-      temp_obj: [],
+      temp_obj: [], 
     };
   },
   mounted() {
@@ -54,8 +54,10 @@ export default {
         },
       }
     );
-    this.lineSeries = this.chart.addCandlestickSeries();
-
+    this.lineSeries = this.chart.addCandlestickSeries({		upColor: '#FE2A30',
+		downColor: '#226FD8',
+		wickUpColor: '#FE2A30',
+		wickDownColor: '#226FD8',borderVisible: false,});
     this.getStockPrice(this.$route.params.code);
   },
 
