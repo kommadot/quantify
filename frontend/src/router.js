@@ -4,17 +4,23 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
       component: () => import('@/views/dashboard/Index'),
       children: [
+        // Main
+        {
+          name: 'Main',
+          path: '',
+          component: () => import('@/views/dashboard/Main'),
+        },
         // Dashboard
         {
           name: 'Dashboard',
-          path: '',
+          path: 'dashboard',
           component: () => import('@/views/dashboard/Dashboard'),
         },
         // Pages
