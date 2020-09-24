@@ -27,8 +27,22 @@
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
       </template>
-    </v-text-field>
+    </v-text-field> -->
+        <v-autocomplete
+          v-model="searchModel"
+          :items="items"
+          :search-input.sync="search"
 
+          hide-no-data
+          hide-selected
+          item-text="name"
+          dark
+          placeholder="종목 입력"
+          prepend-icon="mdi-chart-line-variant"
+          return-object
+          
+          
+        ></v-autocomplete>
     <div class="mx-3" />
 
     <!-- login -->
@@ -88,19 +102,15 @@ export default {
     value: {
       type: Boolean,
       default: false,
+
     },
   },
   data() {
     return {
       dialog: false,
       login_profile: "login",
-      keyword: "",
-      users: [],
-      items: [],
-      active: [],
-      temp: [],
-      open: [1, 2],
-      search: null,
+            searchModel:"",
+      search:"",
     };
   },
   created() {
@@ -125,17 +135,18 @@ export default {
     );
   },
   computed: {
-    ...mapState(["drawer"]),
+    ...mapState(["drawer","company"]),
     ...mapGetters(["isLoggedIn"]),
-    filter() {
-      return this.caseSensitive
-        ? (item, search, textKey) => item[textKey].indexOf(search) > -1
-        : undefined;
+    items () {
+      return this.company.map(entry => {
+        const Description = entry.name.length > this.descriptionLimit
+          ? entry.name.slice(0, this.descriptionLimit) + '...'
+          : entry.name
+
+        return Object.assign({}, entry)
+      })
     },
-    selected() {
-      // 여기 눌리면 오는 곳
-      return "안녕하세요";
-    },
+
   },
 
   methods: {
@@ -158,43 +169,15 @@ export default {
         this.$router.push("/");
       }
     },
-    // getLabel(item) {
-    //   return item.name;
-    // },
-    // updateItems(text) {
-    //   yourGetItemsMethod(text).then((response) => {
-    //     this.items = response;
-    //   });
-    // },
-    onChange(selection) {
-      var userId = null;
 
-      for (var i = 0; i < this.items.length; i++) {
-        if (this.items[i].id === selection[0]) {
-          userId = this.items[i].name;
-          break;
-        }
-      }
-      this.$router.push("/ItemTemplate/");
-    },
   },
-  watch: {
-    keyword: function (v) {
-      if (v.length > 0) {
-        CompanyApi.findComBykeyword(
-          v,
-          (response) => {
-            this.users = response.data;
-          },
-          (error) => {
-            alert("기업 목록 조회에 실패했습니다.");
-          }
-        );
-      } else {
-        this.users = [];
+  watch:{
+    searchModel(value){
+      if(typeof(value)=="object"){
+        this.$router.push({name:"Chart",params:{code:value.code}})
       }
     },
-    selected: "randomAvatar",
-  },
+
+  }
 };
 </script>

@@ -1,7 +1,7 @@
-import Vue from "vue";
-import Router from "vue-router";
-
-Vue.use(Router);
+import Vue from 'vue'
+import Router from 'vue-router'
+import Chart from '@/views/dashboard/component/Chart'
+Vue.use(Router)
 
 export default new Router({
   mode: 'history',
@@ -56,7 +56,11 @@ export default new Router({
           component: () => import("@/views/Stock")
         }
         // Maps
-
+        {
+          name:"Chart",
+          path:'chart/:code',
+          component:Chart,
+        }
         // Upgrade
       ]
     }

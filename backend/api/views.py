@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from . import price
 import json
-from .serialization import StockPriceSerializer,StockSerializer
+from .serialization import StockPriceSerializer,StockSerializer,CompanySerializer
 from .models import StockPrice,Stock,Company
 # Create your views here.
 @permission_classes((AllowAny,))
