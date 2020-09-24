@@ -1,16 +1,29 @@
 <template>
   <v-app-bar id="app-bar" absolute app color="transparent" flat height="75">
-    <v-btn class="mr-3" elevation="1" fab small @click="setDrawer(!drawer)">
+    <!-- <v-btn class="mr-3" elevation="1" fab small @click="setDrawer(!drawer)">
       <v-icon v-if="value">mdi-view-quilt</v-icon>
 
       <v-icon v-else>mdi-dots-vertical</v-icon>
-    </v-btn>
+    </v-btn> -->
 
     <v-spacer />
 
-    <!-- <v-text-field :label="$t('search')" color="primary" hide-details style="max-width: 500px;">
+    <!-- <v-autocomplete
+      :items="items"
+      v-model="item"
+      :get-label="getLabel"
+      :component-item="template"
+      @update-items="updateItems"
+    ></v-autocomplete>-->
+    <v-text-field
+      :label="$t('기업 검색')"
+      color="primary"
+      v-model="search"
+      hide-details
+      style="max-width: 500px;"
+    >
       <template v-if="$vuetify.breakpoint.mdAndUp" v-slot:append-outer>
-        <v-btn class="mt-n2" elevation="1" fab small>
+        <v-btn class="mt-n2" elevation="1" fab small @click="searchStock">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
       </template>
@@ -33,21 +46,42 @@
     <div class="mx-3" />
 
     <!-- login -->
-    <v-btn v-if="!this.isLoggedIn" class="ml-2" min-width="0" text @click="login" dark>
+    <v-btn
+      v-if="!this.isLoggedIn"
+      class="ml-2"
+      min-width="0"
+      text
+      @click="login"
+      dark
+    >
       <!-- <v-icon>mdi-account</v-icon> -->
       login
     </v-btn>
-    <login-form :dialog="dialog" @closeForm="dialog=false" />
+    <login-form :dialog="dialog" @closeForm="dialog = false" />
 
     <!-- profile -->
-    <v-btn v-if="this.isLoggedIn" class="ml-2" min-width="0" text @click="login" dark>
+    <v-btn
+      v-if="this.isLoggedIn"
+      class="ml-2"
+      min-width="0"
+      text
+      @click="login"
+      dark
+    >
       <!-- <v-icon>mdi-account</v-icon> -->
       profile
     </v-btn>
-    <login-form :dialog="dialog" @closeForm="dialog=false" />
+    <login-form :dialog="dialog" @closeForm="dialog = false" />
 
     <!-- logout -->
-    <v-btn v-if="this.isLoggedIn" class="ml-2" min-width="0" text @click="logout2" dark>
+    <v-btn
+      v-if="this.isLoggedIn"
+      class="ml-2"
+      min-width="0"
+      text
+      @click="logout2"
+      dark
+    >
       <!-- <v-icon>mdi-account-off</v-icon> -->
       logout
     </v-btn>
@@ -57,6 +91,7 @@
 <script>
 import LoginForm from "@/components/base/LoginForm.vue";
 import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
+import UserApi from "../../../../api/CompanyApi";
 
 export default {
   name: "DashboardCoreAppBar",
@@ -77,6 +112,27 @@ export default {
             searchModel:"",
       search:"",
     };
+  },
+  created() {
+    let data = {
+      token: localStorage.getItem("token"),
+    };
+
+    CompanyApi.findComAll(
+      data,
+      (res) => {
+        this.temp = res.data;
+        for (var i = 0; i < this.temp.length; i++) {
+          this.items.push({
+            id: i + 1,
+            name: this.temp[i].userId,
+          });
+        }
+      },
+      (error) => {
+        alert(error);
+      }
+    );
   },
   computed: {
     ...mapState(["drawer","company"]),

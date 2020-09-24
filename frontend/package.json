@@ -13,8 +13,12 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@syncfusion/ej2-charts": "*",
+    "@syncfusion/ej2-grids": "^18.2.59",
+    "@syncfusion/ej2-vue-charts": "^18.2.58",
     "axios": "^0.20.0",
     "core-js": "^3.6.2",
+    "v-autocomplete": "^1.8.2",
     "vue": "^2.6.11",
     "vue-google-signin-button": "^1.0.4",
     "vue-i18n": "^8.15.3",
