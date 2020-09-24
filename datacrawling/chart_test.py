@@ -25,8 +25,8 @@ def insert_item_many(mongo, datas, db_name=None, collection_name=None):
 
 # myclient = pymongo.MongoClient("mongodb://127.0.0.1:27017/")
 myclient = pymongo.MongoClient("mongodb://j3a105.p.ssafy.io:27017/")
-mydb = myclient.testdb
-mycol = mydb.testdb
+mydb = myclient.quantify2
+mycol = mydb.api_stockprice
 code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0]
 code_df.종목코드 = code_df.종목코드.map('{:06d}'.format)
 code_df = code_df[['회사명', '종목코드']]
@@ -49,7 +49,7 @@ def get_price_1y(item_name,i):
 
     df = pd.DataFrame(rows,columns=df_col)
     # print(df)
-    with open(item_name+'.json', 'w', encoding="utf-8") as make_file:
+    with open('as.json', 'w', encoding="utf-8") as make_file:
 
         for line in rows:
             # print(line)
@@ -58,8 +58,9 @@ def get_price_1y(item_name,i):
             daterows[date] = {"open": line[1], "high":line[2], "low": line[3], "close": line[4], "volume": line[5]}
         file_data['data'] = daterows
         file_data["code"] = code
+        file_data['id']=i
         json.dump(file_data, make_file, ensure_ascii=False, indent="\t")
-    with open(item_name + '.json') as json_file:
+    with open('as.json') as json_file:
         json_data = json.load(json_file)
     # json_object = json_data["2020-09-16"]
     mycol.insert_one(json_data)

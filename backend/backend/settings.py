@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     'strategy',
+    'api',
 
     'users.apps.UsersConfig',
     'simulations',
