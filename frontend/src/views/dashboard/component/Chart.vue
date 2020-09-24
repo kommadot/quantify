@@ -1,5 +1,5 @@
 <template>
-  <v-container style="width: 100%; height: 100%">
+  <v-container fill-height>
     <v-row style="width: 100%; height: 100%">
       <div
         id="home"
@@ -55,16 +55,16 @@ export default {
       }
     );
     this.lineSeries = this.chart.addCandlestickSeries();
-    this.lineSeries.setData([temp_obj]);
+
+    this.getStockPrice(this.$route.params.code);
   },
+
   methods: {
     getStockPrice(code) {
-      //   code = this.code1;
+
       http.get(`/stockprice/${code}`).then((res) => {
-        console.log(JSON.parse(res.data.data));
+
         this.temp_obj = JSON.parse(res.data.data);
-        // alert(typeof JSON.parse(res.data.data));
-        // this.lineSeries.push(JSON.parse(res.data.data))
       });
     },
   },
@@ -73,8 +73,7 @@ export default {
       this.lineSeries.setData(value);
     },
     $route(value) {
-      //   alert(value);
-      console.log(value);
+
       this.getStockPrice(value.params.code);
     },
   },
