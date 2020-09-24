@@ -11,18 +11,6 @@
     <v-autocomplete
       v-model="searchModel"
       :items="items"
-<<<<<<< HEAD
-=======
-      v-model="item"
-      :get-label="getLabel"
-      :component-item="template"
-      @update-items="updateItems"
-    ></v-autocomplete>-->
-
-    <v-autocomplete
-      v-model="searchModel"
-      :items="items"
->>>>>>> cab93380d5c301b706e59fdb3f4f1016a19ed0b5
       :search-input.sync="search"
       hide-no-data
       hide-selected
