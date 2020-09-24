@@ -3,17 +3,48 @@
     <v-container fluid>
       <v-row>
         <!-- checkboxes -->
-        <v-col cols="1.5">
-          <v-checkbox v-model="selected" label="저변동성 전략" value="lowvar" dark></v-checkbox>
+        <!-- <v-col cols="1.5">
+          <v-checkbox
+            v-model="checked"
+            label="저변동성 전략"
+            value="lowvar"
+            dark
+          ></v-checkbox>
         </v-col>
         <v-col cols="1.5">
-          <v-checkbox v-model="selected" label="모멘텀 전략" value="momentum" dark></v-checkbox>
+          <v-checkbox
+            v-model="checked"
+            label="모멘텀 전략"
+            value="momentum"
+            dark
+          ></v-checkbox>
         </v-col>
         <v-col cols="1.5">
-          <v-checkbox v-model="selected" label="퀄리티 전략" value="quality" dark></v-checkbox>
+          <v-checkbox
+            v-model="checked"
+            label="퀄리티 전략"
+            value="quality"
+            dark
+          ></v-checkbox>
         </v-col>
         <v-col cols="1.5">
-          <v-checkbox v-model="selected" label="밸류 전략" value="value" dark></v-checkbox>
+          <v-checkbox
+            v-model="checked"
+            label="밸류 전략"
+            value="value"
+            dark
+          ></v-checkbox>
+        </v-col> -->
+
+        <v-col cols="6">
+          <v-overflow-btn
+            class="my-2"
+            v-model="dropdownselected"
+            :items="dropdown_font"
+            label="전략 선택"
+            target="#dropdown-example"
+            dark
+          ></v-overflow-btn>
         </v-col>
 
         <!-- calendar -->
@@ -29,9 +60,19 @@
             dark
           >
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field v-model="date1" label="시작일" readonly v-bind="attrs" v-on="on" dark></v-text-field>
+              <v-text-field
+                v-model="date1"
+                label="시작일"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                dark
+              ></v-text-field>
             </template>
-            <v-date-picker v-model="date1" @input="menu1 = false"></v-date-picker>
+            <v-date-picker
+              v-model="date1"
+              @input="menu1 = false"
+            ></v-date-picker>
           </v-menu>
         </v-col>
         <!-- enddate -->
@@ -56,17 +97,21 @@
                 dark
               ></v-text-field>
             </template>
-            <v-date-picker v-model="date2" @input="menu2 = false"></v-date-picker>
+            <v-date-picker
+              v-model="date2"
+              @input="menu2 = false"
+            ></v-date-picker>
           </v-menu>
         </v-col>
       </v-row>
       <v-data-table
         :headers="headers"
-        :items="valuetable"
+        :items="filtertable"
         :sort-by="selected"
         :sort-desc="[false, true]"
         multi-sort
         class="elevation-1"
+        dark
       ></v-data-table>
     </v-container>
   </v-container>
@@ -80,26 +125,21 @@ export default {
 
   data() {
     return {
-      headers: [
-        {
-          text: "순위",
-          align: "start",
-          sortable: false,
-          value: "rank",
-        },
-        { text: "기업명", value: "name" },
-        { text: "PER", value: "per" },
-        { text: "PSR", value: "psr" },
-        { text: "PBR", value: "pbr" },
-        { text: "Score", value: "score" },
+      dropdown_font: [
+        "저변동성 전략",
+        "모멘텀 전략",
+        "퀄리티 전략",
+        "밸류 전략",
       ],
+      dropdownselected: "",
+      headers: [],
       lowvartable: [],
       momentable: [],
       riskmomentable: [],
       qualitytable: [],
       valuetable: [],
       filtertable: [],
-      selected: [],
+      checked: [],
       menu1: false,
       menu2: false,
       date1: new Date().toISOString().substr(0, 10),
@@ -107,9 +147,64 @@ export default {
     };
   },
   watch: {
-    selected(value) {
-      if (value.includes("lowvar")) {
-        lowvartable;
+    dropdownselected(value) {
+      if (value == "저변동성 전략") {
+        this.headers = [
+          {
+            text: "순위",
+            align: "start",
+            sortable: false,
+            value: "rank",
+          },
+          { text: "기업명", value: "name" },
+          { text: "변동성", value: "variability" },
+        ];
+        this.filtertable = this.lowvartable;
+      }
+
+      if (value == "모멘텀 전략") {
+        this.headers = [
+          {
+            text: "순위",
+            align: "start",
+            sortable: false,
+            value: "rank",
+          },
+          { text: "기업명", value: "name" },
+          { text: "모멘텀", value: "momentum" },
+        ];
+        this.filtertable = this.momentable;
+      }
+
+      if (value == "퀄리티 전략") {
+        this.headers = [
+          {
+            text: "순위",
+            align: "start",
+            sortable: false,
+            value: "rank",
+          },
+          { text: "기업명", value: "name" },
+          { text: "퀄리티 합계", value: "sum" },
+        ];
+        this.filtertable = this.qualitytable;
+      }
+
+      if (value == "밸류 전략") {
+        this.headers = [
+          {
+            text: "순위",
+            align: "start",
+            sortable: false,
+            value: "rank",
+          },
+          { text: "기업명", value: "name" },
+          { text: "PER", value: "per" },
+          { text: "PSR", value: "psr" },
+          { text: "PBR", value: "pbr" },
+          { text: "F-Score", value: "score" },
+        ];
+        this.filtertable = this.valuetable;
       }
     },
   },
@@ -118,7 +213,7 @@ export default {
       const self = this;
       let idx = 1;
       http
-        .get("/strategy/getlowvar")
+        .get("/strategy/lowvar")
         .then(function (res) {
           self.lowvartable = [];
           for (let i of res.data) {
@@ -138,7 +233,7 @@ export default {
       const self = this;
       let idx = 1;
       http
-        .get("/strategy/getmomen")
+        .get("/strategy/momen")
         .then(function (res) {
           self.momentable = [];
           for (let i of res.data) {
@@ -158,7 +253,7 @@ export default {
       const self = this;
       let idx = 1;
       http
-        .get("/strategy/getriskmomen")
+        .get("/strategy/riskmomen")
         .then(function (res) {
           self.riskmomentable = [];
           for (let i of res.data) {
@@ -178,7 +273,7 @@ export default {
       const self = this;
       let idx = 1;
       http
-        .get("/strategy/getquality")
+        .get("/strategy/quality")
         .then(function (res) {
           self.qualitytable = [];
           for (let i of res.data) {
@@ -198,7 +293,7 @@ export default {
       let self = this;
       let idx = 1;
       http
-        .get("/strategy/getvalue")
+        .get("/strategy/value")
         .then(function (res) {
           self.valuetable = [];
           console.log(res.data);

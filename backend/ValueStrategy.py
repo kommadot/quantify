@@ -19,11 +19,11 @@ code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
 
 value_df = pd.DataFrame(columns=['종목', 'PER', 'PBR', 'PSR'])
 
-for cnt in range(20):
+for cnt in range(50):
     item_name = code_df.loc[cnt, 'name']
     code = code_df.loc[cnt, 'code']
+    fs = FS(code)
     try:
-        fs = FS(code)
         cnt += 1
         print(item_name)
         value_df.loc[cnt, ['종목']] = item_name

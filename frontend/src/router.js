@@ -19,9 +19,9 @@ export default new Router({
         },
         // Dashboard
         {
-          name: 'Dashboard',
-          path: 'dashboard',
-          component: () => import('@/views/dashboard/Dashboard'),
+          name: 'Strategy',
+          path: 'Strategy',
+          component: () => import('@/views/dashboard/Strategy'),
         },
         // Pages
         {
@@ -35,20 +35,20 @@ export default new Router({
           component: () => import("@/views/dashboard/component/Notifications")
         },
         {
-          name: "Icons",
-          path: "components/icons",
-          component: () => import("@/views/dashboard/component/Icons")
+          name: "Community",
+          path: "Community",
+          component: () => import("@/views/dashboard/component/Community")
         },
         {
-          name: "Typography",
-          path: "components/typography",
-          component: () => import("@/views/dashboard/component/Typography")
+          name: "BackTest",
+          path: "BackTest",
+          component: () => import("@/views/dashboard/component/BackTest")
         },
         // Tables
         {
-          name: "Regular Tables",
-          path: "tables/regular-tables",
-          component: () => import("@/views/dashboard/tables/RegularTables")
+          name: "Simulation",
+          path: "Simulation",
+          component: () => import("@/views/dashboard/tables/Simulation")
         },
         {
           name: "Stock Data",
