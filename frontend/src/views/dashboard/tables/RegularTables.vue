@@ -166,24 +166,24 @@ export default {
   */
   methods: {
     ...mapActions(["getSimulationList"]),
-    getStocks() {
-      for (s in simulationlist) {
-        let cur_price = 0;
-        http.get("/api/price" + s.item_code).then((res) => {
-          cur_price = res.data;
-        });
-        const a = {};
-        a["quantity"] = s.quantity;
-        a["price"] = s.price;
-        a["profit"] = s.quantity * cur_price - s.quantity * s.price;
-        a["rate"] = ((cur_price - s.price) / s.price) * 100;
-        a["cur_price"] = cur_price;
-        a["item_name"] = s.name;
-        a["eval"] = cur_price * s.quantity;
-        this.stocks.push(a);
-      }
-      console.log(this.stocks);
-    },
+    // getStocks() {
+    //   for (s in simulationlist) {
+    //     let cur_price = 0;
+    //     http.get("/api/price" + s.item_code).then((res) => {
+    //       cur_price = res.data;
+    //     });
+    //     const a = {};
+    //     a["quantity"] = s.quantity;
+    //     a["price"] = s.price;
+    //     a["profit"] = s.quantity * cur_price - s.quantity * s.price;
+    //     a["rate"] = ((cur_price - s.price) / s.price) * 100;
+    //     a["cur_price"] = cur_price;
+    //     a["item_name"] = s.name;
+    //     a["eval"] = cur_price * s.quantity;
+    //     this.stocks.push(a);
+    //   }
+    //   console.log(this.stocks);
+    // },
     setupdate() {
       this.stocks.forEach((el) => {
         http.get("/price/" + el.item_code).then((res) => {

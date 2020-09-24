@@ -9,6 +9,7 @@
     app
     width="260"
     v-bind="$attrs"
+    permanent="true"
   >
     <template v-slot:img="props">
       <v-img :gradient="`to bottom, ${barColor}`" v-bind="props" />
@@ -20,7 +21,7 @@
       <v-list-item>
         <v-img
           src="@/assets/green.png"
-          style="border-radius:50px;cursor: pointer"
+          style="border-radius: 50px; cursor: pointer"
           @click="$router.push('/')"
         />
       </v-list-item>
@@ -34,11 +35,17 @@
       <div />
 
       <template v-for="(item, i) in computedItems">
-        <base-item-group v-if="item.children" :key="`group-${i}`" :item="item">
-          <!--  -->
-        </base-item-group>
+        <template v-if="check(item)">
+          <base-item-group
+            v-if="item.children"
+            :key="`group-${i}`"
+            :item="item"
+          >
+            <!--  -->
+          </base-item-group>
 
-        <base-item v-else :key="`item-${i}`" :item="item" />
+          <base-item v-else :key="`item-${i}`" :item="item" />
+        </template>
       </template>
       <div />
     </v-list>
@@ -47,7 +54,7 @@
 
 <script>
 // Utilities
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "DashboardCoreDrawer",
@@ -62,14 +69,18 @@ export default {
   data: () => ({
     items: [
       {
-        icon: "mdi-view-dashboard",
-        title: "전략필터",
+        icon: "mdi-trackpad",
+        title: "메인",
         to: "/",
       },
-
+      {
+        icon: "mdi-view-dashboard",
+        title: "전략필터",
+        to: "/dashboard",
+      },
       {
         title: "모의투자",
-        icon: "mdi-clipboard-outline",
+        icon: "mdi-chart-line",
         to: "/tables/regular-tables",
       },
       {
@@ -87,6 +98,7 @@ export default {
 
   computed: {
     ...mapState(["barColor", "barImage"]),
+    ...mapGetters(["isLoggedIn"]),
     drawer: {
       get() {
         return this.$store.state.drawer;
@@ -114,7 +126,16 @@ export default {
         title: this.$t(item.title),
       };
     },
+    check(value) {
+      if (!this.isLoggedIn) {
+        if (value.title == "모의투자") {
+          return false;
+        }
+      }
+      return true;
+    },
   },
+  filters: {},
 };
 </script>
 
