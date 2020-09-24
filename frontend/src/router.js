@@ -54,12 +54,12 @@ export default new Router({
           name: "Stock Data",
           path: "components/stocks",
           component: () => import("@/views/Stock")
-        }
+        },
         // Maps
         {
-          name:"Chart",
-          path:'chart/:code',
-          component:Chart,
+          name: "Chart",
+          path: 'chart/:code',
+          component: Chart,
         }
         // Upgrade
       ]

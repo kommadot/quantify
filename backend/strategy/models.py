@@ -21,7 +21,7 @@ class Value(models.Model):
     per = models.FloatField()
     pbr = models.FloatField()
     psr = models.FloatField()
-    rank = models.IntegerField()
+    rank = models.CharField(max_length=100)
 
 
 class Quality(models.Model):
