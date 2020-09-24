@@ -84,36 +84,46 @@ export default {
       const self = this;
       Kakao.Auth.login({
         success: function (res) {
-          console.log(res);
+
           const token = res.access_token;
           http
             .post("/auth/kakao", {
               access_token: token,
             })
             .then((res) => {
-              console.log(res);
-              const config = {
-                "Content-Type": "application/json",
-              };
-              http
-                .post(
-                  "/login/",
-                  {
-                    username: res.data.username,
-                    password: res.data.social_id,
-                  },
-                  config
-                )
-                .then((json) => {
-                  const data = json.data.token;
-                  self.setToken(data.token);
-                  self.setUserProfile(data.user);
-                  self.login();
-                })
-                .catch((error) => {
-                  console.log(error);
-                  window.gapi && window.gapi.auth2.getAuthInstance().signOut();
-                });
+
+              Kakao.API.request({
+                url: '/v2/user/me',
+
+                success: function(res) {
+
+                  var username = res.properties.nickname
+                  var password = res.id
+                  http
+                    .post(
+                      "/login/",
+                      {
+                        username: username,
+                        password: password,
+                      }
+                    )
+                    .then((json) => {
+                      const data = json.data;
+                      self.setToken(data.token);
+                      self.setUserProfile(data.user);
+                      self.login();
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                      window.gapi && window.gapi.auth2.getAuthInstance().signOut();
+                    });
+                },
+                fail: function(error) {
+                  
+                }
+              });
+
+              
             })
             .catch((err) => {
               console.log(err.response);

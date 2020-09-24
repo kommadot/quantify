@@ -40,7 +40,11 @@ class SimulationList(APIView):
         quantity = int(request.data['quantity'])
         price = int(request.data['price'])
         temp_simulation = Simulation.objects.filter(Q(user_id = user.user_id) & Q(item_code = code)).first()
-
+        temp_budget = user.budget - price*quantity
+        if temp_budget <0:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        user.budget = user.budget-price*quantity
+        user.save()
         if not temp_simulation:
             simulation = Simulation(user_id = user.user_id, item_code = code, item_name = name, price = price, quantity = quantity)
             simulation.save()

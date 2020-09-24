@@ -53,7 +53,7 @@ class KakaoLogin(SocialLoginView):
         u = User.objects.filter(social_id=json_data['id'])
         if not u:
             enc = hashlib.md5()
-            enc.update(json_data['id'].encode('utf-8'))
+            enc.update(str(json_data['id']).encode('utf-8'))
             encText = enc.hexdigest()
             user = User(user_id = encText, username=json_data['properties']['nickname'], social_id=json_data['id'], platform='kakao',password=json_data['id'])
             serializer = UserSerializerWithToken(data = model_to_dict(user))
