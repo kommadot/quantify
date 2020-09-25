@@ -107,6 +107,9 @@ DATABASES = {
         'NAME': 'quantify2',
         'CLIENT': {
            'host': 'j3a105.p.ssafy.io',
+           'username':'quantify',
+           'password':'qwer1234',
+           'authSource': 'admin',
         }
     }
 }
