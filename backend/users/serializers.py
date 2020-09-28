@@ -20,7 +20,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username']
+        fields = '__all__'
+        write_only_fields = (
+            'password',
+            'social_id',
+        )        
 
         
 class UserSerializerWithToken(serializers.ModelSerializer):

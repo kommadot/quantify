@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-
+from django.forms.models import model_to_dict
 from .serializers import ArticleSerializer, ArticleListSerializer
 from .models import Article
 
@@ -14,7 +14,7 @@ from .models import Article
 class CommunityList(APIView):
     queryset = Article.objects.all()
 
-    @permission_classes((AllowAny,))
+    
     def get(self, request):
         articles = Article.objects.all()
         serializer = ArticleListSerializer(articles, many=True)
@@ -23,14 +23,11 @@ class CommunityList(APIView):
 
     @permission_classes([IsAuthenticated])
     def post(self, request):
-        serializer = ArticleSerializer(data=request.data)
-        serializer.username = request.user.user_id
+        article = Article(title=request.data['title'],content=request.data['content'],user=request.user)
+        article.save()
+        return Response(status=status.HTTP_201_CREATED)
 
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
-            return Response(serializer.data)
-
-
+@permission_classes((AllowAny,))
 class CommunityDetail(APIView):
     queryset = Article.objects.all()
 

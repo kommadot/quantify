@@ -1,4 +1,5 @@
 <template>
+<div id="app">
   <v-app-bar id="app-bar" absolute app color="transparent" flat height="75">
     <!-- <v-btn class="mr-3" elevation="1" fab small @click="setDrawer(!drawer)">
       <v-icon v-if="value">mdi-view-quilt</v-icon>
@@ -27,21 +28,24 @@
       <!-- <v-icon>mdi-account</v-icon> -->
       login
     </v-btn>
-    <login-form :dialog="dialog" @closeForm="dialog = false" />
+    
 
     <!-- profile -->
     <v-btn v-if="this.isLoggedIn" class="ml-2" min-width="0" text @click="login" dark>
       <!-- <v-icon>mdi-account</v-icon> -->
       profile
     </v-btn>
-    <login-form :dialog="dialog" @closeForm="dialog = false" />
+    
 
     <!-- logout -->
     <v-btn v-if="this.isLoggedIn" class="ml-2" min-width="0" text @click="logout2" dark>
       <!-- <v-icon>mdi-account-off</v-icon> -->
       logout
     </v-btn>
+    
   </v-app-bar>
+  <login-form :dialog="dialog" @closeForm="dialog = false" />
+</div>
 </template>
 
 <script>

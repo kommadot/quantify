@@ -3,8 +3,7 @@
     <v-container>
       <v-row> 제목 </v-row>
       <v-row> {{ title }} </v-row>
-      <v-row> 내용 </v-row>
-      <v-row> {{ content }} </v-row>
+      <div style="background-color:gray" class="tiptap-vuetify-editor__content" v-html="content"/>
       <v-row>
         <v-btn block outlined color="blue" @click="listClick"> 목록 </v-btn>
       </v-row>
@@ -15,6 +14,7 @@
         <v-btn @click="modifyClick"> 수정 </v-btn>
       </v-row>
     </v-container>
+    
   </v-form>
 </template>
 
@@ -40,11 +40,8 @@ export default {
   methods: {
     articleDetail(number) {
       http
-        .get(`/community/community/${this.$route.params.number}`, {
-          headers: {
-            Authorization: "JWT " + this.token,
-          },
-        })
+        .get(`/community/community/${this.$route.params.number}`
+        )
         .then((data) => {
           console.log(data);
           this.title = data.data.title;
