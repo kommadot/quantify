@@ -40,6 +40,21 @@ export default new Router({
           component: () => import("@/views/dashboard/component/Community")
         },
         {
+          name: "CommunityWrite",
+          path: "CommunityWrite",
+          component: () => import("@/views/dashboard/component/CommunityWrite")
+        },
+        {
+          name: "CommunityDetail",
+          path: "detail/:number",
+          component: () => import("@/views/dashboard/component/CommunityDetail")
+        },
+        {
+          name: "CommunityModify",
+          path: "detail/:number/modify",
+          component: () => import("@/views/dashboard/component/CommunityModify")
+        },
+        {
           name: "BackTest",
           path: "BackTest",
           component: () => import("@/views/dashboard/component/BackTest")

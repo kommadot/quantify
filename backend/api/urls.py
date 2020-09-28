@@ -6,6 +6,7 @@ urlpatterns = [
     path('auth/', include('users.urls')),
     path('strategy/', include('strategy.urls')),
     path('simulations/',include('simulations.urls')),
+    path('community/',include('community.urls')),
     path('login/', obtain_jwt_token),
     re_path(r'^price/(?P<code>[0-9]+)$',views.Price.as_view()),
     re_path(r'^stockprice/(?P<code>[\w\-]+)$',views.StockPriceDetail.as_view()),

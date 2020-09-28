@@ -11,6 +11,17 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+        write_only_fields = (
+            'password',
+            'social_id',
+        )
+
+class CustomUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['username']
+
         
 class UserSerializerWithToken(serializers.ModelSerializer):
 
