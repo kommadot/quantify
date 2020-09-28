@@ -16,6 +16,7 @@ from django.db.models import Q
 from django.forms.models import model_to_dict
 from bson.objectid import ObjectId
 from users.serializers import UserSerializer
+
 @permission_classes((IsAuthenticated,))
 @authentication_classes((JSONWebTokenAuthentication,))
 class SimulationList(APIView):
