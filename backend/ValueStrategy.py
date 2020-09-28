@@ -19,7 +19,7 @@ code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
 
 value_df = pd.DataFrame(columns=['종목', 'PER', 'PBR', 'PSR'])
 
-for cnt in range(50):
+for cnt in range(15):
     item_name = code_df.loc[cnt, 'name']
     code = code_df.loc[cnt, 'code']
     fs = FS(code)

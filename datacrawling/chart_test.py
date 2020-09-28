@@ -72,3 +72,7 @@ def get_price_1y(item_name,i):
 for i in range(10):
     # print(i)
     get_price_1y(code_df.name[i], i)
+
+for i in range(2370):
+    if code_df.name[i] == '멀티캠퍼스':
+        get_price_1y(code_df.name[i], i)
