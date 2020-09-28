@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Chart from '@/views/dashboard/component/Chart'
+import CommunityWrite from "@/views/dashboard/component/CommunityWrite"
 Vue.use(Router)
 
 export default new Router({
@@ -42,7 +43,7 @@ export default new Router({
         {
           name: "CommunityWrite",
           path: "CommunityWrite",
-          component: () => import("@/views/dashboard/component/CommunityWrite")
+          component: CommunityWrite
         },
         {
           name: "CommunityDetail",

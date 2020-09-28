@@ -1,8 +1,6 @@
 <template>
-  <v-form>
-    <v-container>
-      <v-row>
-        <v-text-field
+  <div id="app">
+            <v-text-field
           :counter="50"
           label="제목"
           name="title"
@@ -11,36 +9,85 @@
           maxlength="50"
           dark
         ></v-text-field>
-      </v-row>
-      <v-row>
-        <v-textarea
-          filled
-          name="content"
-          hint="내용을 입력해주세요."
-          v-model="content"
-          :counter="1000"
-          maxlength="1000"
-          dark
-        ></v-textarea>
-      </v-row>
-      <v-row>
-        <v-btn block outlined color="blue" @click="createArticle"> 등록 </v-btn>
-      </v-row>
-    </v-container>
-  </v-form>
+      <tiptap-vuetify
+        v-model="content"
+        :extensions="extensions"
+      />
+      <v-btn @click="createArticle">
+        submit
+      </v-btn>
+  </div>
 </template>
 
 <script>
 import http from "@/util/http-common";
 import { mapState } from "vuex";
-
+import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
   name: "CommunityWrite",
-
+  components: { TiptapVuetify },
   data() {
     return {
       title: "",
-      content: "",
+      extensions: [
+      // Render in the Bubble menu
+      [
+        Link,
+        {
+          renderIn: 'bubbleMenu'
+        }
+      ],
+      [
+        Underline,
+        {
+          renderIn: 'bubbleMenu'
+        }
+      ],
+      [
+        Strike,
+        {
+          renderIn: 'bubbleMenu'
+        }
+      ],
+      [
+        Bold,
+        {
+          renderIn: 'bubbleMenu',
+          // extension's options
+          options: {
+            levels: [1, 2, 3]
+          }
+        }
+      ],
+      // Render in the toolbar
+      [
+        Blockquote,
+        {
+          renderIn: 'toolbar'
+        }
+      ],
+      // You can use a short form, the default "renderIn" is "'toolbar'"
+      History,
+      Strike,
+      Italic,
+      ListItem, // if you need to use a list (BulletList, OrderedList)
+      BulletList,
+      OrderedList,
+      [
+        Heading,
+        {
+          // Options that fall into the tiptap's extension
+          options: {
+            levels: [1, 2, 3]
+          }
+        }
+      ],
+      Code,
+      HorizontalRule,
+      Paragraph,
+      HardBreak // line break on Shift + Ctrl + Enter
+    ],
+    content: ""
     };
   },
   computed: {
@@ -66,9 +113,12 @@ export default {
           console.log(errors.response.data);
         });
     },
+    
   },
+
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+
 </style>
