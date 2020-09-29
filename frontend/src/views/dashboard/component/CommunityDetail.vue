@@ -7,12 +7,16 @@
       <v-row>
         <v-btn block outlined color="blue" @click="listClick"> 목록 </v-btn>
       </v-row>
-      <v-row>
+      <v-row v-if="userProfile.user_id==user_id">
+        <v-col>
+
         <v-btn @click="deleteClick"> 삭제 </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn @click="modifyClick"> 수정 </v-btn>
+        </v-col>
       </v-row>
-      <v-row>
-        <v-btn @click="modifyClick"> 수정 </v-btn>
-      </v-row>
+
     </v-container>
     
   </v-form>
@@ -29,13 +33,14 @@ export default {
       title: "",
       content: "",
       username: "",
+      user_id:"",
     };
   },
   created() {
     this.articleDetail();
   },
   computed: {
-    ...mapState(["token"]),
+    ...mapState(["token",'userProfile']),
   },
   methods: {
     articleDetail(number) {
@@ -46,6 +51,8 @@ export default {
           console.log(data);
           this.title = data.data.title;
           this.content = data.data.content;
+          this.user_id = data.data.user.user_id
+          this.username = data.data.username
         });
     },
     listClick() {
@@ -66,11 +73,11 @@ export default {
           console.log(error);
         });
     },
-    modifyClick(item) {
+    modifyClick() {
       this.$router.push({
         name: "CommunityModify",
         params: {
-          number: item.number,
+          number: this.$route.params.number,
         },
       });
     },

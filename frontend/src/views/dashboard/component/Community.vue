@@ -77,7 +77,7 @@ export default {
         });
     },
     writeClick() {
-      this.$router.push("/CommunityWrite");
+      this.$router.push("/communityWrite");
     },
     rowClick(item) {
       this.$router.push({
