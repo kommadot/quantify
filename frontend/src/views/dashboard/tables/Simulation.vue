@@ -103,6 +103,9 @@
       </v-simple-table>
     </base-material-card>
 
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 <script>
@@ -115,6 +118,7 @@ export default {
   data() {
     return {
       stocks: [],
+      overlay: false,
     };
   },
   computed: {
@@ -151,8 +155,8 @@ export default {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
   },
-  created(){
-    this.getSimulationList()
+  created() {
+    this.getSimulationList();
   },
   /*
           item_name: "",
@@ -201,6 +205,10 @@ export default {
   },
   watch: {
     simulationlist(value) {
+      this.overlay = true;
+      let cnt = 0;
+      let mcnt = 0;
+      mcnt = value.length;
       value.forEach((s) => {
         let cur_price = 0;
         http.get("/price/" + s.item_code).then((res) => {
@@ -215,9 +223,12 @@ export default {
           a["item_name"] = s.item_name;
           a["eval"] = cur_price * s.quantity;
           this.stocks.push(a);
+          cnt += 1;
+          if (cnt == mcnt) {
+            this.overlay = false;
+          }
         });
       });
-
     },
   },
 };
