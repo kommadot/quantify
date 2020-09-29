@@ -1,8 +1,6 @@
 <template>
-  <v-form>
-    <v-container>
-      <v-row>
-        <v-text-field
+  <div id="app">
+            <v-text-field
           :counter="50"
           label="제목"
           name="title"
@@ -11,42 +9,95 @@
           maxlength="50"
           dark
         ></v-text-field>
-      </v-row>
-      <v-row>
-        <v-textarea
-          filled
-          name="content"
-          hint="내용을 입력해주세요."
-          v-model="content"
-          :counter="1000"
-          maxlength="1000"
-          dark
-        ></v-textarea>
-      </v-row>
-      <v-row>
-        <v-btn block outlined color="blue" @click="modifyArticle"> 수정 </v-btn>
-      </v-row>
-    </v-container>
-  </v-form>
+      <tiptap-vuetify
+        v-model="content"
+        :extensions="extensions"
+      />
+      <v-btn @click="createArticle">
+        submit
+      </v-btn>
+  </div>
 </template>
 
 <script>
 import http from "@/util/http-common";
 import { mapState } from "vuex";
-
+import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
-  name: "CommunityModify",
+  name: "CommunityWrite",
+  components: { TiptapVuetify },
   data() {
     return {
       title: "",
-      content: "",
+      extensions: [
+      // Render in the Bubble menu
+      [
+        Link,
+        {
+          renderIn: 'bubbleMenu'
+        }
+      ],
+      [
+        Underline,
+        {
+          renderIn: 'bubbleMenu'
+        }
+      ],
+      [
+        Strike,
+        {
+          renderIn: 'bubbleMenu'
+        }
+      ],
+      [
+        Bold,
+        {
+          renderIn: 'bubbleMenu',
+          // extension's options
+          options: {
+            levels: [1, 2, 3]
+          }
+        }
+      ],
+      // Render in the toolbar
+      [
+        Blockquote,
+        {
+          renderIn: 'toolbar'
+        }
+      ],
+      // You can use a short form, the default "renderIn" is "'toolbar'"
+      History,
+      Strike,
+      Italic,
+      ListItem, // if you need to use a list (BulletList, OrderedList)
+      BulletList,
+      OrderedList,
+      [
+        Heading,
+        {
+          // Options that fall into the tiptap's extension
+          options: {
+            levels: [1, 2, 3]
+          }
+        }
+      ],
+      Code,
+      HorizontalRule,
+      Paragraph,
+      HardBreak // line break on Shift + Ctrl + Enter
+    ],
+    content: ""
     };
   },
   computed: {
     ...mapState(["token"]),
   },
+    created() {
+    this.articleDetail();
+  },
   methods: {
-    modifyArticle(number) {
+    createArticle() {
       const requestHeaders = {
         headers: {
           Authorization: "JWT " + this.token,
@@ -59,15 +110,53 @@ export default {
           requestHeaders
         )
         .then(() => {
-          this.$router.push(`/detail/${this.$route.params.number}`);
+          this.$router.push("/Community");
         })
         .catch((errors) => {
           console.log(errors.response.data);
         });
     },
+        articleDetail(number) {
+      http
+        .get(`/community/community/${this.$route.params.number}`
+        )
+        .then((data) => {
+          console.log(data);
+          this.title = data.data.title;
+          this.content = data.data.content;
+        });
+    },
+    listClick() {
+      this.$router.push("/Community");
+    },
+    deleteClick(number) {
+      http
+        .delete(`/community/community/${this.$route.params.number}`, {
+          headers: {
+            Authorization: "JWT " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          this.$router.push("/Community");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    modifyClick(item) {
+      this.$router.push({
+        name: "CommunityModify",
+        params: {
+          number: item.number,
+        },
+      });
+    },
   },
+
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+
 </style>

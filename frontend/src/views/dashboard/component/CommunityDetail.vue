@@ -76,11 +76,11 @@ export default {
           console.log(error);
         });
     },
-    modifyClick(item) {
+    modifyClick() {
       this.$router.push({
         name: "CommunityModify",
         params: {
-          number: item.number,
+          number: this.$route.params.number,
         },
       });
     },

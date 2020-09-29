@@ -21,7 +21,7 @@ export default new Router({
         // Dashboard
         {
           name: 'Strategy',
-          path: 'Strategy',
+          path: 'strategy',
           component: () => import('@/views/dashboard/Strategy'),
         },
         // Pages
@@ -37,12 +37,12 @@ export default new Router({
         },
         {
           name: "Community",
-          path: "Community",
+          path: "community",
           component: () => import("@/views/dashboard/component/Community")
         },
         {
           name: "CommunityWrite",
-          path: "CommunityWrite",
+          path: "communityWrite",
           component: CommunityWrite
         },
         {
@@ -52,7 +52,7 @@ export default new Router({
         },
         {
           name: "CommunityModify",
-          path: "detail/:number/modify",
+          path: "modify/:number",
           component: () => import("@/views/dashboard/component/CommunityModify")
         },
         {
