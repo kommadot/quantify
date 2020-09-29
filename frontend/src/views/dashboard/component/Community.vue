@@ -16,13 +16,16 @@
       </v-data-table>
       <br />
       <v-row>
-        <v-btn outlined color="blue" @click="writeClick"> 작성 </v-btn>
+        <v-btn v-if="token" outlined color="blue" @click="writeClick">
+          작성
+        </v-btn>
       </v-row>
     </base-material-card>
   </v-container>
 </template>
 <script>
 import http from "@/util/http-common";
+import { mapState } from "vuex";
 
 export default {
   name: "Community",
@@ -44,6 +47,9 @@ export default {
   },
   created() {
     this.getCommunity();
+  },
+  computed: {
+    ...mapState(["token"]),
   },
   methods: {
     getCommunity() {

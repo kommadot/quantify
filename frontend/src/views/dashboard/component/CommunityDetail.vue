@@ -1,21 +1,29 @@
 <template>
-  <v-form>
-    <v-container>
-      <v-row> 제목 </v-row>
-      <v-row> {{ title }} </v-row>
-      <div style="background-color:gray" class="tiptap-vuetify-editor__content" v-html="content"/>
-      <v-row>
-        <v-btn block outlined color="blue" @click="listClick"> 목록 </v-btn>
-      </v-row>
-      <v-row>
-        <v-btn @click="deleteClick"> 삭제 </v-btn>
-      </v-row>
-      <v-row>
-        <v-btn @click="modifyClick"> 수정 </v-btn>
-      </v-row>
-    </v-container>
-    
-  </v-form>
+  <v-container id="icons" fluid tag="section">
+    <base-material-card color="success" dark>
+      <template v-slot:heading>
+        <div class="display-2 font-weight-light">{{ title }}</div>
+      </template>
+      <v-container>
+        <div
+          style="background-color: gray"
+          class="tiptap-vuetify-editor__content mb-3"
+          v-html="content"
+        />
+        <v-row class="mr-1">
+          <v-col cols="10">
+            <v-btn outlined color="primary" @click="listClick"> 목록 </v-btn>
+          </v-col>
+          <v-col cols="1" v-if="userProfile.user_id == user_id">
+            <v-btn outlined color="primary" @click="deleteClick"> 삭제 </v-btn>
+          </v-col>
+          <v-col cols="1" v-if="userProfile.user_id == user_id">
+            <v-btn outlined color="primary" @click="modifyClick"> 수정 </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </base-material-card>
+  </v-container>
 </template>
 
 <script>
@@ -29,23 +37,25 @@ export default {
       title: "",
       content: "",
       username: "",
+      user_id: "",
     };
   },
   created() {
     this.articleDetail();
   },
   computed: {
-    ...mapState(["token"]),
+    ...mapState(["token", "userProfile"]),
   },
   methods: {
     articleDetail(number) {
       http
-        .get(`/community/community/${this.$route.params.number}`
-        )
+        .get(`/community/community/${this.$route.params.number}`)
         .then((data) => {
           console.log(data);
           this.title = data.data.title;
           this.content = data.data.content;
+          this.user_id = data.data.user.user_id;
+          this.username = data.data.username;
         });
     },
     listClick() {

@@ -16,7 +16,7 @@ class CommunityList(APIView):
 
     
     def get(self, request):
-        articles = Article.objects.all()
+        articles = Article.objects.order_by('-id')
         serializer = ArticleListSerializer(articles, many=True)
         return Response(serializer.data)
 
