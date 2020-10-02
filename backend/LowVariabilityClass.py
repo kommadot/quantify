@@ -23,7 +23,7 @@ class LV:
         end = end if end <= self.SP.count() else self.SP.count()
         SP = self.SP[start:end]
         df = pd.DataFrame(columns=['종목', '변동성'])
-        test_date = datetime.strptime(test_date, "%Y-%m-%d")
+        # test_date = datetime.strptime(test_date, "%Y-%m-%d")
         for i in range(end-start):
             print(self.cnt)
             stock = model_to_dict(SP[i])
@@ -45,11 +45,16 @@ class LV:
             df.loc[i, ['변동성']] = price_variability
             # print(i)
             self.cnt+=1
-        print(self.df)
+        # print(self.df)
         self.df = self.df.append(df)
         return self.df
     
+    def run(self,test_date):
+        self.thread_init(test_date)
+        self.thread_run()
 
+        return self.df
+        
     def thread_init(self,test_date):
         START, END = 0, 0
         self.threads = []
@@ -68,9 +73,9 @@ class LV:
             i.start()
         for i in self.threads:
             i.join()
-        self.df = self.df.sort_values(by=["변동성"], ascending=[True])
+        self.df = self.df.sort_values(by=["변동성"], ascending=True)
 
 
-a = LV()
-a.thread_init("2020-08-20")
-print(a.df)
+# a = LV()
+# a.thread_init("2020-08-20")
+# print(a.df)

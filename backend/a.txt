@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "Backtest.py", line 79, in <module>
+    a.run()
+  File "Backtest.py", line 38, in run
+    self.df = self.df.append({'date':date,'budget':self.get_budget(date)},ignore_index=True)
+  File "Backtest.py", line 61, in get_budget
+    stock = StockPrice.objects.get(code="005930")
+  File "C:\Users\multicampus\Desktop\s03p22a105\backend\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\multicampus\Desktop\s03p22a105\backend\venv\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+api.models.DoesNotExist: StockPrice matching query does not exist.
