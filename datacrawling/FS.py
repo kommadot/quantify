@@ -55,6 +55,9 @@ class FS:
         return self.fs_list2_FH[self.cur_index].loc['PBR']
 
 
+    def SC(self):
+        return int(self.fs_list2_SH[1].loc['시가총액(보통주,억원)'])
+
     # 시가총액 / 매출액
     def get_PSR(self):
         return int(self.fs_list2_SH[1].loc['시가총액(보통주,억원)']) / self.fs_list1_PS[self.cur_index].loc['매출액']
