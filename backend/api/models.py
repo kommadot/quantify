@@ -20,6 +20,8 @@ class StockRow(models.Model):
 class StockPrice(models.Model):
     code = models.CharField(max_length=6)
     data = models.ArrayField(model_container=StockRow)
+    name = models.CharField(max_length=100)
+    market_price = models.IntegerField()
 
 class Company(models.Model):
     name = models.CharField(max_length=200)
