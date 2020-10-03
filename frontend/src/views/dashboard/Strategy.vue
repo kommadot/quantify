@@ -49,7 +49,7 @@
 
         <!-- calendar -->
         <!-- startdate -->
-        <v-col cols="3">
+        <!-- <v-col cols="3">
           <v-menu
             v-model="menu1"
             :close-on-content-click="false"
@@ -74,9 +74,9 @@
               @input="menu1 = false"
             ></v-date-picker>
           </v-menu>
-        </v-col>
+        </v-col> -->
         <!-- enddate -->
-        <v-col cols="3">
+        <!-- <v-col cols="3">
           <v-menu
             v-model="menu2"
             :close-on-content-click="false"
@@ -102,7 +102,7 @@
               @input="menu2 = false"
             ></v-date-picker>
           </v-menu>
-        </v-col>
+        </v-col> -->
       </v-row>
       <v-data-table
         :headers="headers"
@@ -121,7 +121,7 @@
 import http from "@/util/http-common";
 
 export default {
-  name: "DashboardDashboard",
+  name: "Strategy",
 
   data() {
     return {
@@ -131,15 +131,15 @@ export default {
         "퀄리티 전략",
         "밸류 전략",
       ],
+      checked: [],
       dropdownselected: "",
       headers: [],
       lowvartable: [],
-      momentable: [],
+      // momentable: [],
       riskmomentable: [],
       qualitytable: [],
       valuetable: [],
       filtertable: [],
-      checked: [],
       menu1: false,
       menu2: false,
       date1: new Date().toISOString().substr(0, 10),
@@ -171,9 +171,9 @@ export default {
             value: "rank",
           },
           { text: "기업명", value: "name" },
-          { text: "모멘텀", value: "momentum" },
+          { text: "위험조정수익률", value: "momentum" },
         ];
-        this.filtertable = this.momentable;
+        this.filtertable = this.riskmomentable;
       }
 
       if (value == "퀄리티 전략") {
@@ -207,7 +207,20 @@ export default {
         this.filtertable = this.valuetable;
       }
     },
+
+    // checked(value) {
+    //   this.headers = [
+    //     {
+    //       text: "순위",
+    //       align: "start",
+    //       sortable: false,
+    //       value: "rank",
+    //     },
+    //     { text: "기업명", value: "name" },
+    //   ];
+    // },
   },
+
   methods: {
     lowvarlist: function () {
       const self = this;
@@ -229,25 +242,25 @@ export default {
         });
     },
 
-    momenlist: function () {
-      const self = this;
-      let idx = 1;
-      http
-        .get("/strategy/momen")
-        .then(function (res) {
-          self.momentable = [];
-          for (let i of res.data) {
-            self.momentable.push({
-              rank: idx++,
-              name: i.name,
-              momentum: i.momentum,
-            });
-          }
-        })
-        .catch(function (err) {
-          alert(err);
-        });
-    },
+    // momenlist: function () {
+    //   const self = this;
+    //   let idx = 1;
+    //   http
+    //     .get("/strategy/momen")
+    //     .then(function (res) {
+    //       self.momentable = [];
+    //       for (let i of res.data) {
+    //         self.momentable.push({
+    //           rank: idx++,
+    //           name: i.name,
+    //           momentum: i.momentum,
+    //         });
+    //       }
+    //     })
+    //     .catch(function (err) {
+    //       alert(err);
+    //     });
+    // },
 
     riskmomenlist: function () {
       const self = this;
@@ -316,7 +329,7 @@ export default {
   },
   created() {
     this.lowvarlist();
-    this.momenlist();
+    // this.momenlist();
     this.riskmomenlist();
     this.qualitylist();
     this.valuelist();

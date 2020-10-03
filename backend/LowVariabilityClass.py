@@ -14,11 +14,14 @@ from datetime import timedelta
 
 from threading import Thread
 
+from strategy.models import LowVariability
+
 class LV:
     def __init__(self):
         self.df = pd.DataFrame(columns=['종목', '변동성'])
         self.cnt = 0
-        self.SP = StockPrice.objects.all()
+        # self.SP = StockPrice.objects.all()
+        self.SP = StockPrice.objects.filter(market_price__gte=10000)
     def getLV(self, start, end, test_date):
         end = end if end <= self.SP.count() else self.SP.count()
         SP = self.SP[start:end]
@@ -41,7 +44,8 @@ class LV:
             price_profit = price_close.pct_change()
             # 변동성
             price_variability = price_profit.std() * np.sqrt(len(stock_price))
-            df.loc[i, ['종목']] = stock_code
+            # df.loc[i, ['종목']] = stock_code
+            df.loc[i, ['종목']] = stock['name']
             df.loc[i, ['변동성']] = price_variability
             # print(i)
             self.cnt+=1
@@ -59,14 +63,13 @@ class LV:
         START, END = 0, 0
         self.threads = []
         ma = self.SP.count()
-        ma = 100
+        # ma = 100
         qu = ma//4
         END = START + qu
         for i in range(4):
             self.threads.append(Thread(target=self.getLV, args=(START, END, test_date)))
             START += qu
             END += qu
-        self.thread_run()
         
     def thread_run(self):
         for i in self.threads:
@@ -76,6 +79,15 @@ class LV:
         self.df = self.df.sort_values(by=["변동성"], ascending=True)
 
 
-# a = LV()
-# a.thread_init("2020-08-20")
-# print(a.df)
+a = LV()
+df = a.run(datetime.today())
+df_records = df.to_dict('records')
+print(df_records)
+
+model_instances = [LowVariability(
+    name=record['종목'],
+    variability=record['변동성'],
+) for record in df_records]
+
+LowVariability.objects.all().delete()
+LowVariability.objects.bulk_create(model_instances)

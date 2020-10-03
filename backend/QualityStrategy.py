@@ -19,12 +19,14 @@ code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
 
 value_df = pd.DataFrame(columns=['종목', 'ROA', 'CFO', 'ROA_DIFF', 'ACCRUAL', 'LIQUID', 'MARGIN', 'TURN', 'SUM'])
 
-# for cnt in range(len(code_df)):
-for cnt in range(20):
+for cnt in range(len(code_df)):
+# for cnt in range(20):
     item_name = code_df.loc[cnt, 'name']
     code = code_df.loc[cnt, 'code']
     try:
         fs = FS(code)
+        if fs.get_SC() < 10000:
+            continue
         print(item_name)
         cnt += 1
         value_df.loc[cnt, ['종목']] = item_name

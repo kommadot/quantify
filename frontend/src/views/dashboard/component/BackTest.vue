@@ -1,120 +1,325 @@
 <template>
-  <v-container
-    id="typography"
-    fluid
-    tag="section"
-  >
-    <base-v-component
-      heading="Typography"
-      link="styles/typography"
-    />
+  <v-container id="dashboard" fluid tag="section">
+    <v-container fluid>
+      <v-row>
+        <!-- checkboxes -->
+        <!-- <v-col cols="1.5">
+          <v-checkbox
+            v-model="checked"
+            label="저변동성 전략"
+            value="lowvar"
+            dark
+          ></v-checkbox>
+        </v-col>
+        <v-col cols="1.5">
+          <v-checkbox
+            v-model="checked"
+            label="모멘텀 전략"
+            value="momentum"
+            dark
+          ></v-checkbox>
+        </v-col>
+        <v-col cols="1.5">
+          <v-checkbox
+            v-model="checked"
+            label="퀄리티 전략"
+            value="quality"
+            dark
+          ></v-checkbox>
+        </v-col>
+        <v-col cols="1.5">
+          <v-checkbox
+            v-model="checked"
+            label="밸류 전략"
+            value="value"
+            dark
+          ></v-checkbox>
+        </v-col> -->
 
-    <v-row
-      align="center"
-      justify="center"
-    >
-      <v-col cols="12">
-        <base-material-card
-          color="green"
-        >
-          <template v-slot:heading>
-            <div class="display-2 font-weight-light">
-              Material Dashboard Heading
-            </div>
+        <v-col cols="6">
+          <v-overflow-btn
+            class="my-2"
+            v-model="dropdownselected"
+            :items="dropdown_font"
+            label="전략 선택"
+            target="#dropdown-example"
+            dark
+          ></v-overflow-btn>
+        </v-col>
 
-            <div class="subtitle-1 font-weight-light">
-              Created using Roboto Font Family
-            </div>
-          </template>
-
-          <v-card-text>
-            <v-container
-              class="pa-0"
-              fluid
-            >
-              <v-row
-                v-for="(t, i) in typography"
-                :key="i"
-                align="center"
-              >
-                <v-col
-                  cols="1"
-                  md="3"
-                >
-                  <span
-                    class="tim-note"
-                    v-text="t[0]"
-                  />
-                </v-col>
-
-                <v-col cols="8">
-                  <component
-                    :is="t[2]"
-                    :class="i"
-                  >
-                    <template v-if="i !== 'quote'">
-                      {{ t[1] }}
-                    </template>
-
-                    <p v-if="i === 'quote'">
-                      {{ t[1] }}
-                    </p>
-                    <small v-if="i === 'quote'">Kanye West, Musician</small>
-
-                    <template v-if="i === 'small'">
-                      <br>
-                      <small>Use 'small' tag for the headers</small>
-                    </template>
-                  </component>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
-        </base-material-card>
-      </v-col>
-    </v-row>
+        <!-- calendar -->
+        <!-- startdate -->
+        <v-col cols="3">
+          <v-menu
+            v-model="menu1"
+            :close-on-content-click="false"
+            :nudge-right="0"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+            dark
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="date1"
+                label="시작일"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                dark
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="date1"
+              @input="menu1 = false"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+        <!-- enddate -->
+        <v-col cols="3">
+          <v-menu
+            v-model="menu2"
+            :close-on-content-click="false"
+            :nudge-right="0"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+            dark
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="date2"
+                label="종료일"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                max-width="100px"
+                dark
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="date2"
+              @input="menu2 = false"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+      </v-row>
+      <v-data-table
+        :headers="headers"
+        :items="filtertable"
+        :sort-by="selected"
+        :sort-desc="[false, true]"
+        multi-sort
+        class="elevation-1"
+        dark
+      ></v-data-table>
+    </v-container>
   </v-container>
 </template>
 
 <script>
-  const leader = 'I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.'
-  const leaderShort = leader.slice(0, 105) + '...'
-  const material = 'The Life of Material Dashboard'
-  const small = 'Header with small subtitle'
+import http from "@/util/http-common";
 
-  export default {
-    data: () => ({
-      typography: {
-        'display-4': ['Display 4', material, 'h1'],
-        'display-3': ['Display 3', material, 'h2'],
-        'display-2': ['Display 2', material, 'h3'],
-        'display-1': ['Display 1', material, 'h4'],
-        headline: ['Headline', material, 'h5'],
-        'title text-uppercase': ['Title', material, 'h6'],
-        '': ['Paragraph', leader, 'p'],
-        blockquote: ['Quote', leader, 'blockquote'],
-        'text--disabled': ['Muted Text', leaderShort, 'p'],
-        'primary--text': ['Primary Text', leaderShort, 'p'],
-        'info--text': ['Info Text', leaderShort, 'p'],
-        'success--text': ['Success Text', leaderShort, 'p'],
-        'warning--text': ['Warning Text', leaderShort, 'p'],
-        'danger--text': ['Danger Text', leaderShort, 'p'],
-        small: ['Small Tag', small, 'h2'],
-      },
-    }),
-  }
+export default {
+  name: "BackTest",
+
+  data() {
+    return {
+      dropdown_font: [
+        "저변동성 전략",
+        "모멘텀 전략",
+        "퀄리티 전략",
+        "밸류 전략",
+      ],
+      dropdownselected: "",
+      headers: [],
+      lowvartable: [],
+      momentable: [],
+      riskmomentable: [],
+      qualitytable: [],
+      valuetable: [],
+      filtertable: [],
+      checked: [],
+      menu1: false,
+      menu2: false,
+      date1: new Date().toISOString().substr(0, 10),
+      date2: new Date().toISOString().substr(0, 10),
+    };
+  },
+  watch: {
+    dropdownselected(value) {
+      if (value == "저변동성 전략") {
+        this.headers = [
+          {
+            text: "순위",
+            align: "start",
+            sortable: false,
+            value: "rank",
+          },
+          { text: "기업명", value: "name" },
+          { text: "변동성", value: "variability" },
+        ];
+        this.filtertable = this.lowvartable;
+      }
+
+      if (value == "모멘텀 전략") {
+        this.headers = [
+          {
+            text: "순위",
+            align: "start",
+            sortable: false,
+            value: "rank",
+          },
+          { text: "기업명", value: "name" },
+          { text: "모멘텀", value: "momentum" },
+        ];
+        this.filtertable = this.momentable;
+      }
+
+      if (value == "퀄리티 전략") {
+        this.headers = [
+          {
+            text: "순위",
+            align: "start",
+            sortable: false,
+            value: "rank",
+          },
+          { text: "기업명", value: "name" },
+          { text: "퀄리티 합계", value: "sum" },
+        ];
+        this.filtertable = this.qualitytable;
+      }
+
+      if (value == "밸류 전략") {
+        this.headers = [
+          {
+            text: "순위",
+            align: "start",
+            sortable: false,
+            value: "rank",
+          },
+          { text: "기업명", value: "name" },
+          { text: "PER", value: "per" },
+          { text: "PSR", value: "psr" },
+          { text: "PBR", value: "pbr" },
+          { text: "F-Score", value: "score" },
+        ];
+        this.filtertable = this.valuetable;
+      }
+    },
+  },
+  methods: {
+    lowvarlist: function () {
+      const self = this;
+      let idx = 1;
+      http
+        .get("/strategy/lowvar")
+        .then(function (res) {
+          self.lowvartable = [];
+          for (let i of res.data) {
+            self.lowvartable.push({
+              rank: idx++,
+              name: i.name,
+              variability: i.variability,
+            });
+          }
+        })
+        .catch(function (err) {
+          alert(err);
+        });
+    },
+
+    momenlist: function () {
+      const self = this;
+      let idx = 1;
+      http
+        .get("/strategy/momen")
+        .then(function (res) {
+          self.momentable = [];
+          for (let i of res.data) {
+            self.momentable.push({
+              rank: idx++,
+              name: i.name,
+              momentum: i.momentum,
+            });
+          }
+        })
+        .catch(function (err) {
+          alert(err);
+        });
+    },
+
+    riskmomenlist: function () {
+      const self = this;
+      let idx = 1;
+      http
+        .get("/strategy/riskmomen")
+        .then(function (res) {
+          self.riskmomentable = [];
+          for (let i of res.data) {
+            self.riskmomentable.push({
+              rank: idx++,
+              name: i.name,
+              riskmomentum: i.risk_momentum,
+            });
+          }
+        })
+        .catch(function (err) {
+          alert(err);
+        });
+    },
+
+    qualitylist: function () {
+      const self = this;
+      let idx = 1;
+      http
+        .get("/strategy/quality")
+        .then(function (res) {
+          self.qualitytable = [];
+          for (let i of res.data) {
+            self.qualitytable.push({
+              rank: idx++,
+              name: i.name,
+              sum: i.sum,
+            });
+          }
+        })
+        .catch(function (err) {
+          alert(err);
+        });
+    },
+
+    valuelist: function () {
+      let self = this;
+      let idx = 1;
+      http
+        .get("/strategy/value")
+        .then(function (res) {
+          self.valuetable = [];
+          console.log(res.data);
+          for (let i of res.data) {
+            self.valuetable.push({
+              rank: idx++,
+              name: i.name,
+              per: i.per,
+              pbr: i.pbr,
+              psr: i.psr,
+              score: i.rank,
+            });
+          }
+          console.log(self.valuetable);
+        })
+        .catch(function (err) {
+          alert(err);
+        });
+    },
+  },
+  created() {
+    this.lowvarlist();
+    this.momenlist();
+    this.riskmomenlist();
+    this.qualitylist();
+    this.valuelist();
+  },
+};
 </script>
-
-<style lang="scss">
-  .tim-note {
-    bottom: 10px;
-    color: #c0c1c2;
-    display: block;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 13px;
-    left: 0;
-    margin-left: 20px;
-    width: 260px;
-  }
-</style>
