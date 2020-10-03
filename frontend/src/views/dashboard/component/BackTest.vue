@@ -91,16 +91,16 @@
             ></v-date-picker>
           </v-menu>
         </v-col>
+        <v-col>
+          <v-btn @click="backtesting">
+            백테스트 시작
+          </v-btn>
+        </v-col>
       </v-row>
-      <v-data-table
-        :headers="headers"
-        :items="filtertable"
-        :sort-by="selected"
-        :sort-desc="[false, true]"
-        multi-sort
-        class="elevation-1"
-        dark
-      ></v-data-table>
+      <v-row>
+        <div id="chart">
+        </div>
+      </v-row>
     </v-container>
   </v-container>
 </template>
@@ -128,6 +128,8 @@ export default {
       valuetable: [],
       filtertable: [],
       checked: [],
+      chart:null,
+      lineSeries:null,
       menu1: false,
       menu2: false,
       date1: new Date().toISOString().substr(0, 10),
@@ -135,179 +137,45 @@ export default {
     };
   },
   watch: {
-    dropdownselected(value) {
-      if (value == "저변동성 전략") {
-        this.headers = [
-          {
-            text: "순위",
-            align: "start",
-            sortable: false,
-            value: "rank"
-          },
-          { text: "기업명", value: "name" },
-          { text: "변동성", value: "variability" }
-        ];
-        this.filtertable = this.lowvartable;
-      }
-
-      if (value == "모멘텀 전략") {
-        this.headers = [
-          {
-            text: "순위",
-            align: "start",
-            sortable: false,
-            value: "rank"
-          },
-          { text: "기업명", value: "name" },
-          { text: "모멘텀", value: "momentum" }
-        ];
-        this.filtertable = this.momentable;
-      }
-
-      if (value == "퀄리티 전략") {
-        this.headers = [
-          {
-            text: "순위",
-            align: "start",
-            sortable: false,
-            value: "rank"
-          },
-          { text: "기업명", value: "name" },
-          { text: "퀄리티 합계", value: "sum" }
-        ];
-        this.filtertable = this.qualitytable;
-      }
-
-      if (value == "밸류 전략") {
-        this.headers = [
-          {
-            text: "순위",
-            align: "start",
-            sortable: false,
-            value: "rank"
-          },
-          { text: "기업명", value: "name" },
-          { text: "PER", value: "per" },
-          { text: "PSR", value: "psr" },
-          { text: "PBR", value: "pbr" },
-          { text: "F-Score", value: "score" }
-        ];
-        this.filtertable = this.valuetable;
-      }
-    }
   },
   methods: {
-    lowvarlist: function() {
-      const self = this;
-      let idx = 1;
-      http
-        .get("/strategy/lowvar")
-        .then(function(res) {
-          self.lowvartable = [];
-          for (let i of res.data) {
-            self.lowvartable.push({
-              rank: idx++,
-              name: i.name,
-              variability: i.variability
-            });
-          }
+    backtesting(){
+      http.post("/backtest/backtest",{
+        start:this.date1,
+        end:this.date2,
+        budget:1000000,
+        rebalance:6
+      }).then(res=>{
+        const a = []
+        console.log(typeof res.data)
+        const data = JSON.parse(res.data)
+        data.forEach(r=>{
+          // console.log(r)
+          a.push({time:r[0],value:r[1]})
         })
-        .catch(function(err) {
-          alert(err);
-        });
-    },
-
-    momenlist: function() {
-      const self = this;
-      let idx = 1;
-      http
-        .get("/strategy/momen")
-        .then(function(res) {
-          self.momentable = [];
-          for (let i of res.data) {
-            self.momentable.push({
-              rank: idx++,
-              name: i.name,
-              momentum: i.momentum
-            });
-          }
-        })
-        .catch(function(err) {
-          alert(err);
-        });
-    },
-
-    riskmomenlist: function() {
-      const self = this;
-      let idx = 1;
-      http
-        .get("/strategy/riskmomen")
-        .then(function(res) {
-          self.riskmomentable = [];
-          for (let i of res.data) {
-            self.riskmomentable.push({
-              rank: idx++,
-              name: i.name,
-              riskmomentum: i.risk_momentum
-            });
-          }
-        })
-        .catch(function(err) {
-          alert(err);
-        });
-    },
-
-    qualitylist: function() {
-      const self = this;
-      let idx = 1;
-      http
-        .get("/strategy/quality")
-        .then(function(res) {
-          self.qualitytable = [];
-          for (let i of res.data) {
-            self.qualitytable.push({
-              rank: idx++,
-              name: i.name,
-              sum: i.sum
-            });
-          }
-        })
-        .catch(function(err) {
-          alert(err);
-        });
-    },
-
-    valuelist: function() {
-      let self = this;
-      let idx = 1;
-      http
-        .get("/strategy/value")
-        .then(function(res) {
-          self.valuetable = [];
-          // console.log(res.data);
-          for (let i of res.data) {
-            self.valuetable.push({
-              rank: idx++,
-              name: i.name,
-              per: i.per,
-              pbr: i.pbr,
-              psr: i.psr,
-              score: i.rank
-            });
-          }
-          // console.log(self.valuetable);
-        })
-        .catch(function(err) {
-          alert(err);
-        });
+        this.lineSeries.setData(a)
+      })
     }
   },
-  created() {
-    this.lowvarlist();
-    this.momenlist();
-    this.riskmomenlist();
-    this.qualitylist();
-    this.valuelist();
+  mounted() {
+    this.chart = LightweightCharts.createChart(document.getElementById("chart"), {
+	width: 600,
+  height: 300,
+  layout: {
+    backgroundColor: "#000000",
+    textColor: "rgba(255, 255, 255, 0.9)",
+  },
+	rightPriceScale: {
+		scaleMargins: {
+			top: 0.1,
+			bottom: 0.1,
+		},
+	},
+});
+this.lineSeries = this.chart.addLineSeries({
+  color: 'rgba(33, 150, 243, 1)',
+  lineWidth: 3,
+});
   }
 };
 </script>

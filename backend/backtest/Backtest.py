@@ -8,8 +8,8 @@ django.setup()
 from api.models import StockPrice
 import time
 from django.forms.models import model_to_dict
-from LowVariabilityClass import LV
-class Backtest:
+from .LowVariabilityClass import LV
+class Backtest():
     def __init__(self,start,end,strategy,budget, rebalance=6):
         self.start = datetime.datetime.strptime(start,'%Y-%m-%d')
         self.end = datetime.datetime.strptime(end,'%Y-%m-%d')
@@ -69,9 +69,11 @@ class Backtest:
 
         table = self.lv.run(date)
         budget_divide = self.budget/self.divide
+        print(table)
         for i in range(self.divide):
-            code = table.iloc[i].종목
-
+            code = table.iloc[i].code
+            
+            print(code)
             stock = StockPrice.objects.get(code=code)
             stock = model_to_dict(stock)
             df = pd.DataFrame(stock['data'])
@@ -121,5 +123,5 @@ class Backtest:
                 continue
             stock_sum += r['close'].values[0]*row['quantity']
         return self.budget+stock_sum
-a = Backtest("2017-01-20","2018-01-20",1,2000000,3)
-print(a.run())
+# a = Backtest("2017-01-20","2018-01-20",1,2000000,3)
+# print(a.run())
