@@ -65,14 +65,8 @@ export default {
       stockName: "",
     };
   },
-
-
-
-
-    };
-  },
   mounted() {
-      this.getStocks();
+    this.getStocks();
     var home = document.getElementById("home");
 
     this.chart = LightweightCharts.createChart(
@@ -174,14 +168,12 @@ export default {
     getStocks() {},
     getStockPrice(code) {
       http.get(`/stockprice/${code}`).then((res) => {
-
         console.log(res);
         this.name = res.data.name;
         this.market_price = res.data.market_price;
         http.get("/price/" + this.$route.params.code).then((res) => {
           this.cur_price = res.data.price;
         });
-
 
         this.temp_obj = JSON.parse(res.data.data);
         this.stockName = res.data.name;
@@ -213,13 +205,13 @@ export default {
           );
           this.buy_count = null;
         });
+    },
 
     businessDayToString(businessDay) {
       return businessDay.year + "-" + businessDay.month + "-" + businessDay.day;
     },
     getStockName() {
       return this.stockName;
-
     },
   },
   watch: {
