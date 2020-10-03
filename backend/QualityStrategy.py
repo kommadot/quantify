@@ -40,7 +40,7 @@ for cnt in range(len(code_df)):
     except:
         pass
 
-value_df['SUM'] = value_df[['ROA', 'CFO', 'ROA_DIFF', 'ACCRUAL', 'LIQUID', 'TURN']].sum(axis=1)
+value_df['SUM'] = value_df[['ROA', 'CFO', 'ROA_DIFF', 'ACCRUAL', 'LIQUID', 'MARGIN', 'TURN']].sum(axis=1)
 value_df = value_df.sort_values(by=["SUM"], ascending=[False])
 value_df.to_json('Value.json', orient='table')
 
