@@ -77,19 +77,19 @@ class SimulationDetail(mixins.RetrieveModelMixin,
 
 
     @transaction.atomic
-    def delete(self,request,oid,format=None):
+    def put(self,request,oid,format=None):
         user =  request.user
-        
+        print(request.data)
         simulation = Simulation.objects.get(_id = ObjectId(oid))
         sell_price = request.data['sell_price']
 
-        user.budget += sell_price * simuation.quantity
+        user.budget += sell_price * simulation.quantity
         user.save()
         
-        simulationbreakdown = SimulationBreakdown(user_id=simuation.user_id,item_code=simuation.item_code,item_name=simuation.item_name,price=simuation.price,
-                                                  buy_date=simuation.buy_date,quantity=simuation.quantity,sell_price=sell_price)
+        simulationbreakdown = SimulationBreakdown(user_id=simulation.user_id,item_code=simulation.item_code,item_name=simulation.item_name,price=simulation.price,
+                                                  buy_date=simulation.buy_date,quantity=simulation.quantity,sell_price=sell_price)
         simulationbreakdown.save()
-        simuation.delete()
+        simulation.delete()
         return Response(status=status.HTTP_200_OK)
 
 @permission_classes((IsAuthenticated,))
