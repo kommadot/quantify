@@ -28,7 +28,7 @@ class LV:
         df = pd.DataFrame(columns=['종목', '변동성','code'])
         # test_date = datetime.strptime(test_date, "%Y-%m-%d")
         for i in range(end-start):
-            print(self.cnt)
+
             stock = model_to_dict(SP[i])
             stock_code = stock['code']
             stock_price = pd.DataFrame(stock['data'])
@@ -49,7 +49,7 @@ class LV:
             df.loc[i,['code']] = stock_code
             df.loc[i, ['변동성']] = price_variability
             # print(i)
-            self.cnt+=1
+
         # print(self.df)
         self.df = self.df.append(df)
         return self.df
