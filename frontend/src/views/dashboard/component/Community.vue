@@ -1,9 +1,15 @@
 <template>
   <v-container id="icons" fluid tag="section">
-    <base-material-card color="success" dark>
-      <template v-slot:heading>
+    <base-material-card
+      color="#283593"
+      dark
+      icon="mdi-chart-bubble"
+      title="커뮤니티"
+      class="px-5 py-3"
+    >
+      <!-- <template v-slot:heading>
         <div class="display-2 font-weight-light">커뮤니티</div>
-      </template>
+      </template> -->
       <br />
       <v-data-table
         :headers="headers"
