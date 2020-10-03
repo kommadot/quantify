@@ -1,13 +1,13 @@
 <template>
   <v-container id="regular-tables" fluid tag="section">
     <base-material-card
-      color="success"
+      color="#283593"
       dark
       icon="mdi-chart-line"
       title="모의투자현황"
       class="px-5 py-3"
     >
-      <v-simple-table class="my-3" style="border: 1px solid green">
+      <v-simple-table class="my-3" style="border: 1px solid #283593">
         <tbody>
           <tr>
             <td style="font-size: 130%">총평가금액</td>
@@ -15,7 +15,7 @@
               {{ EvaluatedPrice | numberWithCommas }}
             </td>
 
-            <td style="font-size: 130%; border-left: 1px solid green">
+            <td style="font-size: 130%; border-left: 1px solid #283593">
               총평가손익
             </td>
             <td
@@ -36,7 +36,7 @@
               {{ EvaluatedProfitLoss | numberWithCommas }}
             </td>
 
-            <td style="font-size: 130%; border-left: 1px solid green">
+            <td style="font-size: 130%; border-left: 1px solid #283593">
               수익률
             </td>
             <td
@@ -70,6 +70,7 @@
             <th class="text-right" style="font-size: 130%">보유수량</th>
             <th class="text-right" style="font-size: 130%">매수단가</th>
             <th class="text-right" style="font-size: 130%">현재가</th>
+            <th style="width: 100px"></th>
           </tr>
         </thead>
 
@@ -98,6 +99,15 @@
             <td class="text-right">{{ item.quantity | numberWithCommas }}</td>
             <td class="text-right">{{ item.price | numberWithCommas }}</td>
             <td class="text-right">{{ item.cur_price | numberWithCommas }}</td>
+            <td>
+              <v-btn
+                depressed
+                color="error"
+                @click="deleteSimulationDetail(item._id, item.cur_price)"
+              >
+                팔기
+              </v-btn>
+            </td>
           </tr>
         </tbody>
       </v-simple-table>
@@ -169,24 +179,23 @@ export default {
   */
   methods: {
     ...mapActions(["getSimulationList"]),
-    // getStocks() {
-    //   for (s in simulationlist) {
-    //     let cur_price = 0;
-    //     http.get("/api/price" + s.item_code).then((res) => {
-    //       cur_price = res.data;
-    //     });
-    //     const a = {};
-    //     a["quantity"] = s.quantity;
-    //     a["price"] = s.price;
-    //     a["profit"] = s.quantity * cur_price - s.quantity * s.price;
-    //     a["rate"] = ((cur_price - s.price) / s.price) * 100;
-    //     a["cur_price"] = cur_price;
-    //     a["item_name"] = s.name;
-    //     a["eval"] = cur_price * s.quantity;
-    //     this.stocks.push(a);
-    //   }
-    //   console.log(this.stocks);
-    // },
+    deleteSimulationDetail(_id, cur_price) {
+      console.log(this.$store.state.token);
+      const data = {
+        sell_price: cur_price,
+      };
+      http
+        .put("/simulations/simulation/" + _id, data, {
+          headers: {
+            Authorization: "JWT " + this.$store.state.token,
+          },
+        })
+        .then();
+      const idx = this.stocks.findIndex(function (item) {
+        return item._id === _id;
+      });
+      if (idx > -1) this.stocks.splice(idx, 1);
+    },
     setupdate() {
       this.stocks.forEach((el) => {
         http.get("/price/" + el.item_code).then((res) => {
@@ -209,6 +218,9 @@ export default {
       let cnt = 0;
       let mcnt = 0;
       mcnt = value.length;
+      if (value.length == 0) {
+        this.overlay = false;
+      }
       value.forEach((s) => {
         let cur_price = 0;
         http.get("/price/" + s.item_code).then((res) => {
@@ -222,6 +234,7 @@ export default {
           a["cur_price"] = cur_price;
           a["item_name"] = s.item_name;
           a["eval"] = cur_price * s.quantity;
+          a["_id"] = s._id;
           this.stocks.push(a);
           cnt += 1;
           if (cnt == mcnt) {

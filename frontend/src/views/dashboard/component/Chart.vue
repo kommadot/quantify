@@ -1,5 +1,34 @@
 <template>
   <v-container fill-height>
+    <v-row justify="d-flex align-center space-between">
+      <v-col style="padding: 0">
+        <v-row>
+          <div class="headline mr-3 white--text">
+            {{ name }}
+          </div>
+          <div class="d-flex align-end mr-3 pb-0 white--text">
+            현재가 : {{ cur_price }}원
+          </div>
+          <div class="d-flex align-end pb-0 white--text">
+            시가총액 : {{ market_price }}억원
+          </div>
+        </v-row>
+      </v-col>
+      <v-col style="padding: 0" cols="4">
+        <v-row>
+          <v-text-field
+            color="white"
+            label="수량"
+            v-model="buy_count"
+            dark
+          ></v-text-field>
+
+          <v-btn depressed color="#283593" @click="postSimulationList">
+            모의주식구매
+          </v-btn>
+        </v-row>
+      </v-col>
+    </v-row>
     <v-row style="width: 100%; height: 100%">
       <div
         id="home"
@@ -13,6 +42,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapState, mapActions, Store } from "vuex";
 import http from "@/util/http-common";
 
 export default {
@@ -24,12 +55,26 @@ export default {
       lineSeries: null,
       // lineSeries: [],
       //   code1: "155660",
+
+      name: "",
+      market_price: 0,
+      cur_price: 0,
+      buy_count: null,
       temp_obj: [],
+
       stockName: "",
     };
   },
+
+
+
+
+    };
+  },
   mounted() {
+      this.getStocks();
     var home = document.getElementById("home");
+
     this.chart = LightweightCharts.createChart(
       document.getElementById("home"),
       {
@@ -126,17 +171,55 @@ export default {
     });
   },
   methods: {
+    getStocks() {},
     getStockPrice(code) {
       http.get(`/stockprice/${code}`).then((res) => {
+
+        console.log(res);
+        this.name = res.data.name;
+        this.market_price = res.data.market_price;
+        http.get("/price/" + this.$route.params.code).then((res) => {
+          this.cur_price = res.data.price;
+        });
+
+
         this.temp_obj = JSON.parse(res.data.data);
         this.stockName = res.data.name;
       });
     },
+
+    postSimulationList(context) {
+      const data = {
+        code: this.$route.params.code,
+        name: this.name,
+        quantity: this.buy_count,
+        price: this.cur_price,
+      };
+      http
+        .post("/simulations/simulation", data, {
+          headers: {
+            Authorization: "JWT " + this.$store.state.token,
+          },
+        })
+        .then(({ data }) => {
+          this.$store.commit("setSimulationList", data);
+          alert(
+            this.name +
+              " " +
+              this.buy_count +
+              "주가 " +
+              this.cur_price +
+              "원에 매수되었습니다."
+          );
+          this.buy_count = null;
+        });
+
     businessDayToString(businessDay) {
       return businessDay.year + "-" + businessDay.month + "-" + businessDay.day;
     },
     getStockName() {
       return this.stockName;
+
     },
   },
   watch: {

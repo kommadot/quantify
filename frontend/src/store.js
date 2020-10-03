@@ -16,7 +16,7 @@ export default new Vuex.Store({
     simulationdetail: {},
     simulationbreakdownlist: [],
     simulationbreakdowndetail: {},
-    company:[],
+    company: [],
   },
   getters: {
     isLoggedIn(state) {
@@ -75,7 +75,7 @@ export default new Vuex.Store({
     setSimulationBreakdownDetail(state, payload) {
       state.simulationbreakdowndetail = payload
     },
-    setCompany(state,payload){
+    setCompany(state, payload) {
       state.company = payload
     },
 
@@ -100,6 +100,7 @@ export default new Vuex.Store({
           },
         })
         .then(({ data }) => {
+          console.log(data);
           context.commit("setSimulationList", data);
         });
     },
@@ -115,15 +116,7 @@ export default new Vuex.Store({
           context.commit("setSimulationDetail", data);
         });
     },
-    deleteSimulationDetail() {
-      http
-        .delete('/simulations/oid', {
-          headers: {
-            Authorization: "JWT " + context.state.token
-          },
-        })
-        .then();
-    },
+
 
     getSimulationBreakdownList(context) {
       http
@@ -148,9 +141,9 @@ export default new Vuex.Store({
           context.commit("setSimulationBreakdownDetail", data);
         });
     },
-    getCompany(context){
-      http.get('/company').then(res=>{
-        context.commit("setCompany",res.data)
+    getCompany(context) {
+      http.get('/company').then(res => {
+        context.commit("setCompany", res.data)
       })
     }
   },
