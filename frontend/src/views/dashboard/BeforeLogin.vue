@@ -7,7 +7,10 @@
       id="mobile_video"
       playsinline=""
     >
-      <source src="@/assets/AP_1920_1080.mp4" type="video/mp4" />
+      <source
+        src="https://s3.ap-northeast-2.amazonaws.com/alphasquare-s3/media/AP_1920_1080.mp4"
+        type="video/mp4"
+      />
     </video>
 
     <v-btn
@@ -24,7 +27,7 @@
 export default {};
 </script>
 
-<style scoped>
+<style>
 #mobile_video {
   z-index: -1;
   position: fixed;
@@ -34,6 +37,6 @@ export default {};
   min-height: 100vh;
   width: auto;
   height: auto;
-  opacity: 70%;
+  opacity: 0.7;
 }
 </style>
