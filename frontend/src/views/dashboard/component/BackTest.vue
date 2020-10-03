@@ -2,8 +2,7 @@
   <v-container id="dashboard" fluid tag="section">
     <v-container fluid>
       <v-row>
-        <!-- checkboxes -->
-        <!-- <v-col cols="1.5">
+        <v-col cols="1.5">
           <v-checkbox
             v-model="checked"
             label="저변동성 전략"
@@ -34,17 +33,6 @@
             value="value"
             dark
           ></v-checkbox>
-        </v-col> -->
-
-        <v-col cols="6">
-          <v-overflow-btn
-            class="my-2"
-            v-model="dropdownselected"
-            :items="dropdown_font"
-            label="전략 선택"
-            target="#dropdown-example"
-            dark
-          ></v-overflow-btn>
         </v-col>
 
         <!-- calendar -->
@@ -129,7 +117,7 @@ export default {
         "저변동성 전략",
         "모멘텀 전략",
         "퀄리티 전략",
-        "밸류 전략",
+        "밸류 전략"
       ],
       dropdownselected: "",
       headers: [],
@@ -143,7 +131,7 @@ export default {
       menu1: false,
       menu2: false,
       date1: new Date().toISOString().substr(0, 10),
-      date2: new Date().toISOString().substr(0, 10),
+      date2: new Date().toISOString().substr(0, 10)
     };
   },
   watch: {
@@ -154,10 +142,10 @@ export default {
             text: "순위",
             align: "start",
             sortable: false,
-            value: "rank",
+            value: "rank"
           },
           { text: "기업명", value: "name" },
-          { text: "변동성", value: "variability" },
+          { text: "변동성", value: "variability" }
         ];
         this.filtertable = this.lowvartable;
       }
@@ -168,10 +156,10 @@ export default {
             text: "순위",
             align: "start",
             sortable: false,
-            value: "rank",
+            value: "rank"
           },
           { text: "기업명", value: "name" },
-          { text: "모멘텀", value: "momentum" },
+          { text: "모멘텀", value: "momentum" }
         ];
         this.filtertable = this.momentable;
       }
@@ -182,10 +170,10 @@ export default {
             text: "순위",
             align: "start",
             sortable: false,
-            value: "rank",
+            value: "rank"
           },
           { text: "기업명", value: "name" },
-          { text: "퀄리티 합계", value: "sum" },
+          { text: "퀄리티 합계", value: "sum" }
         ];
         this.filtertable = this.qualitytable;
       }
@@ -196,107 +184,107 @@ export default {
             text: "순위",
             align: "start",
             sortable: false,
-            value: "rank",
+            value: "rank"
           },
           { text: "기업명", value: "name" },
           { text: "PER", value: "per" },
           { text: "PSR", value: "psr" },
           { text: "PBR", value: "pbr" },
-          { text: "F-Score", value: "score" },
+          { text: "F-Score", value: "score" }
         ];
         this.filtertable = this.valuetable;
       }
-    },
+    }
   },
   methods: {
-    lowvarlist: function () {
+    lowvarlist: function() {
       const self = this;
       let idx = 1;
       http
         .get("/strategy/lowvar")
-        .then(function (res) {
+        .then(function(res) {
           self.lowvartable = [];
           for (let i of res.data) {
             self.lowvartable.push({
               rank: idx++,
               name: i.name,
-              variability: i.variability,
+              variability: i.variability
             });
           }
         })
-        .catch(function (err) {
+        .catch(function(err) {
           alert(err);
         });
     },
 
-    momenlist: function () {
+    momenlist: function() {
       const self = this;
       let idx = 1;
       http
         .get("/strategy/momen")
-        .then(function (res) {
+        .then(function(res) {
           self.momentable = [];
           for (let i of res.data) {
             self.momentable.push({
               rank: idx++,
               name: i.name,
-              momentum: i.momentum,
+              momentum: i.momentum
             });
           }
         })
-        .catch(function (err) {
+        .catch(function(err) {
           alert(err);
         });
     },
 
-    riskmomenlist: function () {
+    riskmomenlist: function() {
       const self = this;
       let idx = 1;
       http
         .get("/strategy/riskmomen")
-        .then(function (res) {
+        .then(function(res) {
           self.riskmomentable = [];
           for (let i of res.data) {
             self.riskmomentable.push({
               rank: idx++,
               name: i.name,
-              riskmomentum: i.risk_momentum,
+              riskmomentum: i.risk_momentum
             });
           }
         })
-        .catch(function (err) {
+        .catch(function(err) {
           alert(err);
         });
     },
 
-    qualitylist: function () {
+    qualitylist: function() {
       const self = this;
       let idx = 1;
       http
         .get("/strategy/quality")
-        .then(function (res) {
+        .then(function(res) {
           self.qualitytable = [];
           for (let i of res.data) {
             self.qualitytable.push({
               rank: idx++,
               name: i.name,
-              sum: i.sum,
+              sum: i.sum
             });
           }
         })
-        .catch(function (err) {
+        .catch(function(err) {
           alert(err);
         });
     },
 
-    valuelist: function () {
+    valuelist: function() {
       let self = this;
       let idx = 1;
       http
         .get("/strategy/value")
-        .then(function (res) {
+        .then(function(res) {
           self.valuetable = [];
-          console.log(res.data);
+          // console.log(res.data);
           for (let i of res.data) {
             self.valuetable.push({
               rank: idx++,
@@ -304,15 +292,15 @@ export default {
               per: i.per,
               pbr: i.pbr,
               psr: i.psr,
-              score: i.rank,
+              score: i.rank
             });
           }
-          console.log(self.valuetable);
+          // console.log(self.valuetable);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           alert(err);
         });
-    },
+    }
   },
   created() {
     this.lowvarlist();
@@ -320,6 +308,6 @@ export default {
     this.riskmomenlist();
     this.qualitylist();
     this.valuelist();
-  },
+  }
 };
 </script>
