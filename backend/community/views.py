@@ -48,8 +48,7 @@ class CommunityDetail(APIView):
     @permission_classes([IsAuthenticated])
     def put(self, request, article_pk):
         article = get_object_or_404(Article, pk=article_pk)
-        serializer = ArticleSerializer(data=request.data)
-
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
-            return Response(serializer.data)
+        article.title = request.data['title']
+        article.content = request.data['content']
+        article.save()
+        return Response(status=status.HTTP_200_OK)

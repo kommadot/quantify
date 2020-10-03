@@ -56,22 +56,24 @@ def get_price_1y(item_name,i):
     df = pd.DataFrame(rows,columns=df_col)
     # print(df)
     with open('as.json', 'w', encoding="utf-8") as make_file:
-
         for line in rows:
             # print(line)
             # str(line)close,diff,open,high,low,volume
+            if line[1] == "0":
+                line[1],line[2],line[3] = line[4],line[4],line[4]
             date = line[0][:4] + '-' + line[0][4:6] + '-' + line[0][6:]
             daterows.append({"time": date, "open": line[1], "high":line[2], "low": line[3], "close": line[4], "volume": line[5]})
         file_data['data'] = daterows
         file_data["code"] = code
+        file_data["name"] = item_name
         file_data['market_price'] = m_price
         file_data['id']= i
         json.dump(file_data, make_file, ensure_ascii=False, indent="\t")
-    with open('as.json') as json_file:
+    with open('as.json', encoding="utf-8") as json_file:
         json_data = json.load(json_file)
     # json_object = json_data["2020-09-16"]
     mycol.insert_one(json_data)
 
-for i in range(len(code_df)):
+for i in range(1997, len(code_df)):
     # print(i)
     get_price_1y(code_df.name[i], i)
