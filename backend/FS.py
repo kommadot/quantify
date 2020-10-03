@@ -40,6 +40,7 @@ class FS:
         # self.fs_list2_SH[self.past_index]
 
         self.fs_list2_FH = self.fs_lists2[11]
+        # print(self.fs_lists2)
         self.fs_list2_FH.columns = self.fs_list2_FH.columns.get_level_values(1)
         self.fs_list2_FH.set_index(self.fs_list2_FH.columns[0], inplace=True)
         self.fs_list2_FH[self.cur_index]
@@ -54,6 +55,9 @@ class FS:
     def get_PBR(self):
         return self.fs_list2_FH[self.cur_index].loc['PBR']
 
+
+    def get_SC(self):
+        return int(self.fs_list2_SH[1].loc['시가총액(보통주,억원)'])
 
     # 시가총액 / 매출액
     def get_PSR(self):

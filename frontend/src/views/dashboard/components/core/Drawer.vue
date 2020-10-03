@@ -9,7 +9,6 @@
     app
     width="260"
     v-bind="$attrs"
-    
     permanent
   >
     <template v-slot:img="props">
@@ -23,14 +22,14 @@
         <v-img
           src="@/assets/green.png"
           style="border-radius: 50px; cursor: pointer"
-          @click="$router.push('/')"
+          @click="$router.push('/home')"
         />
       </v-list-item>
     </v-list>
 
     <v-divider class="mb-2" />
 
-    <v-list expand nav >
+    <v-list expand nav>
       <!-- Style cascading bug  -->
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
@@ -41,7 +40,6 @@
             v-if="item.children"
             :key="`group-${i}`"
             :item="item"
-            
           >
             <!--  -->
           </base-item-group>
@@ -73,27 +71,27 @@ export default {
       {
         icon: "mdi-trackpad",
         title: "메인",
-        to: "/",
+        to: "/home",
       },
       {
         icon: "mdi-view-dashboard",
         title: "전략필터",
-        to: "/Strategy",
+        to: "/home/Strategy",
       },
       {
         title: "모의투자",
         icon: "mdi-chart-line",
-        to: "/Simulation",
+        to: "/home/Simulation",
       },
       {
         title: "백테스트",
         icon: "mdi-format-font",
-        to: "/BackTest",
+        to: "/home/BackTest",
       },
       {
         title: "커뮤니티",
         icon: "mdi-chart-bubble",
-        to: "/Community",
+        to: "/home/Community",
       },
     ],
   }),

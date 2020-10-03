@@ -14,16 +14,19 @@ from datetime import timedelta
 
 from threading import Thread
 
+from strategy.models import RiskMomentum
+
 class MM:
     def __init__(self):
         self.df = pd.DataFrame(columns=['종목', '위험조정수익률'])
         self.cnt = 0
-        self.SP = StockPrice.objects.all()
+        # self.SP = StockPrice.objects.all()
+        self.SP = StockPrice.objects.filter(market_price__gte=10000)
     def getMM(self, start, end, test_date):
         end = end if end <= self.SP.count() else self.SP.count()
         SP = self.SP[start:end]
         df = pd.DataFrame(columns=['종목', '위험조정수익률'])
-        test_date = datetime.strptime(test_date, "%Y-%m-%d")
+        # test_date = datetime.strptime(test_date, "%Y-%m-%d")
         for i in range(end-start):
             print(self.cnt)
             stock = model_to_dict(SP[i])
@@ -42,7 +45,8 @@ class MM:
             # 변동성
             price_variability = price_profit.std() * np.sqrt(len(stock_price))
 
-            df.loc[i, ['종목']] = stock_code
+            # df.loc[i, ['종목']] = stock_code
+            df.loc[i, ['종목']] = stock['name']
             
             # 누적수익률
             accumulated_price_profit = price_profit + 1
@@ -61,19 +65,22 @@ class MM:
         self.df = self.df.append(df)
         return self.df
     
+    def run(self,test_date):
+        self.thread_init(test_date)
+        self.thread_run()
+        return self.df
 
     def thread_init(self,test_date):
         START, END = 0, 0
         self.threads = []
         ma = self.SP.count()
-        ma = 100
+        # ma = 100
         qu = ma//4
         END = START + qu
         for i in range(4):
             self.threads.append(Thread(target=self.getMM, args=(START, END, test_date)))
             START += qu
             END += qu
-        self.thread_run()
         
     def thread_run(self):
         for i in self.threads:
@@ -84,5 +91,14 @@ class MM:
 
 
 a = MM()
-a.thread_init("2020-08-20")
-print(a.df)
+df = a.run(datetime.today())
+df_records = df.to_dict('records')
+print(df_records)
+
+model_instances = [RiskMomentum(
+    name=record['종목'],
+    risk_momentum=record['위험조정수익률'],
+) for record in df_records]
+
+RiskMomentum.objects.all().delete()
+RiskMomentum.objects.bulk_create(model_instances)

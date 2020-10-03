@@ -11,6 +11,7 @@ django.setup()
 
 from strategy.models import Value
 
+import math
 
 code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0]
 code_df.종목코드 = code_df.종목코드.map('{:06d}'.format)
@@ -19,11 +20,18 @@ code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
 
 value_df = pd.DataFrame(columns=['종목', 'PER', 'PBR', 'PSR'])
 
-for cnt in range(15):
+for cnt in range(len(code_df)):
+# for cnt in range(20):
     item_name = code_df.loc[cnt, 'name']
     code = code_df.loc[cnt, 'code']
-    fs = FS(code)
+    # print(fs.get_PER())
+    
     try:
+        fs = FS(code)
+        if fs.get_SC() < 10000:
+            continue
+        if math.isnan(fs.get_PER()) or math.isnan(fs.get_PBR()) or math.isnan(fs.get_PSR()):
+            continue
         cnt += 1
         print(item_name)
         value_df.loc[cnt, ['종목']] = item_name

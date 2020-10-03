@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'simulations',
     'community',
+    'backtest',
 ]
 
 MIDDLEWARE = [

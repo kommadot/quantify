@@ -10,6 +10,10 @@ export default new Router({
   routes: [
     {
       path: "/",
+      component: () => import("@/views/dashboard/BeforeLogin"),
+    },
+    {
+      path: "/home",
       component: () => import("@/views/dashboard/Index"),
       children: [
         // Main

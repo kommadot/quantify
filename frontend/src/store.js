@@ -16,7 +16,7 @@ export default new Vuex.Store({
     simulationdetail: {},
     simulationbreakdownlist: [],
     simulationbreakdowndetail: {},
-    company:[],
+    company: [],
   },
   getters: {
     isLoggedIn(state) {
@@ -75,7 +75,7 @@ export default new Vuex.Store({
     setSimulationBreakdownDetail(state, payload) {
       state.simulationbreakdowndetail = payload
     },
-    setCompany(state,payload){
+    setCompany(state, payload) {
       state.company = payload
     },
 
@@ -148,9 +148,9 @@ export default new Vuex.Store({
           context.commit("setSimulationBreakdownDetail", data);
         });
     },
-    getCompany(context){
-      http.get('/company').then(res=>{
-        context.commit("setCompany",res.data)
+    getCompany(context) {
+      http.get('/company').then(res => {
+        context.commit("setCompany", res.data)
       })
     }
   },
