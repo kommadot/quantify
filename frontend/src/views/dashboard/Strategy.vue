@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-row>
         <!-- checkboxes -->
-        <!-- <v-col cols="1.5">
+        <v-col cols="1.5">
           <v-checkbox
             v-model="checked"
             label="저변동성 전략"
@@ -34,9 +34,9 @@
             value="value"
             dark
           ></v-checkbox>
-        </v-col> -->
+        </v-col>
 
-        <v-col cols="6">
+        <!-- <v-col cols="6">
           <v-overflow-btn
             class="my-2"
             v-model="dropdownselected"
@@ -45,7 +45,7 @@
             target="#dropdown-example"
             dark
           ></v-overflow-btn>
-        </v-col>
+        </v-col> -->
 
         <!-- calendar -->
         <!-- startdate -->
@@ -107,7 +107,6 @@
       <v-data-table
         :headers="headers"
         :items="filtertable"
-        :sort-by="selected"
         :sort-desc="[false, true]"
         multi-sort
         class="elevation-1"
@@ -147,36 +146,134 @@ export default {
     };
   },
   watch: {
-    dropdownselected(value) {
-      if (value == "저변동성 전략") {
-        this.headers = [
-          {
-            text: "순위",
-            align: "start",
-            sortable: false,
-            value: "rank",
-          },
-          { text: "기업명", value: "name" },
-          { text: "변동성", value: "variability" },
-        ];
-        this.filtertable = this.lowvartable;
+    // dropdownselected(value) {
+    //   if (value == "저변동성 전략") {
+    //     this.headers = [
+    //       {
+    //         text: "순위",
+    //         align: "start",
+    //         sortable: false,
+    //         value: "rank",
+    //       },
+    //       { text: "기업명", value: "name" },
+    //       { text: "변동성", value: "variability" },
+    //     ];
+    //     this.filtertable = this.lowvartable;
+    //   }
+
+    //   if (value == "모멘텀 전략") {
+    //     this.headers = [
+    //       {
+    //         text: "순위",
+    //         align: "start",
+    //         sortable: false,
+    //         value: "rank",
+    //       },
+    //       { text: "기업명", value: "name" },
+    //       { text: "위험조정수익률", value: "riskmomentum" },
+    //     ];
+    //     this.filtertable = this.riskmomentable;
+    //   }
+
+    //   if (value == "퀄리티 전략") {
+    //     this.headers = [
+    //       {
+    //         text: "순위",
+    //         align: "start",
+    //         sortable: false,
+    //         value: "rank",
+    //       },
+    //       { text: "기업명", value: "name" },
+    //       { text: "퀄리티 합계", value: "sum" },
+    //     ];
+    //     this.filtertable = this.qualitytable;
+    //   }
+
+    //   if (value == "밸류 전략") {
+    //     this.headers = [
+    //       {
+    //         text: "순위",
+    //         align: "start",
+    //         sortable: false,
+    //         value: "rank",
+    //       },
+    //       { text: "기업명", value: "name" },
+    //       { text: "PER", value: "per" },
+    //       { text: "PSR", value: "psr" },
+    //       { text: "PBR", value: "pbr" },
+    //       { text: "F-Score", value: "score" },
+    //     ];
+    //     this.filtertable = this.valuetable;
+    //   }
+    // },
+
+    checked(value) {
+      // 선택된게 1개일때
+      if (value.length == 1) {
+        if (value[0] == "lowvar") {
+          this.headers = [
+            {
+              text: "순위",
+              align: "start",
+              sortable: false,
+              value: "rank",
+            },
+            { text: "기업명", value: "name" },
+            { text: "변동성", value: "variability" },
+          ];
+          this.filtertable = this.lowvartable;
+        }
+        if (value[0] == "momentum") {
+          this.headers = [
+            {
+              text: "순위",
+              align: "start",
+              sortable: false,
+              value: "rank",
+            },
+            { text: "기업명", value: "name" },
+            { text: "위험조정수익률", value: "riskmomentum" },
+          ];
+          this.filtertable = this.riskmomentable;
+        }
+        if (value[0] == "quality") {
+          this.headers = [
+            {
+              text: "순위",
+              align: "start",
+              sortable: false,
+              value: "rank",
+            },
+            { text: "기업명", value: "name" },
+            { text: "퀄리티 합계", value: "sum" },
+          ];
+          this.filtertable = this.qualitytable;
+        }
+        if (value[0] == "value") {
+          this.headers = [
+            {
+              text: "순위",
+              align: "start",
+              sortable: false,
+              value: "rank",
+            },
+            { text: "기업명", value: "name" },
+            { text: "PER", value: "per" },
+            { text: "PSR", value: "psr" },
+            { text: "PBR", value: "pbr" },
+            { text: "F-Score", value: "score" },
+          ];
+          this.filtertable = this.valuetable;
+        }
       }
 
-      if (value == "모멘텀 전략") {
-        this.headers = [
-          {
-            text: "순위",
-            align: "start",
-            sortable: false,
-            value: "rank",
-          },
-          { text: "기업명", value: "name" },
-          { text: "위험조정수익률", value: "momentum" },
-        ];
-        this.filtertable = this.riskmomentable;
+      // 선택된게 0개일때 초기화
+      if (value.length == 0) {
+        this.filtertable = [];
       }
 
-      if (value == "퀄리티 전략") {
+      // 선택된게 2개 이상일때
+      if (value.length > 1) {
         this.headers = [
           {
             text: "순위",
@@ -185,40 +282,64 @@ export default {
             value: "rank",
           },
           { text: "기업명", value: "name" },
-          { text: "퀄리티 합계", value: "sum" },
         ];
-        this.filtertable = this.qualitytable;
-      }
-
-      if (value == "밸류 전략") {
-        this.headers = [
-          {
-            text: "순위",
-            align: "start",
-            sortable: false,
-            value: "rank",
-          },
-          { text: "기업명", value: "name" },
-          { text: "PER", value: "per" },
-          { text: "PSR", value: "psr" },
-          { text: "PBR", value: "pbr" },
-          { text: "F-Score", value: "score" },
-        ];
-        this.filtertable = this.valuetable;
+        this.filtertable = [];
+        var temp_obj = {};
+        // [{}]
+        if (value.includes("lowvar")) {
+          for (let i of this.lowvartable) {
+            if (i.name in temp_obj) {
+              temp_obj[i.name].rank += i.rank;
+              temp_obj[i.name].num += 1;
+            } else {
+              temp_obj[i.name] = { name: i.name, rank: i.rank, num: 1 };
+            }
+          }
+        }
+        if (value.includes("momentum")) {
+          for (let i of this.riskmomentable) {
+            if (i.name in temp_obj) {
+              temp_obj[i.name].rank += i.rank;
+              temp_obj[i.name].num += 1;
+            } else {
+              temp_obj[i.name] = { name: i.name, rank: i.rank, num: 1 };
+            }
+          }
+        }
+        if (value.includes("quality")) {
+          for (let i of this.qualitytable) {
+            if (i.name in temp_obj) {
+              temp_obj[i.name].rank += i.rank;
+              temp_obj[i.name].num += 1;
+            } else {
+              temp_obj[i.name] = { name: i.name, rank: i.rank, num: 1 };
+            }
+          }
+        }
+        if (value.includes("value")) {
+          for (let i of this.valuetable) {
+            if (i.name in temp_obj) {
+              temp_obj[i.name].rank += i.rank;
+              temp_obj[i.name].num += 1;
+            } else {
+              temp_obj[i.name] = { name: i.name, rank: i.rank, num: 1 };
+            }
+          }
+        }
+        this.filtertable = Object.values(temp_obj);
+        for (let i of this.filtertable) {
+          i.rank /= i.num;
+        }
+        this.filtertable.sort(function (a, b) {
+          return a["rank"] - b["rank"];
+        });
+        var cnt = 0;
+        for (let i of this.filtertable) {
+          cnt += 1;
+          i.rank = cnt;
+        }
       }
     },
-
-    // checked(value) {
-    //   this.headers = [
-    //     {
-    //       text: "순위",
-    //       align: "start",
-    //       sortable: false,
-    //       value: "rank",
-    //     },
-    //     { text: "기업명", value: "name" },
-    //   ];
-    // },
   },
 
   methods: {
@@ -309,7 +430,7 @@ export default {
         .get("/strategy/value")
         .then(function (res) {
           self.valuetable = [];
-          console.log(res.data);
+          // console.log(res.data);
           for (let i of res.data) {
             self.valuetable.push({
               rank: idx++,
@@ -320,7 +441,7 @@ export default {
               score: i.rank,
             });
           }
-          console.log(self.valuetable);
+          // console.log(self.valuetable);
         })
         .catch(function (err) {
           alert(err);

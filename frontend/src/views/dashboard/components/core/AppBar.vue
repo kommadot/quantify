@@ -1,57 +1,74 @@
 <template>
-<div id="app">
-  <v-app-bar id="app-bar" absolute app color="transparent" flat height="75">
-    <!-- <v-btn class="mr-3" elevation="1" fab small @click="setDrawer(!drawer)">
+  <div id="app">
+    <v-app-bar id="app-bar" absolute app color="transparent" flat height="75">
+      <!-- <v-btn class="mr-3" elevation="1" fab small @click="setDrawer(!drawer)">
       <v-icon v-if="value">mdi-view-quilt</v-icon>
 
       <v-icon v-else>mdi-dots-vertical</v-icon>
     </v-btn>-->
 
-    <v-spacer />
+      <v-spacer />
 
-    <v-autocomplete
-      v-model="searchModel"
-      :items="items"
-      :search-input.sync="search"
-      hide-no-data
-      hide-selected
-      item-text="name"
-      dark
-      placeholder="종목 입력"
-      prepend-icon="mdi-chart-line-variant"
-      return-object
-    ></v-autocomplete>
-    <div class="mx-3" />
+      <v-autocomplete
+        v-model="searchModel"
+        :items="items"
+        :search-input.sync="search"
+        hide-no-data
+        hide-selected
+        item-text="name"
+        dark
+        placeholder="종목 입력"
+        prepend-icon="mdi-chart-line-variant"
+        return-object
+      ></v-autocomplete>
+      <div class="mx-3" />
 
-    <!-- login -->
-    <v-btn v-if="!this.isLoggedIn" class="ml-2" min-width="0" text @click="login" dark>
-      <!-- <v-icon>mdi-account</v-icon> -->
-      login
-    </v-btn>
-    
+      <!-- login -->
+      <v-btn
+        v-if="!this.isLoggedIn"
+        class="ml-2"
+        min-width="0"
+        text
+        @click="login"
+        dark
+      >
+        <!-- <v-icon>mdi-account</v-icon> -->
+        login
+      </v-btn>
 
-    <!-- profile -->
-    <v-btn v-if="this.isLoggedIn" class="ml-2" min-width="0" text @click="login" dark>
-      <!-- <v-icon>mdi-account</v-icon> -->
-      profile
-    </v-btn>
-    
+      <!-- profile -->
+      <v-btn
+        v-if="this.isLoggedIn"
+        class="ml-2"
+        min-width="0"
+        text
+        @click="login"
+        dark
+      >
+        <!-- <v-icon>mdi-account</v-icon> -->
+        profile
+      </v-btn>
 
-    <!-- logout -->
-    <v-btn v-if="this.isLoggedIn" class="ml-2" min-width="0" text @click="logout2" dark>
-      <!-- <v-icon>mdi-account-off</v-icon> -->
-      logout
-    </v-btn>
-    
-  </v-app-bar>
-  <login-form :dialog="dialog" @closeForm="dialog = false" />
-</div>
+      <!-- logout -->
+      <v-btn
+        v-if="this.isLoggedIn"
+        class="ml-2"
+        min-width="0"
+        text
+        @click="logout2"
+        dark
+      >
+        <!-- <v-icon>mdi-account-off</v-icon> -->
+        logout
+      </v-btn>
+    </v-app-bar>
+    <login-form :dialog="dialog" @closeForm="dialog = false" />
+  </div>
 </template>
 
 <script>
 import LoginForm from "@/components/base/LoginForm.vue";
 import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
-
 
 export default {
   name: "DashboardCoreAppBar",
@@ -72,9 +89,7 @@ export default {
       search: "",
     };
   },
-  created() {
-
-  },
+  created() {},
   computed: {
     ...mapState(["drawer", "company"]),
     ...mapGetters(["isLoggedIn"]),
@@ -96,7 +111,7 @@ export default {
     }),
     login() {
       if (this.isLoggedIn) {
-        this.$router.push("/pages/user");
+        this.$router.push("/home/pages/user");
         this.login_profile = "profile";
       } else {
         this.dialog = true;

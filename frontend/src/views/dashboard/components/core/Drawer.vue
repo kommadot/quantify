@@ -71,7 +71,7 @@ export default {
       {
         icon: "mdi-trackpad",
         title: "메인",
-        to: "/home",
+        to: "/home/#/",
       },
       {
         icon: "mdi-view-dashboard",
