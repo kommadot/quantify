@@ -83,7 +83,7 @@ export default {
         });
     },
     writeClick() {
-      this.$router.push("/communityWrite");
+      this.$router.push("/home/communityWrite");
     },
     rowClick(item) {
       this.$router.push({

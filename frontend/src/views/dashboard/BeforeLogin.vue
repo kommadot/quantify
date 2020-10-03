@@ -7,10 +7,7 @@
       id="mobile_video"
       playsinline=""
     >
-      <source
-        src="https://s3.ap-northeast-2.amazonaws.com/alphasquare-s3/media/AP_1920_1080.mp4"
-        type="video/mp4"
-      />
+      <source src="@/assets/AP_1920_1080.mp4" type="video/mp4" />
     </video>
 
     <v-btn

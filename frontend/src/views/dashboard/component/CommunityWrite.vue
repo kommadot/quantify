@@ -119,7 +119,7 @@ export default {
           requestHeaders
         )
         .then(() => {
-          this.$router.push("/Community");
+          this.$router.push("/home/Community");
         })
         .catch((errors) => {
           console.log(errors.response.data);
