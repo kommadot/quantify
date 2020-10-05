@@ -5,11 +5,12 @@ from django.conf import settings
 
 class Stock(models.Model):
     code = models.CharField(max_length=6)
+    name = models.CharField(max_length=30)
     quantity = models.IntegerField()
     price = models.FloatField()
     class Meta:
         abstract = True
-        
+
 class Log(models.Model):
     date = models.CharField(max_length=100)
     datas = models.ArrayField(model_container = Stock)

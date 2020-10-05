@@ -31,8 +31,6 @@ class BackTestView(APIView):
             # btm = BacktestModel(user=request.user)
             
             for row in logs:
-                print(row['datas'])
-                print(type(row['datas']))
                 log = {"date":row['date'],"types":row['types'],"datas":row['datas']}
                 log_array.append(log)
             btm.log = log_array
