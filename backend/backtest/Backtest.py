@@ -93,7 +93,7 @@ class Backtest():
             
             if quantity==0:
                 continue
-            self.stock_list.append({"code":code,"quantity":quantity,"price":price})
+            self.stock_list.append({"name":stock['name'],"code":code,"quantity":quantity,"price":price})
             self.budget -= price*quantity
         self.log.append({"date": date.strftime('%Y-%m-%d'),"types":"buy","datas":self.stock_list.copy()})
 
