@@ -103,17 +103,36 @@
           title="BACKTEST LOG"
           class="px-5 py-3 mx-6"
         >
-          <div v-for="ld in log_data" :key="ld.id">
-            <span>{{ ld.date }}에 </span>
-            <br />
-            <div v-for="data in ld.datas" :key="data.id">
-              <span>{{ data.name }}종목 </span>
-              <span>{{ data.quantity }}주를 </span>
-              <span>{{ data.price }}원에 </span>
-              <span>{{ ld.types }}</span>
+          <!-- datas = res.data -->
+          <!-- <div v-for="data in datas.logs" :key="data.id"> -->
+          <div v-for="log in datas.logs" :key="log.id">
+            <span>{{ log.date }}에 </span>
+            <div v-for="log_data in log.datas" :key="log_data.id">
+              <span>{{ log_data.name }} </span>
+              <span>{{ log_data.quantity }}주를 </span>
+              <span>{{ log_data.price }}원에 </span>
+              <span v-if="log.types == 'buy'" style="color: red">{{
+                log.types
+              }}</span>
+              <span v-else style="color: skyblue">{{ log.types }}</span>
             </div>
-            <span>현재 평가액은 {{ ld.datas | getTotalPrice }}원 입니다.</span>
+            <span v-if="log.types == 'buy'"
+              >주문 금액은 {{ log.datas | getTotalPrice }}원 입니다.</span
+            >
+            <span v-if="log.types == 'buy'"
+              ><br />현재 평가 금액은 1000000원 입니다.</span
+            >
+
+            <span v-if="log.types == 'sell'"
+              >정산 금액은 {{ log.datas | getTotalPrice }}원 입니다.</span
+            >
           </div>
+          <span
+            >현재 평가 금액은
+            {{ this.budget_data[this.budget_data.length - 1] }}원 입니다.
+          </span>
+
+          <!-- </div> -->
         </base-material-card>
       </v-row>
     </v-container>
@@ -135,8 +154,8 @@ export default {
       menu2: false,
       date1: new Date().toISOString().substr(0, 10),
       date2: new Date().toISOString().substr(0, 10),
-      log_data: [],
-      total_price: 0,
+      budget_data: [],
+      datas: {},
     };
   },
   watch: {},
@@ -167,7 +186,7 @@ export default {
           }
         )
         .then((res) => {
-          this.log_data = res.data.logs;
+          this.datas = res.data;
           console.log(res);
           const a = [];
           const data = res.data.data;
@@ -210,20 +229,16 @@ export default {
       })
       .then((res) => {
         console.log(res);
-        let log = res.data.log;
-        log = log.replace(/\\/g, "");
-        log = log.replace(/\"\[/g, "[");
-        log = log.replace(/\]\"/g, "]");
-        log = JSON.parse(log);
-        this.log_data = log;
-
+        this.datas = res.data;
+        console.log(this.datas);
         const a = [];
         let data = res.data.data;
-        data = JSON.parse(data);
         console.log(data);
         data.forEach((r) => {
           a.push({ time: r["date"], value: r["budget"] });
+          this.budget_data.push(r["budget"]);
         });
+        console.log(this.budget_data);
         this.lineSeries.setData(a);
       });
   },

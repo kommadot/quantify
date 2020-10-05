@@ -48,5 +48,4 @@ class BackTestView(APIView):
     def get(self,request):
         user = request.user
         test_data = BacktestModel.objects.get(user=user)
-        
-        return Response(BacktestModelSerializer(test_data).data)
+        return Response({"data":test_data.data,"logs":test_data.log})
