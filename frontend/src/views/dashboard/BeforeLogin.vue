@@ -15,9 +15,16 @@
     >
       <p style="color: white; font-size: 450%">주식의 첫 걸음</p>
       <br />
+
       <v-img
         src="@/assets/green.png"
-        style="border-radius: 50px; cursor: pointer"
+        style="
+          border-radius: 50px;
+          cursor: pointer;
+          width: 50%;
+          margin-left: auto;
+          margin-right: auto;
+        "
         @click="$router.push('/home')"
       />
       <br />
