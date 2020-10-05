@@ -9,6 +9,7 @@ from api.models import StockPrice
 import time
 from django.forms.models import model_to_dict
 from .LowVariabilityClass import LV
+import copy
 class Backtest():
     def __init__(self,start,end,strategy,budget, rebalance=6):
         self.start = datetime.datetime.strptime(start,'%Y-%m-%d')
@@ -95,11 +96,13 @@ class Backtest():
                 continue
             self.stock_list.append({"name":stock['name'],"code":code,"quantity":quantity,"price":price})
             self.budget -= price*quantity
-        self.log.append({"date": date.strftime('%Y-%m-%d'),"types":"buy","datas":self.stock_list.copy()})
+        print(self.stock_list)
+        self.log.append({"date": date.strftime('%Y-%m-%d'),"types":"buy","datas":copy.deepcopy(self.stock_list)})
 
     def sell_stock(self,date):
 
-        self.log.append({"date": date.strftime('%Y-%m-%d'),"types":"sell","datas":self.stock_list.copy()})
+        
+        s = []
         for i in self.stock_list:
             stock = StockPrice.objects.get(code=i['code'])
             stock = model_to_dict(stock)
@@ -114,9 +117,12 @@ class Backtest():
                     price=temp
 
                 cur_date -= datetime.timedelta(days=1)
+            i['price']=price
+            print(i)
+            s.append(copy.deepcopy(i))
             self.budget += i['quantity'] * price
         self.stock_list=[]
-
+        self.log.append({"date": date.strftime('%Y-%m-%d'),"types":"sell","datas":s})
     def get_budget(self,day):
         stock_sum = 0
         for row in self.stock_list:
