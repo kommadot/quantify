@@ -1,109 +1,150 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-container fluid>
+      <!-- filter -->
       <v-row>
-        <!-- checkboxes -->
-        <v-col cols="1.5">
+        <!-- 저변동성 전략 -->
+        <v-col class="d-flex flex-nowrap justify-center">
           <v-checkbox
             v-model="checked"
             label="저변동성 전략"
             value="lowvar"
             dark
-          ></v-checkbox>
+          >
+          </v-checkbox>
+          <v-tooltip bottom max-width="1150px" nudge-right="425px;">
+            <template v-slot:activator="{ on, attrs }">
+              <span
+                v-bind="attrs"
+                v-on="on"
+                style="color: white; margin: 15px 0px 30px 5px"
+                >?</span
+              >
+            </template>
+            <span>
+              <p>
+                <br />
+                전통적 금융 이론에서는 수익률의 변동성이 클수록 위험이 크고,
+                이런 위험에 대한 보상으로 기대수익률이 높아야 한다고 보았습니다.
+                따라서 고변동성 종목의 기대수익률이 크고, 저변동성 종목의
+                기대수익률이 낮은 고위험 고수익이 당연한 믿음이었습니다.
+              </p>
+              <p>
+                그러나 현실에서는 오히려 변동성이 낮은 종목들의 수익률이
+                변동성이 높은 종목들의 수익률보다 높은,
+                <strong>저변동성 효과</strong>가 발견되고 있습니다.
+              </p>
+              <p>
+                따라서 <strong>변동성이 적은 주식</strong>은 장기적으로 시장에
+                영향을 많이 받는 주식들보다
+                <strong>수익률이 좋고 보다 안정적인 수익을 기대</strong>할 수
+                있습니다.
+              </p>
+            </span>
+          </v-tooltip>
         </v-col>
-        <v-col cols="1.5">
+
+        <!-- 모멘텀 전략 -->
+        <v-col class="d-flex flex-nowrap justify-center">
           <v-checkbox
             v-model="checked"
             label="모멘텀 전략"
             value="momentum"
             dark
           ></v-checkbox>
+          <v-tooltip bottom max-width="1150px" nudge-right="0px;">
+            <template v-slot:activator="{ on, attrs }">
+              <span
+                v-bind="attrs"
+                v-on="on"
+                style="color: white; margin: 15px 0px 30px 5px"
+                >?</span
+              >
+            </template>
+            <span>
+              <p>
+                <br />
+                투자에서 모멘텀이란 주가 혹은 이익의 추세로서,
+                <strong>상승 추세의 주식은 지속적으로 상승하는 경향</strong>을
+                보입니다.
+              </p>
+              <p>
+                1년간의 수익률과 변동성을 고려한
+                <strong>위험조정 수익률</strong>을 제공합니다.
+              </p>
+            </span>
+          </v-tooltip>
         </v-col>
-        <v-col cols="1.5">
+
+        <!-- 퀄리티 전략 -->
+        <v-col class="d-flex flex-nowrap justify-center">
           <v-checkbox
             v-model="checked"
             label="퀄리티 전략"
             value="quality"
             dark
           ></v-checkbox>
+          <v-tooltip bottom max-width="1150px" nudge-right="0px;">
+            <template v-slot:activator="{ on, attrs }">
+              <span
+                v-bind="attrs"
+                v-on="on"
+                style="color: white; margin: 15px 0px 30px 5px"
+                >?</span
+              >
+            </template>
+            <span>
+              <p>
+                <br />
+                퀄리티 전략은 기업의 재무제표 데이터를 활용하여
+                <strong>기업의 우량성 정도</strong>를 나타내는
+                <strong>F-score</strong>를 계산합니다.
+              </p>
+              <p>
+                <strong
+                  >수익성, 수익의 안정성, 기업 구조, 수익의 성장성, 회계적
+                  우량성, 배당, 투자</strong
+                >등의 가치를 종합적으로 분석합니다.
+              </p>
+            </span>
+          </v-tooltip>
         </v-col>
-        <v-col cols="1.5">
+
+        <!-- 밸류 전략 -->
+        <v-col class="d-flex flex-nowrap justify-center">
           <v-checkbox
             v-model="checked"
             label="밸류 전략"
             value="value"
             dark
           ></v-checkbox>
+          <v-tooltip bottom max-width="1150px" nudge-right="0px;">
+            <template v-slot:activator="{ on, attrs }">
+              <span
+                v-bind="attrs"
+                v-on="on"
+                style="color: white; margin: 15px 0px 30px 5px"
+                >?</span
+              >
+            </template>
+            <span>
+              <p>
+                <br />
+                밸류 전략은
+                <strong>내재 가치 대비 낮은 가격의 주식(저PER, 저PBR 등)</strong
+                >이, 내재 가치 대비 비싼 주식보다
+                <strong>수익률이 높은 현상</strong>을 이용합니다.
+              </p>
+              <p>
+                <strong>PER, PBR, PSR</strong>에 각 기업의 순위를 매겨 종합
+                순위가 낮은 주식을 추천합니다.
+              </p>
+            </span>
+          </v-tooltip>
         </v-col>
-
-        <!-- <v-col cols="6">
-          <v-overflow-btn
-            class="my-2"
-            v-model="dropdownselected"
-            :items="dropdown_font"
-            label="전략 선택"
-            target="#dropdown-example"
-            dark
-          ></v-overflow-btn>
-        </v-col> -->
-
-        <!-- calendar -->
-        <!-- startdate -->
-        <!-- <v-col cols="3">
-          <v-menu
-            v-model="menu1"
-            :close-on-content-click="false"
-            :nudge-right="0"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-            dark
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="date1"
-                label="시작일"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-                dark
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              v-model="date1"
-              @input="menu1 = false"
-            ></v-date-picker>
-          </v-menu>
-        </v-col> -->
-        <!-- enddate -->
-        <!-- <v-col cols="3">
-          <v-menu
-            v-model="menu2"
-            :close-on-content-click="false"
-            :nudge-right="0"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-            dark
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="date2"
-                label="종료일"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-                max-width="100px"
-                dark
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              v-model="date2"
-              @input="menu2 = false"
-            ></v-date-picker>
-          </v-menu>
-        </v-col> -->
       </v-row>
+
+      <!-- table -->
       <v-data-table
         :headers="headers"
         :items="filtertable"
@@ -146,67 +187,6 @@ export default {
     };
   },
   watch: {
-    // dropdownselected(value) {
-    //   if (value == "저변동성 전략") {
-    //     this.headers = [
-    //       {
-    //         text: "순위",
-    //         align: "start",
-    //         sortable: false,
-    //         value: "rank",
-    //       },
-    //       { text: "기업명", value: "name" },
-    //       { text: "변동성", value: "variability" },
-    //     ];
-    //     this.filtertable = this.lowvartable;
-    //   }
-
-    //   if (value == "모멘텀 전략") {
-    //     this.headers = [
-    //       {
-    //         text: "순위",
-    //         align: "start",
-    //         sortable: false,
-    //         value: "rank",
-    //       },
-    //       { text: "기업명", value: "name" },
-    //       { text: "위험조정수익률", value: "riskmomentum" },
-    //     ];
-    //     this.filtertable = this.riskmomentable;
-    //   }
-
-    //   if (value == "퀄리티 전략") {
-    //     this.headers = [
-    //       {
-    //         text: "순위",
-    //         align: "start",
-    //         sortable: false,
-    //         value: "rank",
-    //       },
-    //       { text: "기업명", value: "name" },
-    //       { text: "퀄리티 합계", value: "sum" },
-    //     ];
-    //     this.filtertable = this.qualitytable;
-    //   }
-
-    //   if (value == "밸류 전략") {
-    //     this.headers = [
-    //       {
-    //         text: "순위",
-    //         align: "start",
-    //         sortable: false,
-    //         value: "rank",
-    //       },
-    //       { text: "기업명", value: "name" },
-    //       { text: "PER", value: "per" },
-    //       { text: "PSR", value: "psr" },
-    //       { text: "PBR", value: "pbr" },
-    //       { text: "F-Score", value: "score" },
-    //     ];
-    //     this.filtertable = this.valuetable;
-    //   }
-    // },
-
     checked(value) {
       // 선택된게 1개일때
       if (value.length == 1) {
@@ -363,26 +343,6 @@ export default {
         });
     },
 
-    // momenlist: function () {
-    //   const self = this;
-    //   let idx = 1;
-    //   http
-    //     .get("/strategy/momen")
-    //     .then(function (res) {
-    //       self.momentable = [];
-    //       for (let i of res.data) {
-    //         self.momentable.push({
-    //           rank: idx++,
-    //           name: i.name,
-    //           momentum: i.momentum,
-    //         });
-    //       }
-    //     })
-    //     .catch(function (err) {
-    //       alert(err);
-    //     });
-    // },
-
     riskmomenlist: function () {
       const self = this;
       let idx = 1;
@@ -457,3 +417,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

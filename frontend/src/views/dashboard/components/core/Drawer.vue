@@ -62,38 +62,38 @@ export default {
   props: {
     expandOnHover: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   data: () => ({
     items: [
       {
-        icon: "mdi-trackpad",
+        icon: "mdi-bulletin-board",
         title: "메인",
         to: "/home/#/",
       },
       {
         icon: "mdi-view-dashboard",
         title: "전략필터",
-        to: "/home/Strategy"
+        to: "/home/Strategy",
       },
       {
         title: "모의투자",
         icon: "mdi-chart-line",
-        to: "/home/Simulation"
+        to: "/home/Simulation",
       },
       {
         title: "백테스트",
-        icon: "mdi-format-font",
-        to: "/home/BackTest"
+        icon: "mdi-chart-bar",
+        to: "/home/BackTest",
       },
       {
         title: "커뮤니티",
         icon: "mdi-chart-bubble",
-        to: "/home/Community"
-      }
-    ]
+        to: "/home/Community",
+      },
+    ],
   }),
 
   computed: {
@@ -105,7 +105,7 @@ export default {
       },
       set(val) {
         this.$store.commit("SET_DRAWER", val);
-      }
+      },
     },
     computedItems() {
       return this.items.map(this.mapItem);
@@ -113,9 +113,9 @@ export default {
     profile() {
       return {
         avatar: true,
-        title: "Quantify"
+        title: "Quantify",
       };
-    }
+    },
   },
 
   methods: {
@@ -123,7 +123,7 @@ export default {
       return {
         ...item,
         children: item.children ? item.children.map(this.mapItem) : undefined,
-        title: this.$t(item.title)
+        title: this.$t(item.title),
       };
     },
     check(value) {
@@ -133,9 +133,9 @@ export default {
         }
       }
       return true;
-    }
+    },
   },
-  filters: {}
+  filters: {},
 };
 </script>
 

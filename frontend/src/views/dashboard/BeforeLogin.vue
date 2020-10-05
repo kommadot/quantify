@@ -7,25 +7,30 @@
       id="mobile_video"
       playsinline=""
     >
-      <source
-        src="https://s3.ap-northeast-2.amazonaws.com/alphasquare-s3/media/AP_1920_1080.mp4"
-        type="video/mp4"
-      />
+      <source src="@/assets/main.mp4" type="video/mp4" />
     </video>
 
-    <v-btn
-      color="#00BCD4"
-      
-      style="position: absolute;top: 50%;left:50%;margin:-50px 0 0 -50px;"
-      @click="$router.push('/home')"
+    <div
+      style="position: absolute; top: 35%; left: 38%; margin: -50px 0 0 -50px"
     >
-      시작하기
-    </v-btn>
+      <p style="color: white; font-size: 450%">주식의 첫 걸음</p>
+      <br />
+      <v-img
+        src="@/assets/green.png"
+        style="border-radius: 50px; cursor: pointer"
+        @click="$router.push('/home')"
+      />
+      <br />
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {};
+  },
+};
 </script>
 
 <style>
@@ -36,7 +41,7 @@ export default {};
   left: 0;
   min-width: 100%;
   min-height: 100vh;
-  width: auto;
+  width: 100%;
   height: auto;
   opacity: 0.7;
 }

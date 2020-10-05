@@ -18,7 +18,7 @@
         item-text="name"
         dark
         placeholder="종목 입력"
-        prepend-icon="mdi-chart-line-variant"
+        prepend-icon="mdi-magnify"
         return-object
       ></v-autocomplete>
       <div class="mx-3" />
@@ -73,20 +73,20 @@ import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "DashboardCoreAppBar",
   components: {
-    LoginForm
+    LoginForm,
   },
   props: {
     value: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       dialog: false,
       login_profile: "login",
       searchModel: "",
-      search: ""
+      search: "",
     };
   },
   created() {},
@@ -94,7 +94,7 @@ export default {
     ...mapState(["drawer", "company"]),
     ...mapGetters(["isLoggedIn"]),
     items() {
-      return this.company.map(entry => {
+      return this.company.map((entry) => {
         const Description =
           entry.name.length > this.descriptionLimit
             ? entry.name.slice(0, this.descriptionLimit) + "..."
@@ -102,12 +102,12 @@ export default {
 
         return Object.assign({}, entry);
       });
-    }
+    },
   },
 
   methods: {
     ...mapMutations({
-      setDrawer: "SET_DRAWER"
+      setDrawer: "SET_DRAWER",
     }),
     login() {
       if (this.isLoggedIn) {
@@ -124,14 +124,14 @@ export default {
         this.login_profile = "login";
         this.$router.push("/");
       }
-    }
+    },
   },
   watch: {
     searchModel(value) {
       if (typeof value == "object") {
         this.$router.push({ name: "Chart", params: { code: value.code } });
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -15,3 +15,10 @@ def get_price(company_code):
     blind = no_today.find("span", {"class": "blind"})
     now_price = blind.text
     return now_price
+
+def get_before_price(company_code):
+    bs_obj = get_code(company_code)
+    first = bs_obj.find("td", {"class": "first"})
+    blind = first.find("span", {"class": "blind"})
+    now_price = blind.text
+    return now_price

@@ -18,6 +18,14 @@ class Price(APIView):
 
 
 @permission_classes((AllowAny,))
+class BeforePrice(APIView):
+    def get(self,request,code):
+        stock_price = price.get_before_price(code)
+        price_json = {'code':code,'price':int(stock_price.replace(",",""))}
+        return Response(price_json,status=status.HTTP_200_OK)
+
+
+@permission_classes((AllowAny,))
 class StockPriceDetail(APIView):
     def get(self,request,code):
         sp = StockPrice.objects.get(code=code)
