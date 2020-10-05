@@ -37,7 +37,7 @@
 
         <!-- calendar -->
         <!-- startdate -->
-        <v-col cols="3">
+        <v-col cols="2">
           <v-menu
             v-model="menu1"
             :close-on-content-click="false"
@@ -64,7 +64,7 @@
           </v-menu>
         </v-col>
         <!-- enddate -->
-        <v-col cols="3">
+        <v-col cols="2">
           <v-menu
             v-model="menu2"
             :close-on-content-click="false"
@@ -91,15 +91,12 @@
             ></v-date-picker>
           </v-menu>
         </v-col>
-        <v-col>
-          <v-btn @click="backtesting">
-            백테스트 시작
-          </v-btn>
+        <v-col cols="2">
+          <v-btn @click="backtesting"> 백테스트 시작 </v-btn>
         </v-col>
       </v-row>
       <v-row>
-        <div id="chart">
-        </div>
+        <div id="chart"></div>
       </v-row>
     </v-container>
   </v-container>
@@ -117,7 +114,7 @@ export default {
         "저변동성 전략",
         "모멘텀 전략",
         "퀄리티 전략",
-        "밸류 전략"
+        "밸류 전략",
       ],
       dropdownselected: "",
       headers: [],
@@ -128,54 +125,58 @@ export default {
       valuetable: [],
       filtertable: [],
       checked: [],
-      chart:null,
-      lineSeries:null,
+      chart: null,
+      lineSeries: null,
       menu1: false,
       menu2: false,
       date1: new Date().toISOString().substr(0, 10),
-      date2: new Date().toISOString().substr(0, 10)
+      date2: new Date().toISOString().substr(0, 10),
     };
   },
-  watch: {
-  },
+  watch: {},
   methods: {
-    backtesting(){
-      http.post("/backtest/backtest",{
-        start:this.date1,
-        end:this.date2,
-        budget:1000000,
-        rebalance:6
-      }).then(res=>{
-        const a = []
-        console.log(typeof res.data)
-        const data = JSON.parse(res.data)
-        data.forEach(r=>{
-          // console.log(r)
-          a.push({time:r[0],value:r[1]})
+    backtesting() {
+      http
+        .post("/backtest/backtest", {
+          start: this.date1,
+          end: this.date2,
+          budget: 1000000,
+          rebalance: 6,
         })
-        this.lineSeries.setData(a)
-      })
-    }
+        .then((res) => {
+          const a = [];
+          console.log(typeof res.data);
+          const data = JSON.parse(res.data);
+          data.forEach((r) => {
+            // console.log(r)
+            a.push({ time: r[0], value: r[1] });
+          });
+          this.lineSeries.setData(a);
+        });
+    },
   },
   mounted() {
-    this.chart = LightweightCharts.createChart(document.getElementById("chart"), {
-	width: 600,
-  height: 300,
-  layout: {
-    backgroundColor: "#000000",
-    textColor: "rgba(255, 255, 255, 0.9)",
+    this.chart = LightweightCharts.createChart(
+      document.getElementById("chart"),
+      {
+        width: 600,
+        height: 300,
+        layout: {
+          backgroundColor: "#000000",
+          textColor: "rgba(255, 255, 255, 0.9)",
+        },
+        rightPriceScale: {
+          scaleMargins: {
+            top: 0.1,
+            bottom: 0.1,
+          },
+        },
+      }
+    );
+    this.lineSeries = this.chart.addLineSeries({
+      color: "rgba(33, 150, 243, 1)",
+      lineWidth: 3,
+    });
   },
-	rightPriceScale: {
-		scaleMargins: {
-			top: 0.1,
-			bottom: 0.1,
-		},
-	},
-});
-this.lineSeries = this.chart.addLineSeries({
-  color: 'rgba(33, 150, 243, 1)',
-  lineWidth: 3,
-});
-  }
 };
 </script>
