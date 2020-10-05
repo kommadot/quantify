@@ -118,3 +118,13 @@ class SimulationBreakdownDetail(mixins.RetrieveModelMixin,
         user = request.user
         simulationBreakdown = SimulationBreakdown.objects.get(_id = ObjectId(oid))
         return Response(serializer_class(simulationBreakdown).data,status=status.HTTP_200_OK)
+
+
+@permission_classes((IsAuthenticated,))
+@authentication_classes((JSONWebTokenAuthentication,))
+class UserBudget(APIView):
+    
+    def get(self, request):
+        user = request.user
+        budget = user.budget
+        return Response(budget,status=status.HTTP_200_OK)

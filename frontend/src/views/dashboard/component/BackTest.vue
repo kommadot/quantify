@@ -97,6 +97,23 @@
       </v-row>
       <v-row>
         <div id="chart"></div>
+        <base-material-card
+          color="#283593"
+          dark
+          title="퀀트 투자의 시작 QUANTIFY"
+          class="px-5 py-3 mx-6"
+        >
+          <div v-for="ld in log_data" :key="ld.id">
+            <span>{{ ld.date }}에 </span>
+            <br />
+            <div v-for="data in ld.datas" :key="data.id">
+              <span>{{ data.code }}종목 </span>
+              <span>{{ data.quantify }}주를 </span>
+              <span>{{ data.price }}원에 </span>
+            </div>
+            <span>{{ ld.types }}</span>
+          </div>
+        </base-material-card>
       </v-row>
     </v-container>
   </v-container>
@@ -110,20 +127,6 @@ export default {
 
   data() {
     return {
-      dropdown_font: [
-        "저변동성 전략",
-        "모멘텀 전략",
-        "퀄리티 전략",
-        "밸류 전략",
-      ],
-      dropdownselected: "",
-      headers: [],
-      lowvartable: [],
-      momentable: [],
-      riskmomentable: [],
-      qualitytable: [],
-      valuetable: [],
-      filtertable: [],
       checked: [],
       chart: null,
       lineSeries: null,
@@ -131,24 +134,33 @@ export default {
       menu2: false,
       date1: new Date().toISOString().substr(0, 10),
       date2: new Date().toISOString().substr(0, 10),
+      log_data: [],
     };
   },
   watch: {},
   methods: {
     backtesting() {
       http
-        .post("/backtest/backtest", {
-          start: this.date1,
-          end: this.date2,
-          budget: 1000000,
-          rebalance: 6,
-        })
+        .post(
+          "/backtest/backtest",
+          {
+            start: this.date1,
+            end: this.date2,
+            budget: 1000000,
+            rebalance: 6,
+          },
+          {
+            headers: {
+              Authorization: "JWT " + this.$store.state.token,
+            },
+          }
+        )
         .then((res) => {
+          this.log_data = res.data.log;
+          console.log(res);
           const a = [];
-          console.log(typeof res.data);
-          const data = JSON.parse(res.data);
+          const data = JSON.parse(res.data.data);
           data.forEach((r) => {
-            // console.log(r)
             a.push({ time: r[0], value: r[1] });
           });
           this.lineSeries.setData(a);

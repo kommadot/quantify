@@ -12,7 +12,7 @@
             dark
           >
           </v-checkbox>
-          <v-tooltip bottom max-width="1150px" nudge-right="425px;">
+          <v-tooltip bottom max-width="1150px" nudge-right="235px;">
             <template v-slot:activator="{ on, attrs }">
               <span
                 v-bind="attrs"
@@ -26,6 +26,8 @@
                 <br />
                 전통적 금융 이론에서는 수익률의 변동성이 클수록 위험이 크고,
                 이런 위험에 대한 보상으로 기대수익률이 높아야 한다고 보았습니다.
+              </p>
+              <p>
                 따라서 고변동성 종목의 기대수익률이 크고, 저변동성 종목의
                 기대수익률이 낮은 고위험 고수익이 당연한 믿음이었습니다.
               </p>
@@ -165,25 +167,13 @@ export default {
 
   data() {
     return {
-      dropdown_font: [
-        "저변동성 전략",
-        "모멘텀 전략",
-        "퀄리티 전략",
-        "밸류 전략",
-      ],
       checked: [],
-      dropdownselected: "",
       headers: [],
       lowvartable: [],
-      // momentable: [],
       riskmomentable: [],
       qualitytable: [],
       valuetable: [],
       filtertable: [],
-      menu1: false,
-      menu2: false,
-      date1: new Date().toISOString().substr(0, 10),
-      date2: new Date().toISOString().substr(0, 10),
     };
   },
   watch: {
@@ -197,9 +187,15 @@ export default {
               align: "start",
               sortable: false,
               value: "rank",
+              width: "33%",
             },
-            { text: "기업명", value: "name" },
-            { text: "변동성", value: "variability" },
+            { text: "기업명", sortable: false, value: "name", width: "33%" },
+            {
+              text: "변동성",
+              sortable: false,
+              value: "variability",
+              width: "33%",
+            },
           ];
           this.filtertable = this.lowvartable;
         }
@@ -210,9 +206,15 @@ export default {
               align: "start",
               sortable: false,
               value: "rank",
+              width: "33%",
             },
-            { text: "기업명", value: "name" },
-            { text: "위험조정수익률", value: "riskmomentum" },
+            { text: "기업명", sortable: false, value: "name", width: "33%" },
+            {
+              text: "위험조정수익률",
+              sortable: false,
+              value: "riskmomentum",
+              width: "33%",
+            },
           ];
           this.filtertable = this.riskmomentable;
         }
@@ -223,9 +225,15 @@ export default {
               align: "start",
               sortable: false,
               value: "rank",
+              width: "33%",
             },
-            { text: "기업명", value: "name" },
-            { text: "퀄리티 합계", value: "sum" },
+            { text: "기업명", sortable: false, value: "name", width: "33%" },
+            {
+              text: "퀄리티 합계",
+              sortable: false,
+              value: "sum",
+              width: "33%",
+            },
           ];
           this.filtertable = this.qualitytable;
         }
@@ -236,12 +244,13 @@ export default {
               align: "start",
               sortable: false,
               value: "rank",
+              width: "10%",
             },
-            { text: "기업명", value: "name" },
-            { text: "PER", value: "per" },
-            { text: "PSR", value: "psr" },
-            { text: "PBR", value: "pbr" },
-            { text: "F-Score", value: "score" },
+            { text: "기업명", sortable: false, value: "name", width: "15%" },
+            { text: "PER", value: "per", width: "15%" },
+            { text: "PSR", value: "psr", width: "15%" },
+            { text: "PBR", value: "pbr", width: "15%" },
+            { text: "F-Score", sortable: false, value: "score", width: "15%" },
           ];
           this.filtertable = this.valuetable;
         }
@@ -260,8 +269,9 @@ export default {
             align: "start",
             sortable: false,
             value: "rank",
+            width: "25%",
           },
-          { text: "기업명", value: "name" },
+          { text: "기업명", sortable: false, value: "name", width: "50%" },
         ];
         this.filtertable = [];
         var temp_obj = {};
@@ -334,7 +344,7 @@ export default {
             self.lowvartable.push({
               rank: idx++,
               name: i.name,
-              variability: i.variability,
+              variability: i.variability.toFixed(3),
             });
           }
         })
@@ -354,7 +364,7 @@ export default {
             self.riskmomentable.push({
               rank: idx++,
               name: i.name,
-              riskmomentum: i.risk_momentum,
+              riskmomentum: i.risk_momentum.toFixed(3),
             });
           }
         })
@@ -395,9 +405,9 @@ export default {
             self.valuetable.push({
               rank: idx++,
               name: i.name,
-              per: i.per,
-              pbr: i.pbr,
-              psr: i.psr,
+              per: i.per.toFixed(3),
+              pbr: i.pbr.toFixed(3),
+              psr: i.psr.toFixed(3),
               score: i.rank,
             });
           }
@@ -414,6 +424,14 @@ export default {
     this.riskmomenlist();
     this.qualitylist();
     this.valuelist();
+  },
+  filters: {
+    DecimalPoint3(value) {
+      return value.toFixed(3);
+    },
+    numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   },
 };
 </script>

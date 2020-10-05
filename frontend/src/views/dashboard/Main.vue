@@ -15,7 +15,7 @@
 
       <template>
         <v-card>
-          <v-tabs background-color="gray" color="#1F4E70" fixed-tabs dark>
+          <v-tabs background-color="gray" color="blue" fixed-tabs dark>
             <v-tab>종목정보</v-tab>
             <v-tab>퀀트전략</v-tab>
             <v-tab>모의투자</v-tab>

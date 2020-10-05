@@ -1,8 +1,9 @@
 <template>
   <v-container id="icons" fluid tag="section">
-    <base-material-card color="success" dark>
+    <base-material-card color="#283593" dark>
       <template v-slot:heading>
-        <div class="display-2 font-weight-light">{{ title }}</div>
+        <span class="display-2 font-weight-light">{{ title }}</span>
+        <span style="float: right">작성자: {{ username }}</span>
       </template>
       <v-container>
         <div
@@ -12,13 +13,13 @@
         />
         <v-row class="mr-1">
           <v-col cols="10">
-            <v-btn outlined color="primary" @click="listClick"> 목록 </v-btn>
+            <v-btn outlined color="blue" @click="listClick"> 목록 </v-btn>
           </v-col>
           <v-col cols="1" v-if="userProfile.user_id == user_id">
-            <v-btn outlined color="primary" @click="deleteClick"> 삭제 </v-btn>
+            <v-btn outlined color="blue" @click="deleteClick"> 삭제 </v-btn>
           </v-col>
           <v-col cols="1" v-if="userProfile.user_id == user_id">
-            <v-btn outlined color="primary" @click="modifyClick"> 수정 </v-btn>
+            <v-btn outlined color="blue" @click="modifyClick"> 수정 </v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -55,7 +56,7 @@ export default {
           this.title = data.data.title;
           this.content = data.data.content;
           this.user_id = data.data.user.user_id;
-          this.username = data.data.username;
+          this.username = data.data.user.username;
         });
     },
     listClick() {
