@@ -138,7 +138,7 @@ export default {
         });
     },
     listClick() {
-      this.$router.push("/Community");
+      this.$router.push("/home/Community");
     },
     deleteClick(number) {
       http
@@ -149,7 +149,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          this.$router.push("/Community");
+          this.$router.push("/home/Community");
         })
         .catch((error) => {
           console.log(error);
