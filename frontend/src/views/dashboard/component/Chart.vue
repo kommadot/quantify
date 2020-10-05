@@ -63,7 +63,11 @@ export default {
       temp_obj: [],
 
       stockName: "",
+      budget: 0,
     };
+  },
+  created() {
+    this.getUserBudget();
   },
   mounted() {
     this.getStocks();
@@ -204,9 +208,27 @@ export default {
               "원에 매수되었습니다."
           );
           this.buy_count = null;
+        })
+        .catch((error) => {
+          console.log(this.$store.state.token);
+          if (this.$store.state.token == null) {
+            alert("로그인시 사용가능한 기능입니다.");
+          } else {
+            alert("보유 현금이 부족합니다. 보유금액: " + this.budget + "원");
+          }
         });
     },
-
+    getUserBudget() {
+      http
+        .get("/simulations/budget", {
+          headers: {
+            Authorization: "JWT " + this.$store.state.token,
+          },
+        })
+        .then((res) => {
+          this.budget = res.data;
+        });
+    },
     businessDayToString(businessDay) {
       return businessDay.year + "-" + businessDay.month + "-" + businessDay.day;
     },

@@ -7,6 +7,7 @@
       title="모의투자현황"
       class="px-5 py-3"
     >
+      <span class="d-flex justify-end">보유현금 : {{ this.budget }}원</span>
       <v-simple-table class="my-3" style="border: 1px solid #283593">
         <tbody>
           <tr>
@@ -129,6 +130,7 @@ export default {
     return {
       stocks: [],
       overlay: false,
+      budget: 0,
     };
   },
   computed: {
@@ -167,6 +169,7 @@ export default {
   },
   created() {
     this.getSimulationList();
+    this.getUserBudget();
   },
   /*
           item_name: "",
@@ -195,6 +198,7 @@ export default {
         return item._id === _id;
       });
       if (idx > -1) this.stocks.splice(idx, 1);
+      this.getUserBudget();
     },
     setupdate() {
       this.stocks.forEach((el) => {
@@ -210,6 +214,17 @@ export default {
     },
     sadf() {
       setInterval(this.setupdate, 5000);
+    },
+    getUserBudget() {
+      http
+        .get("/simulations/budget", {
+          headers: {
+            Authorization: "JWT " + this.$store.state.token,
+          },
+        })
+        .then((res) => {
+          this.budget = res.data;
+        });
     },
   },
   watch: {

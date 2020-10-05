@@ -32,7 +32,7 @@
                   <v-text-field
                     class="purple-input"
                     label="Budget"
-                    v-model="userProfile.budget"
+                    v-model="budget"
                     color="#1F4E70"
                     readonly
                   />
@@ -50,13 +50,34 @@
 </template>
 
 <script>
+import axios from "axios";
+import http from "@/util/http-common";
+import { mapState, mapActions } from "vuex";
+
 export default {
   data() {
     return {
       userProfile: sessionStorage.getItem("userProfile")
         ? JSON.parse(sessionStorage.getItem("userProfile"))
         : [],
+      budget: 0,
     };
+  },
+  created() {
+    this.getUserBudget();
+  },
+  methods: {
+    getUserBudget() {
+      http
+        .get("/simulations/budget", {
+          headers: {
+            Authorization: "JWT " + this.$store.state.token,
+          },
+        })
+        .then((res) => {
+          this.budget = res.data;
+        });
+    },
   },
 };
 </script>
