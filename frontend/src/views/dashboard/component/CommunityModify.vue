@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-            <v-text-field
-          :counter="50"
-          label="제목"
-          name="title"
-          required
-          v-model="title"
-          maxlength="50"
-          dark
-        ></v-text-field>
-      <tiptap-vuetify
-        v-model="content"
-        :extensions="extensions"
-      />
-      <v-btn @click="createArticle">
-        submit
-      </v-btn>
+    <v-text-field
+      :counter="50"
+      label="제목"
+      name="title"
+      required
+      v-model="title"
+      maxlength="50"
+      dark
+    ></v-text-field>
+    <tiptap-vuetify v-model="content" :extensions="extensions" />
+    <v-btn @click="createArticle"> submit </v-btn>
   </div>
 </template>
 
 <script>
 import http from "@/util/http-common";
 import { mapState } from "vuex";
-import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
+import {
+  TiptapVuetify,
+  Heading,
+  Bold,
+  Italic,
+  Strike,
+  Underline,
+  Code,
+  Paragraph,
+  BulletList,
+  OrderedList,
+  ListItem,
+  Link,
+  Blockquote,
+  HardBreak,
+  HorizontalRule,
+  History,
+} from "tiptap-vuetify";
 export default {
   name: "CommunityWrite",
   components: { TiptapVuetify },
@@ -30,70 +42,70 @@ export default {
     return {
       title: "",
       extensions: [
-      // Render in the Bubble menu
-      [
-        Link,
-        {
-          renderIn: 'bubbleMenu'
-        }
-      ],
-      [
-        Underline,
-        {
-          renderIn: 'bubbleMenu'
-        }
-      ],
-      [
+        // Render in the Bubble menu
+        [
+          Link,
+          {
+            renderIn: "bubbleMenu",
+          },
+        ],
+        [
+          Underline,
+          {
+            renderIn: "bubbleMenu",
+          },
+        ],
+        [
+          Strike,
+          {
+            renderIn: "bubbleMenu",
+          },
+        ],
+        [
+          Bold,
+          {
+            renderIn: "bubbleMenu",
+            // extension's options
+            options: {
+              levels: [1, 2, 3],
+            },
+          },
+        ],
+        // Render in the toolbar
+        [
+          Blockquote,
+          {
+            renderIn: "toolbar",
+          },
+        ],
+        // You can use a short form, the default "renderIn" is "'toolbar'"
+        History,
         Strike,
-        {
-          renderIn: 'bubbleMenu'
-        }
+        Italic,
+        ListItem, // if you need to use a list (BulletList, OrderedList)
+        BulletList,
+        OrderedList,
+        [
+          Heading,
+          {
+            // Options that fall into the tiptap's extension
+            options: {
+              levels: [1, 2, 3],
+            },
+          },
+        ],
+        Code,
+        HorizontalRule,
+        Paragraph,
+        HardBreak, // line break on Shift + Ctrl + Enter
       ],
-      [
-        Bold,
-        {
-          renderIn: 'bubbleMenu',
-          // extension's options
-          options: {
-            levels: [1, 2, 3]
-          }
-        }
-      ],
-      // Render in the toolbar
-      [
-        Blockquote,
-        {
-          renderIn: 'toolbar'
-        }
-      ],
-      // You can use a short form, the default "renderIn" is "'toolbar'"
-      History,
-      Strike,
-      Italic,
-      ListItem, // if you need to use a list (BulletList, OrderedList)
-      BulletList,
-      OrderedList,
-      [
-        Heading,
-        {
-          // Options that fall into the tiptap's extension
-          options: {
-            levels: [1, 2, 3]
-          }
-        }
-      ],
-      Code,
-      HorizontalRule,
-      Paragraph,
-      HardBreak // line break on Shift + Ctrl + Enter
-    ],
-    content: ""
+      content: "",
     };
   },
   computed: {
     ...mapState(["token"]),
   },
-    created() {
+  created() {
     this.articleDetail();
   },
   methods: {
@@ -110,16 +122,15 @@ export default {
           requestHeaders
         )
         .then(() => {
-          this.$router.push("/Community");
+          this.$router.push("/home/Community");
         })
         .catch((errors) => {
           console.log(errors.response.data);
         });
     },
-        articleDetail(number) {
+    articleDetail(number) {
       http
-        .get(`/community/community/${this.$route.params.number}`
-        )
+        .get(`/community/community/${this.$route.params.number}`)
         .then((data) => {
           console.log(data);
           this.title = data.data.title;
@@ -127,7 +138,7 @@ export default {
         });
     },
     listClick() {
-      this.$router.push("/Community");
+      this.$router.push("/home/Community");
     },
     deleteClick(number) {
       http
@@ -138,7 +149,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          this.$router.push("/Community");
+          this.$router.push("/home/Community");
         })
         .catch((error) => {
           console.log(error);
@@ -153,10 +164,8 @@ export default {
       });
     },
   },
-
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>
