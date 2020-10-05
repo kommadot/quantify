@@ -154,6 +154,7 @@
         multi-sort
         class="elevation-1"
         dark
+        no-data-text="전략을 선택해 주세요"
       ></v-data-table>
     </v-container>
   </v-container>
