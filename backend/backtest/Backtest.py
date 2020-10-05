@@ -10,6 +10,7 @@ import time
 from django.forms.models import model_to_dict
 from .LowVariabilityClass import LV
 import copy
+from django.core.cache import cache
 class Backtest():
     def __init__(self,start,end,strategy,budget, rebalance=6):
         self.start = datetime.datetime.strptime(start,'%Y-%m-%d')
@@ -40,7 +41,7 @@ class Backtest():
             # day_date = date
             end = date + delta if date + delta <= self.end else self.end
 
-            while date < end:
+            while date <= end:
                 cur_budget = self.get_budget(date)
                 if cur_budget == self.budget:
                     if date == self.start:
@@ -104,7 +105,8 @@ class Backtest():
         
         s = []
         for i in self.stock_list:
-            stock = StockPrice.objects.get(code=i['code'])
+            # stock = StockPrice.objects.get(code=i['code'])
+            stock = cache.get_or_set(i['code'],StockPrice.objects.get(code=i['code']))
             stock = model_to_dict(stock)
             df = pd.DataFrame(stock['data'])
             cur_date = date
