@@ -22,6 +22,7 @@ class Backtest():
         self.stock_list = []
         self.lv = LV()
         self.divide = 5
+        self.log = []
     def run(self):
         day = datetime.timedelta(days=1)
         delta = datetime.timedelta(days=self.rebalance*30)
@@ -37,7 +38,7 @@ class Backtest():
             # df_marks = df_marks.append(new_row, ignore_index=True)
             # day_date = date
             end = date + delta if date + delta <= self.end else self.end
-            print(self.stock_list)
+
             while date < end:
                 cur_budget = self.get_budget(date)
                 if cur_budget == self.budget:
@@ -47,7 +48,7 @@ class Backtest():
                         cur_budget = self.df[self.df['date']==(date-datetime.timedelta(days=1)).strftime("%Y-%m-%d")]['budget'].values[0]
                 cur_budget = int(cur_budget)
                 self.df = self.df.append({'date':date,'budget':cur_budget},ignore_index=True)
-                print(date)
+
                 date+=day
                 cnt+=1
             
@@ -63,17 +64,16 @@ class Backtest():
                 continue
             break
         #반환
-        return self.df
+        return self.df,self.log
         
     def buy_stock(self,date):
 
         table = self.lv.run(date)
-        budget_divide = self.budget/self.divide
-        print(table)
+        num = self.divide
         for i in range(self.divide):
+            budget_divide = self.budget/num
+            num-=1
             code = table.iloc[i].code
-            
-            print(code)
             stock = StockPrice.objects.get(code=code)
             stock = model_to_dict(stock)
             df = pd.DataFrame(stock['data'])
@@ -85,16 +85,21 @@ class Backtest():
                     price=0
                 else:
                     price=temp
-                print(price)
+
 
                 cur_date -= datetime.timedelta(days=1)
-            print(price)
+
             quantity = budget_divide//price
+            
+            if quantity==0:
+                continue
             self.stock_list.append({"code":code,"quantity":quantity,"price":price})
             self.budget -= price*quantity
+        self.log.append({"date": date.strftime('%Y-%m-%d'),"types":"buy","datas":self.stock_list.copy()})
 
     def sell_stock(self,date):
-        print("sell_start")
+
+        self.log.append({"date": date.strftime('%Y-%m-%d'),"types":"sell","datas":self.stock_list.copy()})
         for i in self.stock_list:
             stock = StockPrice.objects.get(code=i['code'])
             stock = model_to_dict(stock)
@@ -107,7 +112,7 @@ class Backtest():
                     price=0
                 else:
                     price=temp
-                print(price)
+
                 cur_date -= datetime.timedelta(days=1)
             self.budget += i['quantity'] * price
         self.stock_list=[]
@@ -123,5 +128,5 @@ class Backtest():
                 continue
             stock_sum += r['close'].values[0]*row['quantity']
         return self.budget+stock_sum
-# a = Backtest("2017-01-20","2018-01-20",1,2000000,3)
+# a = Backtest("2017-01-20","2017-01-25",1,2000000,3)
 # print(a.run())
