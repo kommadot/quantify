@@ -6,7 +6,7 @@ from django.conf import settings
 class Stock(models.Model):
     code = models.CharField(max_length=6)
     quantity = models.IntegerField()
-    price = models.FloatField()
+    price = models.IntegerField()
     class Meta:
         abstract = True
         
@@ -19,7 +19,7 @@ class Log(models.Model):
 
 class BacktestDate(models.Model):
     date = models.CharField(max_length=100)
-    budget = models.FloatField()
+    budget = models.IntegerField()
     
     class Meta:
         abstract = True

@@ -100,18 +100,19 @@
         <base-material-card
           color="#283593"
           dark
-          title="퀀트 투자의 시작 QUANTIFY"
+          title="BACKTEST LOG"
           class="px-5 py-3 mx-6"
         >
           <div v-for="ld in log_data" :key="ld.id">
             <span>{{ ld.date }}에 </span>
             <br />
             <div v-for="data in ld.datas" :key="data.id">
-              <span>{{ data.code }}종목 </span>
-              <span>{{ data.quantify }}주를 </span>
+              <span>{{ data.name }}종목 </span>
+              <span>{{ data.quantity }}주를 </span>
               <span>{{ data.price }}원에 </span>
+              <span>{{ ld.types }}</span>
             </div>
-            <span>{{ ld.types }}</span>
+            <span>현재 평가액은 {{ ld.datas | getTotalPrice }}원 입니다.</span>
           </div>
         </base-material-card>
       </v-row>
@@ -135,9 +136,19 @@ export default {
       date1: new Date().toISOString().substr(0, 10),
       date2: new Date().toISOString().substr(0, 10),
       log_data: [],
+      total_price: 0,
     };
   },
   watch: {},
+  filters: {
+    getTotalPrice(value) {
+      let price = 0;
+      for (let v of value) {
+        price += v.price * v.quantity;
+      }
+      return price;
+    },
+  },
   methods: {
     backtesting() {
       http
@@ -156,10 +167,10 @@ export default {
           }
         )
         .then((res) => {
-          this.log_data = res.data.log;
+          this.log_data = res.data.logs;
           console.log(res);
           const a = [];
-          const data = JSON.parse(res.data.data);
+          const data = res.data.data;
           data.forEach((r) => {
             a.push({ time: r[0], value: r[1] });
           });
@@ -189,6 +200,32 @@ export default {
       color: "rgba(33, 150, 243, 1)",
       lineWidth: 3,
     });
+  },
+  created() {
+    http
+      .get("/backtest/backtest", {
+        headers: {
+          Authorization: "JWT " + this.$store.state.token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        let log = res.data.log;
+        log = log.replace(/\\/g, "");
+        log = log.replace(/\"\[/g, "[");
+        log = log.replace(/\]\"/g, "]");
+        log = JSON.parse(log);
+        this.log_data = log;
+
+        const a = [];
+        let data = res.data.data;
+        data = JSON.parse(data);
+        console.log(data);
+        data.forEach((r) => {
+          a.push({ time: r["date"], value: r["budget"] });
+        });
+        this.lineSeries.setData(a);
+      });
   },
 };
 </script>
