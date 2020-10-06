@@ -61,7 +61,7 @@ class MM:
 
                 df.loc[i, ['위험조정수익률']] = risk_adjust_profit
             except:
-                pass
+                continue
 
             # print(i)
             self.cnt+=1
