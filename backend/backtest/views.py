@@ -42,7 +42,7 @@ class BackTestView(APIView):
         btm.data = data_array
         btm.save()
 
-        return Response({"strategy":strategy,"data":test_data,"logs":logs},status=status.HTTP_200_OK)
+        return Response({"strategy":strategy,"datas":data_array,"logs":logs},status=status.HTTP_200_OK)
 
     
     def get(self,request):
