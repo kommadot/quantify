@@ -8,6 +8,7 @@ django.setup()
 from api.models import StockPrice
 import time
 from django.forms.models import model_to_dict
+from django.core.cache import cache
 # from .LowVariabilityClass import LV
 class Backtest():
     def __init__(self,start,end,strategy,budget, rebalance=6):
@@ -130,7 +131,8 @@ start = time.time()
 stock = ""
 
 for i in range(200):
-    stock = StockPrice.objects.get(code="005930")
+    # stock = StockPrice.objects.get(code="005930")
+    stock = cache.get_or_set('005930',StockPrice.objects.get(code='005930'))
 
 print("몽고 접근 : " , (time.time()-start))
 
