@@ -259,6 +259,7 @@ export default {
 
       // 선택된게 0개일때 초기화
       if (value.length == 0) {
+        this.headers = [];
         this.filtertable = [];
       }
 
