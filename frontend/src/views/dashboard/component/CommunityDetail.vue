@@ -1,52 +1,58 @@
 <template>
-  <v-container id="icons" fluid tag="section" style="padding-left:10%;padding-right:10%">
+  <v-container
+    id="icons"
+    fluid
+    tag="section"
+    style="padding-left: 10%; padding-right: 10%"
+  >
     <v-row justify no-gutters>
       <v-col>
-        <p style="font-size:30px;color:white;margin-top:auto;margin-bottom:auto">
-        {{title}}
+        <p
+          style="
+            font-size: 30px;
+            color: white;
+            margin-top: auto;
+            margin-bottom: auto;
+          "
+        >
+          {{ title }}
         </p>
       </v-col>
     </v-row>
-    <v-row >
+    <v-row>
       <v-spacer></v-spacer>
-      <v-col style="padding-top:0px; color:white;" class="text-right">
-        By {{username}}
+      <v-col style="padding-top: 0px; color: white" class="text-right">
+        By {{ username }}
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-      <div
-          style="background-color: gray; border-radius:10px"
+        <div
+          style="background-color: gray; border-radius: 10px"
           class="tiptap-vuetify-editor__content mb-3"
           v-html="content"
         />
       </v-col>
     </v-row>
     <v-row class="mr-1">
-          <v-col cols="10">
-            <v-btn outlined color="blue" @click="listClick"> 목록 </v-btn>
-          </v-col>
-          <v-col cols="1" v-if="userProfile.user_id == user_id">
-            <v-btn outlined color="blue" @click="deleteClick"> 삭제 </v-btn>
-          </v-col>
-          <v-col cols="1" v-if="userProfile.user_id == user_id">
-            <v-btn outlined color="blue" @click="modifyClick"> 수정 </v-btn>
-          </v-col>
-        </v-row>
-    <!-- <base-material-card color="#283593" dark>
-      <template v-slot:heading>
-        <span class="display-2 font-weight-light">{{ title }}</span>
-        <span style="float: right">작성자: {{ username }}</span>
-      </template>
-      <v-container>
-        <div
-          style="background-color: gray"
-          class="tiptap-vuetify-editor__content mb-3"
-          v-html="content"
-        />
-        
-      </v-container>
-    </base-material-card> -->
+      <v-col cols="9">
+        <v-btn outlined color="blue" @click="listClick"> 목록 </v-btn>
+      </v-col>
+      <v-col
+        class="text-right mr-0 pr-0"
+        cols="1.5"
+        v-if="userProfile.user_id == user_id"
+      >
+        <v-btn outlined color="blue" @click="deleteClick"> 삭제 </v-btn>
+      </v-col>
+      <v-col
+        class="text-right mr-0 pr-0"
+        cols="1.5"
+        v-if="userProfile.user_id == user_id"
+      >
+        <v-btn outlined color="blue" @click="modifyClick"> 수정 </v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

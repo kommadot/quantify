@@ -41,7 +41,7 @@ class Backtest():
             self.buy_stock(date)
             # df_marks = df_marks.append(new_row, ignore_index=True)
             # day_date = date
-            end = date + delta if date + delta <= self.end else self.end + 1
+            end = date + delta if date + delta <= self.end else self.end + day
 
             while date <= end:
                 cur_budget = self.get_budget(date)
