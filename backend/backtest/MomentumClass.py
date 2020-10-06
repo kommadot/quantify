@@ -51,6 +51,7 @@ class MM:
             # 누적수익률
             accumulated_price_profit = price_profit + 1
             accumulated_price_profit = np.cumprod(accumulated_price_profit)
+            print(accumulated_price_profit)
             accumulated_price_profit = accumulated_price_profit.iloc[-1]
             accumulated_price_profit = accumulated_price_profit - 1
 
