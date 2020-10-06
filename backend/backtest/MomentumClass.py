@@ -49,16 +49,19 @@ class MM:
             df.loc[i, ['종목']] = stock['name']
             df.loc[i, ['code']] = stock['code']
             # 누적수익률
-            accumulated_price_profit = price_profit + 1
-            accumulated_price_profit = np.cumprod(accumulated_price_profit)
-            print(accumulated_price_profit)
-            accumulated_price_profit = accumulated_price_profit.iloc[-1]
-            accumulated_price_profit = accumulated_price_profit - 1
+            try:
+                accumulated_price_profit = price_profit + 1
+                accumulated_price_profit = np.cumprod(accumulated_price_profit)
+                # print(stock['name'],accumulated_price_profit)
+                accumulated_price_profit = accumulated_price_profit.iloc[-1]
+                accumulated_price_profit = accumulated_price_profit - 1
 
-            # 위험조정수익률(누적수익률/변동성)
-            risk_adjust_profit = accumulated_price_profit / price_variability
+                # 위험조정수익률(누적수익률/변동성)
+                risk_adjust_profit = accumulated_price_profit / price_variability
 
-            df.loc[i, ['위험조정수익률']] = risk_adjust_profit
+                df.loc[i, ['위험조정수익률']] = risk_adjust_profit
+            except:
+                pass
 
             # print(i)
             self.cnt+=1
