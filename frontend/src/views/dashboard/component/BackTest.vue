@@ -161,7 +161,7 @@
                   >
                 </div>
                 <br />
-                <span
+                <span v-if="logs"
                   >현재 평가 금액은
                   {{ this.budget_data[this.budget_data.length - 1] }}원 입니다.
                 </span>
@@ -191,7 +191,7 @@ export default {
       date2: new Date().toISOString().substr(0, 10),
       budget_data: [],
       datas: {},
-      logs: {},
+      logs: null,
       strategy: null,
       items: [
         { title: "Click Me" },
@@ -228,13 +228,13 @@ export default {
           end: this.date2,
           strategy: this.strategy,
           budget: this.budget,
-          rebalance: this.rebalance,
+          rebalance: this.rebalance + 1,
         })
         .then((res) => {
           this.logs = res.data.logs;
           console.log(res);
           const a = [];
-          const data = res.data.data;
+          const data = res.data.datas;
           data.forEach((r) => {
             a.push({ time: r["date"], value: r["budget"] });
             this.budget_data.push(r["budget"]);
