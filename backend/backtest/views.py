@@ -41,7 +41,7 @@ class BackTestView(APIView):
         
         btm.data = data_array
         btm.save()
-
+        cache.delete("backtests")
         return Response({"strategy":strategy,"datas":data_array,"logs":logs},status=status.HTTP_200_OK)
 
     

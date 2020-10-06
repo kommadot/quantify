@@ -41,7 +41,7 @@ class Backtest():
             self.buy_stock(date)
             # df_marks = df_marks.append(new_row, ignore_index=True)
             # day_date = date
-            end = date + delta if date + delta <= self.end else self.end + day
+            end = date + delta if date + delta <= self.end else self.end
 
             while date <= end:
                 cur_budget = self.get_budget(date)
@@ -59,8 +59,8 @@ class Backtest():
             #리밸런싱 기간 루프
                 #리밸런싱 기간동안 돌면서 데이타프래임에 현재 예산 넣고
             #다 판매
-            date -= day
-            self.sell_stock(date)
+            # date -= day
+            self.sell_stock(date-day)
 
             if date < self.end:
 
