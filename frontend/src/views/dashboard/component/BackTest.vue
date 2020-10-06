@@ -80,7 +80,7 @@
             ></v-date-picker>
           </v-menu>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="2" class="text-right">
           <v-btn color="#283593" @click="backtesting"> 백테스트 시작 </v-btn>
         </v-col>
       </v-row>
