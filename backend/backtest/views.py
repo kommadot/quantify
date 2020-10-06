@@ -24,11 +24,11 @@ class BackTestView(APIView):
         
         df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', errors='raise')
         test_data = df.to_json(orient="values",date_format="iso")
-
+        strategy = data["strategy"]
         log_array = []
         btm = BacktestModel()
         # btm = BacktestModel(user=request.user)
-        
+        btm.strategy = strategy
         for row in logs:
             log = {"date":row['date'],"types":row['types'],"datas":row['datas']}
             log_array.append(log)
@@ -38,11 +38,11 @@ class BackTestView(APIView):
         for row in test_data:
             data = {"date":row[0],"budget":row[1]}
             data_array.append(data)
-        btm.strategy = data["strategy"]
+        
         btm.data = data_array
         btm.save()
 
-        return Response({"strategy":data["strategy"],"data":test_data,"logs":logs},status=status.HTTP_200_OK)
+        return Response({"strategy":strategy,"data":test_data,"logs":logs},status=status.HTTP_200_OK)
 
     
     def get(self,request):
