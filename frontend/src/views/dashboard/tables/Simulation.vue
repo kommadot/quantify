@@ -193,12 +193,14 @@ export default {
             Authorization: "JWT " + this.$store.state.token,
           },
         })
-        .then();
+        .then((res) => {
+          alert("매도되었습니다.");
+          this.getUserBudget();
+        });
       const idx = this.stocks.findIndex(function (item) {
         return item._id === _id;
       });
       if (idx > -1) this.stocks.splice(idx, 1);
-      this.getUserBudget();
     },
     setupdate() {
       this.stocks.forEach((el) => {
