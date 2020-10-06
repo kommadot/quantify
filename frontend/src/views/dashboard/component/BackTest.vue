@@ -210,6 +210,7 @@ export default {
       })
       .then((res) => {
         console.log(res);
+        console.log(decodeURlComponent("ucf00uc774ud2f0"));
         let log = res.data.log;
         log = log.replace(/\\/g, "");
         log = log.replace(/\"\[/g, "[");
