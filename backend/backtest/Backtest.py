@@ -57,7 +57,7 @@ class Backtest():
             #리밸런싱 기간 루프
                 #리밸런싱 기간동안 돌면서 데이타프래임에 현재 예산 넣고
             #다 판매
-            
+            date -= day
             self.sell_stock(date)
 
             if date < self.end:
