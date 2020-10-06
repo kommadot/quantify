@@ -124,7 +124,7 @@
                     <v-card-title v-else>모멘텀 전략</v-card-title>
                     <v-card-title
                       >{{ data.logs[0].date }} ~
-                      {{ data.logs[1].date }}</v-card-title
+                      {{ data.logs[data.logs.length - 1].date }}</v-card-title
                     >
                     <v-card-title
                       >수익률 : {{ data.datas | earningRate }}%</v-card-title
@@ -193,12 +193,6 @@ export default {
       datas: {},
       logs: null,
       strategy: null,
-      items: [
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me 2" },
-      ],
       ticksLabels: [1, 2, 3, 4, 5, 6],
       rebalance: 0,
       budget: 1000000,
@@ -227,7 +221,7 @@ export default {
           start: this.date1,
           end: this.date2,
           strategy: this.strategy,
-          budget: this.budget,
+          budget: parseInt(this.budget),
           rebalance: this.rebalance + 1,
         })
         .then((res) => {
@@ -252,6 +246,11 @@ export default {
       });
       console.log(this.budget_data);
       this.lineSeries.setData(a);
+      this.strategy = "" + data.strategy;
+      // this.rebalance = data.rebalance;
+      this.budget = data.datas[0].budget;
+      this.date1 = data.datas[0].date.substr(0, 10);
+      this.date2 = data.datas[data.datas.length - 1].date.substr(0, 10);
     },
   },
   mounted() {
