@@ -114,14 +114,21 @@
                     class="py-2"
                     style="width: 90%; margin-top: 3px"
                     dark
-                    @click="clickCard"
+                    @click="clickCard(data)"
+                    v-for="data in datas"
+                    :key="data.id"
                   >
-                    <!-- <v-card-title>{{}}</v-card-title>
-                    <v-card-title>{{}} ~ {{}}</v-card-title>
-                    <v-card-title>수익률 : {{}}%</v-card-title> -->
-                    <v-card-title>저변동성 전략</v-card-title>
-                    <v-card-title>2019-01-01 ~ 2020-01-01</v-card-title>
-                    <v-card-title>수익률 : 3%</v-card-title>
+                    <v-card-title v-if="data.strategy == 1"
+                      >저변동성 전략</v-card-title
+                    >
+                    <v-card-title v-else>모멘텀 전략</v-card-title>
+                    <v-card-title
+                      >{{ data.logs[0].date }} ~
+                      {{ data.logs[1].date }}</v-card-title
+                    >
+                    <v-card-title
+                      >수익률 : {{ data.datas | earningRate }}%</v-card-title
+                    >
                   </v-card>
                 </div>
               </v-menu>
@@ -135,7 +142,7 @@
               style="width: 100%"
             >
               <div style="margin-top: 33px; overflow: auto; height: 200px">
-                <div v-for="log in datas.logs" :key="log.id">
+                <div v-for="log in logs" :key="log.id">
                   <span>{{ log.date }}에 </span>
                   <div v-for="log_data in log.datas" :key="log_data.id">
                     <span>{{ log_data.name }} </span>
@@ -184,6 +191,7 @@ export default {
       date2: new Date().toISOString().substr(0, 10),
       budget_data: [],
       datas: {},
+      logs: {},
       strategy: null,
       items: [
         { title: "Click Me" },
@@ -205,51 +213,45 @@ export default {
       }
       return price;
     },
+    earningRate(value) {
+      return (
+        ((value[value.length - 1].budget - value[0].budget) / value[0].budget) *
+        100
+      );
+    },
   },
   methods: {
     backtesting() {
       http
-        .post(
-          "/backtest/backtest",
-          {
-            start: this.date1,
-            end: this.date2,
-            strategy: this.strategy,
-            budget: this.budget,
-            rebalance: this.rebalance,
-          },
-          {
-            headers: {
-              Authorization: "JWT " + this.$store.state.token,
-            },
-          }
-        )
+        .post("/backtest/backtest", {
+          start: this.date1,
+          end: this.date2,
+          strategy: this.strategy,
+          budget: this.budget,
+          rebalance: this.rebalance,
+        })
         .then((res) => {
-          this.datas = res.data;
+          this.logs = res.data.logs;
           console.log(res);
           const a = [];
           const data = res.data.data;
           data.forEach((r) => {
-            a.push({ time: r[0], value: r[1] });
+            a.push({ time: r["date"], value: r["budget"] });
+            this.budget_data.push(r["budget"]);
           });
           this.lineSeries.setData(a);
         });
     },
-    clickCard() {
-      http.get("/backtest/backtest").then((res) => {
-        console.log(res);
-        this.datas = res.data;
-        console.log(this.datas);
-        const a = [];
-        let data = res.data.data;
-        console.log(data);
-        data.forEach((r) => {
-          a.push({ time: r["date"], value: r["budget"] });
-          this.budget_data.push(r["budget"]);
-        });
-        console.log(this.budget_data);
-        this.lineSeries.setData(a);
+    clickCard(data) {
+      console.log(data);
+      this.logs = data.logs;
+      const a = [];
+      data.datas.forEach((r) => {
+        a.push({ time: r["date"], value: r["budget"] });
+        this.budget_data.push(r["budget"]);
       });
+      console.log(this.budget_data);
+      this.lineSeries.setData(a);
     },
   },
   mounted() {
@@ -276,26 +278,11 @@ export default {
     });
   },
   created() {
-    http
-      .get("/backtest/backtest", {
-        headers: {
-          Authorization: "JWT " + this.$store.state.token,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        this.datas = res.data;
-        console.log(this.datas);
-        const a = [];
-        let data = res.data.data;
-        console.log(data);
-        data.forEach((r) => {
-          a.push({ time: r["date"], value: r["budget"] });
-          this.budget_data.push(r["budget"]);
-        });
-        console.log(this.budget_data);
-        this.lineSeries.setData(a);
-      });
+    http.get("/backtest/backtest").then((res) => {
+      console.log(res);
+      this.datas = res.data;
+      console.log(this.datas);
+    });
   },
 };
 </script>
