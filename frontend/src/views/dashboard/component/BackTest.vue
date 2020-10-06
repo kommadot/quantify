@@ -49,6 +49,7 @@
             <v-date-picker
               v-model="date1"
               @input="menu1 = false"
+              :max="max_date"
             ></v-date-picker>
           </v-menu>
         </v-col>
@@ -77,6 +78,8 @@
             <v-date-picker
               v-model="date2"
               @input="menu2 = false"
+              :max="max_date"
+              :min="date1"
             ></v-date-picker>
           </v-menu>
         </v-col>
@@ -189,6 +192,8 @@ export default {
       menu2: false,
       date1: new Date().toISOString().substr(0, 10),
       date2: new Date().toISOString().substr(0, 10),
+      max_date: new Date().toISOString().substr(0, 10),
+      min_date: new Date().toISOString().substr(0, 10),
       budget_data: [],
       datas: {},
       logs: null,

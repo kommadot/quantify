@@ -10,7 +10,7 @@
       dark
     ></v-text-field>
     <tiptap-vuetify v-model="content" :extensions="extensions" />
-    <v-btn color="blue" @click="createArticle"> submit </v-btn>
+    <v-btn outlined color="blue" @click="createArticle"> 등록 </v-btn>
   </div>
 </template>
 
