@@ -1,6 +1,27 @@
 <template>
-  <v-container id="icons" fluid tag="section">
-    <base-material-card color="#283593" dark>
+  <v-container id="icons" fluid tag="section" style="padding-left:10%;padding-right:10%">
+    <v-row align>
+      <v-col>
+        <p style="font-size:30px;color:white">
+        {{title}}
+        </p>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        {{username}}
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+      <div
+          style="background-color: gray"
+          class="tiptap-vuetify-editor__content mb-3"
+          v-html="content"
+        />
+      </v-col>
+    </v-row>
+    <!-- <base-material-card color="#283593" dark>
       <template v-slot:heading>
         <span class="display-2 font-weight-light">{{ title }}</span>
         <span style="float: right">작성자: {{ username }}</span>
@@ -23,7 +44,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </base-material-card>
+    </base-material-card> -->
   </v-container>
 </template>
 

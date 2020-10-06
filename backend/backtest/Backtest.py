@@ -9,6 +9,7 @@ from api.models import StockPrice
 import time
 from django.forms.models import model_to_dict
 from .LowVariabilityClass import LV
+from .MomentumClass import MM
 import copy
 from django.core.cache import cache
 class Backtest():
@@ -16,13 +17,13 @@ class Backtest():
         self.start = datetime.datetime.strptime(start,'%Y-%m-%d')
         self.end = datetime.datetime.strptime(end,'%Y-%m-%d')
         self.current = start
-        self.strategy = strategy
+        self.strategy = LV() if strategy == 1 else MM()
         self.budget = budget
         self.start_budget = budget
         self.rebalance = rebalance
         self.df = pd.DataFrame(columns=['date','budget'])
         self.stock_list = []
-        self.lv = LV()
+        
         self.divide = 5
         self.log = []
     def run(self):
@@ -70,7 +71,7 @@ class Backtest():
         
     def buy_stock(self,date):
 
-        table = self.lv.run(date)
+        table = self.strategy.run(date)
         num = self.divide
         for i in range(self.divide):
             budget_divide = self.budget/num
