@@ -18,17 +18,17 @@ from strategy.models import RiskMomentum
 
 class MM:
     def __init__(self):
-        self.df = pd.DataFrame(columns=['종목', '위험조정수익률'])
+        self.df = pd.DataFrame(columns=['종목', '위험조정수익률','code'])
         self.cnt = 0
         # self.SP = StockPrice.objects.all()
         self.SP = StockPrice.objects.filter(market_price__gte=10000)
     def getMM(self, start, end, test_date):
         end = end if end <= self.SP.count() else self.SP.count()
         SP = self.SP[start:end]
-        df = pd.DataFrame(columns=['종목', '위험조정수익률'])
+        df = pd.DataFrame(columns=['종목', '위험조정수익률','code'])
         # test_date = datetime.strptime(test_date, "%Y-%m-%d")
         for i in range(end-start):
-            print(self.cnt)
+            
             stock = model_to_dict(SP[i])
             stock_code = stock['code']
             stock_price = pd.DataFrame(stock['data'])
@@ -47,7 +47,7 @@ class MM:
 
             # df.loc[i, ['종목']] = stock_code
             df.loc[i, ['종목']] = stock['name']
-            
+            df.loc[i, ['code']] = stock['code']
             # 누적수익률
             accumulated_price_profit = price_profit + 1
             accumulated_price_profit = np.cumprod(accumulated_price_profit)
@@ -61,7 +61,7 @@ class MM:
 
             # print(i)
             self.cnt+=1
-        print(self.df)
+        
         self.df = self.df.append(df)
         return self.df
     

@@ -17,7 +17,8 @@ class Backtest():
         self.start = datetime.datetime.strptime(start,'%Y-%m-%d')
         self.end = datetime.datetime.strptime(end,'%Y-%m-%d')
         self.current = start
-        self.strategy = LV() if strategy == 1 else MM()
+        
+        self.strategy = LV() if strategy == "1" else MM()
         self.budget = budget
         self.start_budget = budget
         self.rebalance = rebalance
