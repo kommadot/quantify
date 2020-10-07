@@ -7,12 +7,6 @@
       title="퀀트 투자의 시작 QUANTIFY"
       class="px-5 py-3"
     >
-      <!-- <template v-slot:heading>
-        <div class="display-2 font-weight-light">
-          퀀트 투자의 시작 <strong>QUANTIFY</strong>
-        </div>
-      </template> -->
-
       <template>
         <v-card>
           <v-tabs background-color="gray" color="blue" fixed-tabs dark>
@@ -337,7 +331,6 @@
 
             <!-- 모의투자 -->
             <v-tab-item>
-              <!-- <v-container fluid style="background-color: gray"> -->
               <v-card class="mx-auto" width="100%">
                 <v-img
                   class="white--text align-end"
@@ -362,12 +355,10 @@
                   </p>
                 </v-card-text>
               </v-card>
-              <!-- </v-container> -->
             </v-tab-item>
 
             <!-- 백테스팅 -->
             <v-tab-item>
-              <!-- <v-container fluid style="background-color: gray"> -->
               <v-card class="mx-auto" width="100%">
                 <v-img
                   class="black--text align-end"
@@ -396,7 +387,6 @@
                   </p>
                 </v-card-text>
               </v-card>
-              <!-- </v-container> -->
             </v-tab-item>
           </v-tabs>
         </v-card>

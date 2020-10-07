@@ -30,8 +30,6 @@
     <v-divider class="mb-2" />
 
     <v-list expand nav>
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
 
       <template v-for="(item, i) in computedItems">
@@ -41,9 +39,7 @@
             :key="`group-${i}`"
             :item="item"
           >
-            <!--  -->
           </base-item-group>
-
           <base-item v-else :key="`item-${i}`" :item="item" />
         </template>
       </template>
@@ -53,7 +49,6 @@
 </template>
 
 <script>
-// Utilities
 import { mapGetters, mapState } from "vuex";
 
 export default {

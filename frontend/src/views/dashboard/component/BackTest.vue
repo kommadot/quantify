@@ -231,7 +231,6 @@ export default {
         })
         .then((res) => {
           this.logs = res.data.logs;
-          console.log(res);
           const a = [];
           const data = res.data.datas;
           data.forEach((r) => {
@@ -242,14 +241,12 @@ export default {
         });
     },
     clickCard(data) {
-      console.log(data);
       this.logs = data.logs;
       const a = [];
       data.datas.forEach((r) => {
         a.push({ time: r["date"], value: r["budget"] });
         this.budget_data.push(r["budget"]);
       });
-      console.log(this.budget_data);
       this.lineSeries.setData(a);
       this.strategy = "" + data.strategy;
       // this.rebalance = data.rebalance;
