@@ -17,7 +17,7 @@ code_df.종목코드 = code_df.종목코드.map('{:06d}'.format)
 code_df = code_df[['회사명', '종목코드']]
 code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
 
-value_df = pd.DataFrame(columns=['종목', 'ROA', 'CFO', 'ROA_DIFF', 'ACCRUAL', 'LIQUID', 'MARGIN', 'TURN', 'SUM'])
+value_df = pd.DataFrame(columns=['종목', 'code', 'ROA', 'CFO', 'ROA_DIFF', 'ACCRUAL', 'LIQUID', 'MARGIN', 'TURN', 'SUM'])
 
 for cnt in range(len(code_df)):
 # for cnt in range(20):
@@ -30,6 +30,7 @@ for cnt in range(len(code_df)):
         print(item_name)
         cnt += 1
         value_df.loc[cnt, ['종목']] = item_name
+        value_df.loc[cnt, ['code']] = code
         value_df.loc[cnt, ['ROA']] = 1 if fs.get_ROA() > 0 else 0
         value_df.loc[cnt, ['CFO']] = 1 if fs.get_CFO() > 0 else 0
         value_df.loc[cnt, ['ROA_DIFF']] = 1 if fs.get_ROA_DIFF() > 0 else 0
@@ -45,7 +46,7 @@ value_df = value_df.sort_values(by=["SUM"], ascending=[False])
 value_df.to_json('Value.json', orient='table')
 
 
-value_df = value_df[['종목', 'SUM']]
+value_df = value_df[['종목', 'code', 'SUM']]
 
 
 df_records = value_df.to_dict('records')
@@ -54,6 +55,7 @@ print(df_records)
 
 model_instances = [Quality(
     name=record['종목'],
+    code=record['code'],
     sum=record['SUM']
 ) for record in df_records]
 

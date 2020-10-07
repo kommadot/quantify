@@ -174,7 +174,6 @@ export default {
   methods: {
     ...mapActions(["getSimulationList"]),
     deleteSimulationDetail(_id, cur_price) {
-      console.log(this.$store.state.token);
       const data = {
         sell_price: cur_price,
       };

@@ -12,7 +12,7 @@
             dark
           >
           </v-checkbox>
-          <v-tooltip bottom max-width="1150px" nudge-right="235px;">
+          <v-tooltip bottom max-width="1150px" nudge-right="300px;">
             <template v-slot:activator="{ on, attrs }">
               <span
                 v-bind="attrs"
@@ -23,25 +23,12 @@
             </template>
             <span>
               <p>
-                <br />
-                전통적 금융 이론에서는 수익률의 변동성이 클수록 위험이 크고,
-                이런 위험에 대한 보상으로 기대수익률이 높아야 한다고 보았습니다.
-              </p>
-              <p>
-                따라서 고변동성 종목의 기대수익률이 크고, 저변동성 종목의
-                기대수익률이 낮은 고위험 고수익이 당연한 믿음이었습니다.
-              </p>
-              <p>
-                그러나 현실에서는 오히려 변동성이 낮은 종목들의 수익률이
-                변동성이 높은 종목들의 수익률보다 높은,
-                <strong>저변동성 효과</strong>가 발견되고 있습니다.
-              </p>
-              <p>
-                따라서 <strong>변동성이 적은 주식</strong>은 장기적으로 시장에
+                <br /><strong>변동성이 적은 주식</strong>은 장기적으로 시장에
                 영향을 많이 받는 주식들보다
                 <strong>수익률이 좋고 보다 안정적인 수익을 기대</strong>할 수
                 있습니다.
               </p>
+              <p>주식의 1년간 변동성을 제공합니다.</p>
             </span>
           </v-tooltip>
         </v-col>
@@ -150,6 +137,7 @@
       <v-data-table
         :headers="headers"
         :items="filtertable"
+        @click:row="handleClick"
         :sort-desc="[false, true]"
         multi-sort
         class="elevation-1"
@@ -283,7 +271,12 @@ export default {
               temp_obj[i.name].rank += i.rank;
               temp_obj[i.name].num += 1;
             } else {
-              temp_obj[i.name] = { name: i.name, rank: i.rank, num: 1 };
+              temp_obj[i.name] = {
+                name: i.name,
+                rank: i.rank,
+                num: 1,
+                code: i.code,
+              };
             }
           }
         }
@@ -293,7 +286,12 @@ export default {
               temp_obj[i.name].rank += i.rank;
               temp_obj[i.name].num += 1;
             } else {
-              temp_obj[i.name] = { name: i.name, rank: i.rank, num: 1 };
+              temp_obj[i.name] = {
+                name: i.name,
+                rank: i.rank,
+                num: 1,
+                code: i.code,
+              };
             }
           }
         }
@@ -303,7 +301,12 @@ export default {
               temp_obj[i.name].rank += i.rank;
               temp_obj[i.name].num += 1;
             } else {
-              temp_obj[i.name] = { name: i.name, rank: i.rank, num: 1 };
+              temp_obj[i.name] = {
+                name: i.name,
+                rank: i.rank,
+                num: 1,
+                code: i.code,
+              };
             }
           }
         }
@@ -313,7 +316,12 @@ export default {
               temp_obj[i.name].rank += i.rank;
               temp_obj[i.name].num += 1;
             } else {
-              temp_obj[i.name] = { name: i.name, rank: i.rank, num: 1 };
+              temp_obj[i.name] = {
+                name: i.name,
+                rank: i.rank,
+                num: 1,
+                code: i.code,
+              };
             }
           }
         }
@@ -346,6 +354,7 @@ export default {
               rank: idx++,
               name: i.name,
               variability: i.variability.toFixed(3),
+              code: i.code,
             });
           }
         })
@@ -366,6 +375,7 @@ export default {
               rank: idx++,
               name: i.name,
               riskmomentum: i.risk_momentum.toFixed(3),
+              code: i.code,
             });
           }
         })
@@ -386,6 +396,7 @@ export default {
               rank: idx++,
               name: i.name,
               sum: i.sum,
+              code: i.code,
             });
           }
         })
@@ -409,12 +420,16 @@ export default {
               pbr: i.pbr.toFixed(3),
               psr: i.psr.toFixed(3),
               score: i.rank,
+              code: i.code,
             });
           }
         })
         .catch(function (err) {
           alert(err);
         });
+    },
+    handleClick(value) {
+      this.$router.push(`/home/chart/${value.code}`);
     },
   },
   created() {
@@ -435,4 +450,7 @@ export default {
 </script>
 
 <style scoped>
+p {
+  font-size: 130%;
+}
 </style>

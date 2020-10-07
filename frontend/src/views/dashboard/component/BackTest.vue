@@ -84,7 +84,9 @@
           </v-menu>
         </v-col>
         <v-col cols="2" class="text-right">
-          <v-btn color="#283593" @click="backtesting"> 백테스트 시작 </v-btn>
+          <v-btn class="mr-0" color="#283593" @click="backtesting">
+            백테스트 시작
+          </v-btn>
         </v-col>
       </v-row>
 
@@ -99,8 +101,14 @@
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="#283593" dark v-bind="attrs" v-on="on">
-                    BACKTEST RESULTS
+                  <v-btn
+                    class="mr-3"
+                    color="#283593"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    백테스트 기록
                   </v-btn>
                 </template>
                 <div
@@ -141,7 +149,7 @@
             <base-material-card
               color="#435965"
               dark
-              title="BACKTEST LOG"
+              title="백테스트 로그"
               style="width: 100%"
             >
               <div style="margin-top: 33px; overflow: auto; height: 200px">
@@ -221,6 +229,9 @@ export default {
   },
   methods: {
     backtesting() {
+      alert(
+        "백테스팅 조건에 따라 최대 20여분이 소요됩니다. 잠시만 기다려주세요."
+      );
       http
         .post("/backtest/backtest", {
           start: this.date1,
@@ -249,12 +260,10 @@ export default {
       });
       this.lineSeries.setData(a);
       this.strategy = "" + data.strategy;
-      this.rebalance = data.rebalance-1;
-      
+      this.rebalance = data.rebalance - 1;
       this.budget = data.datas[0].budget;
       this.date1 = data.datas[0].date.substr(0, 10);
       this.date2 = data.datas[data.datas.length - 1].date.substr(0, 10);
-    
     },
   },
   mounted() {

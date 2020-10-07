@@ -109,7 +109,6 @@ export default {
     getStockPrice(code) {
       code = this.code1;
       http.get(`/stockprice/${code}`).then((res) => {
-        console.log(JSON.parse(res.data.data));
         this.temp_obj = JSON.parse(res.data.data);
       });
     },
