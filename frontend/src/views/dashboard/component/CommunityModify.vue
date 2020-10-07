@@ -127,7 +127,6 @@ export default {
       http
         .get(`/community/community/${this.$route.params.number}`)
         .then((data) => {
-          console.log(data);
           this.title = data.data.title;
           this.content = data.data.content;
         });
@@ -143,7 +142,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
           this.$router.push("/home/Community");
         })
         .catch((error) => {

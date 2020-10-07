@@ -18,14 +18,14 @@ from strategy.models import RiskMomentum
 
 class MM:
     def __init__(self):
-        self.df = pd.DataFrame(columns=['종목', '위험조정수익률','code'])
+        self.df = pd.DataFrame(columns=['종목', '위험조정수익률', 'code'])
         self.cnt = 0
         # self.SP = StockPrice.objects.all()
         self.SP = StockPrice.objects.filter(market_price__gte=10000)
     def getMM(self, start, end, test_date):
         end = end if end <= self.SP.count() else self.SP.count()
         SP = self.SP[start:end]
-        df = pd.DataFrame(columns=['종목', '위험조정수익률','code'])
+        df = pd.DataFrame(columns=['종목', '위험조정수익률', 'code'])
         # test_date = datetime.strptime(test_date, "%Y-%m-%d")
         for i in range(end-start):
             
@@ -96,11 +96,12 @@ class MM:
 
 # a = MM()
 # df = a.run(datetime.today())
+# print(df)
 # df_records = df.to_dict('records')
-# print(df_records)
 
 # model_instances = [RiskMomentum(
 #     name=record['종목'],
+#     code=record['code'],
 #     risk_momentum=record['위험조정수익률'],
 # ) for record in df_records]
 

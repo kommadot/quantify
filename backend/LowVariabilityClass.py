@@ -87,6 +87,7 @@ class LV:
 
 # model_instances = [LowVariability(
 #     name=record['종목'],
+#     code=record['code'],
 #     variability=record['변동성'],
 # ) for record in df_records]
 

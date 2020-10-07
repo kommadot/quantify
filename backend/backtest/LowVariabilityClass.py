@@ -18,14 +18,14 @@ from strategy.models import LowVariability
 
 class LV:
     def __init__(self):
-        self.df = pd.DataFrame(columns=['종목', '변동성','code'])
+        self.df = pd.DataFrame(columns=['종목', '변동성', 'code'])
         self.cnt = 0
         # self.SP = StockPrice.objects.all()
         self.SP = StockPrice.objects.filter(market_price__gte=10000)
     def getLV(self, start, end, test_date):
         end = end if end <= self.SP.count() else self.SP.count()
         SP = self.SP[start:end]
-        df = pd.DataFrame(columns=['종목', '변동성','code'])
+        df = pd.DataFrame(columns=['종목', '변동성', 'code'])
         # test_date = datetime.strptime(test_date, "%Y-%m-%d")
         for i in range(end-start):
 
@@ -87,6 +87,7 @@ class LV:
 
 # model_instances = [LowVariability(
 #     name=record['종목'],
+#     code=record['code'],
 #     variability=record['변동성'],
 # ) for record in df_records]
 

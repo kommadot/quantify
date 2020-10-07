@@ -1,18 +1,21 @@
 <template>
-  <v-app id="inspire" style="position:absolute;">
+  <v-app id="inspire" style="position: absolute">
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="500">
         <v-card>
           <div class="form-structor">
             <div id="loginDiv" class="login">
-              <h2 class="form-title" id="login">Log in</h2>
-              <button class="kakao submit-btn" @click="kakaologin">카카오로 로그인</button>
+              <h2 class="form-title" id="login">Login</h2>
+              <button class="kakao submit-btn" @click="kakaologin">
+                카카오로 로그인
+              </button>
               <g-signin-button
                 class="google g-signin-button submit-btn"
                 :params="googleSignInParams"
                 @success="onGoogleSignInSuccess"
                 @error="onGoogleSignInError"
-              >구글로 로그인</g-signin-button>
+                >구글로 로그인</g-signin-button
+              >
             </div>
           </div>
         </v-card>
@@ -53,7 +56,6 @@ export default {
           access_token: token,
         })
         .then((resp) => {
-          console.log(resp);
           const config = {
             "Content-Type": "application/json",
           };
@@ -84,29 +86,22 @@ export default {
       const self = this;
       Kakao.Auth.login({
         success: function (res) {
-
           const token = res.access_token;
           http
             .post("/auth/kakao", {
               access_token: token,
             })
             .then((res) => {
-
               Kakao.API.request({
-                url: '/v2/user/me',
-
-                success: function(res) {
-
-                  var username = res.properties.nickname
-                  var password = res.id
+                url: "/v2/user/me",
+                success: function (res) {
+                  var username = res.properties.nickname;
+                  var password = res.id;
                   http
-                    .post(
-                      "/login/",
-                      {
-                        username: username,
-                        password: password,
-                      }
-                    )
+                    .post("/login/", {
+                      username: username,
+                      password: password,
+                    })
                     .then((json) => {
                       const data = json.data;
                       self.setToken(data.token);
@@ -115,15 +110,12 @@ export default {
                     })
                     .catch((error) => {
                       console.log(error);
-                      window.gapi && window.gapi.auth2.getAuthInstance().signOut();
+                      window.gapi &&
+                        window.gapi.auth2.getAuthInstance().signOut();
                     });
                 },
-                fail: function(error) {
-                  
-                }
+                fail: function (error) {},
               });
-
-              
             })
             .catch((err) => {
               console.log(err.response);

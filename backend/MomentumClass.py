@@ -18,17 +18,17 @@ from strategy.models import RiskMomentum
 
 class MM:
     def __init__(self):
-        self.df = pd.DataFrame(columns=['종목', '위험조정수익률'])
+        self.df = pd.DataFrame(columns=['종목', '위험조정수익률', 'code'])
         self.cnt = 0
         # self.SP = StockPrice.objects.all()
         self.SP = StockPrice.objects.filter(market_price__gte=10000)
     def getMM(self, start, end, test_date):
         end = end if end <= self.SP.count() else self.SP.count()
         SP = self.SP[start:end]
-        df = pd.DataFrame(columns=['종목', '위험조정수익률'])
+        df = pd.DataFrame(columns=['종목', '위험조정수익률', 'code'])
         # test_date = datetime.strptime(test_date, "%Y-%m-%d")
         for i in range(end-start):
-            print(self.cnt)
+            
             stock = model_to_dict(SP[i])
             stock_code = stock['code']
             stock_price = pd.DataFrame(stock['data'])
@@ -47,21 +47,25 @@ class MM:
 
             # df.loc[i, ['종목']] = stock_code
             df.loc[i, ['종목']] = stock['name']
-            
+            df.loc[i, ['code']] = stock['code']
             # 누적수익률
-            accumulated_price_profit = price_profit + 1
-            accumulated_price_profit = np.cumprod(accumulated_price_profit)
-            accumulated_price_profit = accumulated_price_profit.iloc[-1]
-            accumulated_price_profit = accumulated_price_profit - 1
+            try:
+                accumulated_price_profit = price_profit + 1
+                accumulated_price_profit = np.cumprod(accumulated_price_profit)
+                # print(stock['name'],accumulated_price_profit)
+                accumulated_price_profit = accumulated_price_profit.iloc[-1]
+                accumulated_price_profit = accumulated_price_profit - 1
 
-            # 위험조정수익률(누적수익률/변동성)
-            risk_adjust_profit = accumulated_price_profit / price_variability
+                # 위험조정수익률(누적수익률/변동성)
+                risk_adjust_profit = accumulated_price_profit / price_variability
 
-            df.loc[i, ['위험조정수익률']] = risk_adjust_profit
+                df.loc[i, ['위험조정수익률']] = risk_adjust_profit
+            except:
+                continue
 
             # print(i)
             self.cnt+=1
-        print(self.df)
+        
         self.df = self.df.append(df)
         return self.df
     
@@ -90,15 +94,16 @@ class MM:
         self.df = self.df.sort_values(by=["위험조정수익률"], ascending=[False])
 
 
-a = MM()
-df = a.run(datetime.today())
-df_records = df.to_dict('records')
-print(df_records)
+# a = MM()
+# df = a.run(datetime.today())
+# print(df)
+# df_records = df.to_dict('records')
 
-model_instances = [RiskMomentum(
-    name=record['종목'],
-    risk_momentum=record['위험조정수익률'],
-) for record in df_records]
+# model_instances = [RiskMomentum(
+#     name=record['종목'],
+#     code=record['code'],
+#     risk_momentum=record['위험조정수익률'],
+# ) for record in df_records]
 
-RiskMomentum.objects.all().delete()
-RiskMomentum.objects.bulk_create(model_instances)
+# RiskMomentum.objects.all().delete()
+# RiskMomentum.objects.bulk_create(model_instances)

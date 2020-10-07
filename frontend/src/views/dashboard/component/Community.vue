@@ -59,7 +59,6 @@ export default {
       http
         .get("/community/community")
         .then((response) => {
-          console.log(response);
           response.data.forEach((res) => {
             const r = new Date(res.created_at);
             const reg =
@@ -78,8 +77,6 @@ export default {
               regDt: reg,
             });
           });
-
-          console.log(this.desserts);
         })
         .catch((error) => {
           console.log(error);

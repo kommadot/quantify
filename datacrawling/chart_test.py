@@ -74,6 +74,6 @@ def get_price_1y(item_name,i):
     # json_object = json_data["2020-09-16"]
     mycol.insert_one(json_data)
 
-for i in range(1997, len(code_df)):
+for i in range(len(code_df)):
     # print(i)
     get_price_1y(code_df.name[i], i)
