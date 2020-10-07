@@ -52,6 +52,6 @@ class BackTestView(APIView):
             cache.set("backtests",test_datas)
         test_list = []
         for i in test_datas:
-            test_list.append({"strategy":i.strategy,"datas":i.data,"logs":i.log,"rebalance":rebalance})
+            test_list.append({"strategy":i.strategy,"datas":i.data,"logs":i.log,"rebalance":i.rebalance})
 
         return Response(test_list)
