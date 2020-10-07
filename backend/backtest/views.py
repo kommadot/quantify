@@ -19,7 +19,7 @@ class BackTestView(APIView):
 
         data = request.data
         backtest = Backtest(data['start'],data['end'],data['strategy'],data['budget'],data['rebalance'])
-
+        rebalance = data['rebalance']
         df,logs = backtest.run()
         
         df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', errors='raise')
@@ -29,6 +29,7 @@ class BackTestView(APIView):
         btm = BacktestModel()
         # btm = BacktestModel(user=request.user)
         btm.strategy = strategy
+        btm.rebalance = rebalance
         for row in logs:
             log = {"date":row['date'],"types":row['types'],"datas":row['datas']}
             log_array.append(log)
@@ -42,7 +43,7 @@ class BackTestView(APIView):
         btm.data = data_array
         btm.save()
         cache.delete("backtests")
-        return Response({"strategy":strategy,"datas":data_array,"logs":logs},status=status.HTTP_200_OK)
+        return Response({"strategy":strategy,"datas":data_array,"logs":logs,"rebalance":rebalance},status=status.HTTP_200_OK)
 
     
     def get(self,request):
@@ -52,6 +53,6 @@ class BackTestView(APIView):
             cache.set("backtests",test_datas)
         test_list = []
         for i in test_datas:
-            test_list.append({"strategy":i.strategy,"datas":i.data,"logs":i.log})
+            test_list.append({"strategy":i.strategy,"datas":i.data,"logs":i.log,"rebalance":i.rebalance})
 
         return Response(test_list)

@@ -30,5 +30,5 @@ class BacktestModel(models.Model):
     data = models.ArrayField(model_container=BacktestDate)
     strategy = models.IntegerField(default=1)
     log = models.ArrayField(model_container=Log)
-
+    rebalance = models.IntegerField(default=1)
 
