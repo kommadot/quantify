@@ -277,7 +277,6 @@ export default {
         ];
         this.filtertable = [];
         var temp_obj = {};
-        // [{}]
         if (value.includes("lowvar")) {
           for (let i of this.lowvartable) {
             if (i.name in temp_obj) {
@@ -402,7 +401,6 @@ export default {
         .get("/strategy/value")
         .then(function (res) {
           self.valuetable = [];
-          // console.log(res.data);
           for (let i of res.data) {
             self.valuetable.push({
               rank: idx++,
@@ -413,7 +411,6 @@ export default {
               score: i.rank,
             });
           }
-          // console.log(self.valuetable);
         })
         .catch(function (err) {
           alert(err);
@@ -422,7 +419,6 @@ export default {
   },
   created() {
     this.lowvarlist();
-    // this.momenlist();
     this.riskmomenlist();
     this.qualitylist();
     this.valuelist();

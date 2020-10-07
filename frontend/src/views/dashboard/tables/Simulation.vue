@@ -171,15 +171,6 @@ export default {
     this.getSimulationList();
     this.getUserBudget();
   },
-  /*
-          item_name: "",
-          평가손익: (현재가 - 매수단가) * 보유수량,
-          수익률: ((현재가 - 매수단가) / 매수단가) * 100,
-          평가금액: 현재가 * 보유수량,
-          보유수량: 0,
-          매수단가: 0,
-          현재가: 0,
-  */
   methods: {
     ...mapActions(["getSimulationList"]),
     deleteSimulationDetail(_id, cur_price) {
@@ -205,7 +196,6 @@ export default {
     setupdate() {
       this.stocks.forEach((el) => {
         http.get("/price/" + el.item_code).then((res) => {
-          // const cur_price = res.data.price;
           const cur_price = 1000;
           el.cur_price = cur_price;
           el.profit = el.quantity * cur_price - el.quantity * el.price;

@@ -1,14 +1,7 @@
 <template>
   <div id="app">
     <v-app-bar id="app-bar" absolute app color="transparent" flat height="75">
-      <!-- <v-btn class="mr-3" elevation="1" fab small @click="setDrawer(!drawer)">
-      <v-icon v-if="value">mdi-view-quilt</v-icon>
-
-      <v-icon v-else>mdi-dots-vertical</v-icon>
-    </v-btn>-->
-
       <v-spacer />
-
       <v-autocomplete
         v-model="searchModel"
         :items="items"
@@ -32,7 +25,6 @@
         @click="login"
         dark
       >
-        <!-- <v-icon>mdi-account</v-icon> -->
         login
       </v-btn>
 
@@ -45,7 +37,6 @@
         @click="login"
         dark
       >
-        <!-- <v-icon>mdi-account</v-icon> -->
         profile
       </v-btn>
 
@@ -58,7 +49,6 @@
         @click="logout2"
         dark
       >
-        <!-- <v-icon>mdi-account-off</v-icon> -->
         logout
       </v-btn>
     </v-app-bar>
@@ -122,7 +112,7 @@ export default {
       if (this.isLoggedIn) {
         this.logout();
         this.login_profile = "login";
-        this.$router.push("/");
+        this.$router.push("/home");
       }
     },
   },

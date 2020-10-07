@@ -8,7 +8,7 @@
           </template>
 
           <v-form>
-            <v-container class="py-0">
+            <v-container class="mt-4">
               <v-row>
                 <v-col cols="12" md="6">
                   <v-text-field
@@ -37,9 +37,6 @@
                     readonly
                   />
                 </v-col>
-                <!-- <v-col cols="12" class="text-right">
-                  <v-btn color="#1F4E70" class="mr-0">Update Profile</v-btn>
-                </v-col> -->
               </v-row>
             </v-container>
           </v-form>

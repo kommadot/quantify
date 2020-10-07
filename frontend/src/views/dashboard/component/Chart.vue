@@ -53,15 +53,11 @@ export default {
     return {
       chart: null,
       lineSeries: null,
-      // lineSeries: [],
-      //   code1: "155660",
-
       name: "",
       market_price: 0,
       cur_price: 0,
       buy_count: null,
       temp_obj: [],
-
       stockName: "",
       budget: 0,
     };
@@ -76,8 +72,6 @@ export default {
     this.chart = LightweightCharts.createChart(
       document.getElementById("home"),
       {
-        // width: 600,
-        // height: 300,
         layout: {
           backgroundColor: "#000000",
           textColor: "rgba(255, 255, 255, 0.9)",
@@ -115,7 +109,6 @@ export default {
     var toolTipMargin = 15;
 
     var toolTip = document.getElementById("tooltip");
-    // toolTip.className = "floating-tooltip-2";
     home.appendChild(toolTip);
     var bd = this.businessDayToString;
     var series = this.lineSeries;

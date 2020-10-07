@@ -41,7 +41,7 @@
         <slot name="after-heading" />
       </div>
 
-      <div v-else-if="icon && title" class="ml-4">
+      <div v-else-if="icon && title" class="mt-4 ml-4">
         <div class="card-title font-weight-light" v-text="title" />
       </div>
     </div>

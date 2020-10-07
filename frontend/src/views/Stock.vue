@@ -15,7 +15,6 @@ export default {
     return {
       chart: null,
       lineSeries: null,
-      // lineSeries: [],
       code1: "155660",
       temp_obj: [],
     };
@@ -112,8 +111,6 @@ export default {
       http.get(`/stockprice/${code}`).then((res) => {
         console.log(JSON.parse(res.data.data));
         this.temp_obj = JSON.parse(res.data.data);
-        // alert(typeof JSON.parse(res.data.data));
-        // this.lineSeries.push(JSON.parse(res.data.data))
       });
     },
     businessDayToString(businessDay) {

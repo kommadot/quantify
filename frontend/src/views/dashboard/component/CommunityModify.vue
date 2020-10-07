@@ -42,7 +42,6 @@ export default {
     return {
       title: "",
       extensions: [
-        // Render in the Bubble menu
         [
           Link,
           {
@@ -65,30 +64,26 @@ export default {
           Bold,
           {
             renderIn: "bubbleMenu",
-            // extension's options
             options: {
               levels: [1, 2, 3],
             },
           },
         ],
-        // Render in the toolbar
         [
           Blockquote,
           {
             renderIn: "toolbar",
           },
         ],
-        // You can use a short form, the default "renderIn" is "'toolbar'"
         History,
         Strike,
         Italic,
-        ListItem, // if you need to use a list (BulletList, OrderedList)
+        ListItem,
         BulletList,
         OrderedList,
         [
           Heading,
           {
-            // Options that fall into the tiptap's extension
             options: {
               levels: [1, 2, 3],
             },
@@ -97,7 +92,7 @@ export default {
         Code,
         HorizontalRule,
         Paragraph,
-        HardBreak, // line break on Shift + Ctrl + Enter
+        HardBreak,
       ],
       content: "",
     };
