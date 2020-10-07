@@ -11,7 +11,7 @@
         <v-card>
           <v-tabs background-color="gray" color="blue" fixed-tabs dark>
             <v-tab>퀀트전략</v-tab>
-            <v-tab>종목정보</v-tab>
+            <!-- <v-tab>종목정보</v-tab> -->
             <v-tab>모의투자</v-tab>
             <v-tab>백테스트</v-tab>
 
@@ -123,10 +123,9 @@
             </v-tab-item>
 
             <!-- 종목정보 -->
-            <v-tab-item>
+            <!-- <v-tab-item>
               <v-container fluid style="background-color: gray">
                 <v-row>
-                  <!-- samsung -->
                   <v-col
                     cols="12"
                     sm="6"
@@ -176,7 +175,6 @@
                     />
                   </v-col>
 
-                  <!-- skhynix -->
                   <v-col
                     cols="12"
                     sm="6"
@@ -226,7 +224,6 @@
                     />
                   </v-col>
 
-                  <!-- naver -->
                   <v-col
                     cols="12"
                     sm="6"
@@ -276,7 +273,6 @@
                     />
                   </v-col>
 
-                  <!-- lgchemical -->
                   <v-col
                     cols="12"
                     sm="6"
@@ -327,7 +323,7 @@
                   </v-col>
                 </v-row>
               </v-container>
-            </v-tab-item>
+            </v-tab-item> -->
 
             <!-- 모의투자 -->
             <v-tab-item>
@@ -415,10 +411,10 @@ export default {
       beforelgchemical: 0,
     };
   },
-  created() {
-    this.getStocks();
-    this.getBeforePrice();
-  },
+  // created() {
+  //   this.getStocks();
+  //   this.getBeforePrice();
+  // },
   methods: {
     getStocks() {
       http.get("/price/" + "005930").then((res) => {

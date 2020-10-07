@@ -205,7 +205,7 @@ export default {
       budget_data: [],
       datas: {},
       logs: null,
-      strategy: null,
+      strategy: "1",
       ticksLabels: [1, 2, 3, 4, 5, 6],
       rebalance: 0,
       budget: 1000000,

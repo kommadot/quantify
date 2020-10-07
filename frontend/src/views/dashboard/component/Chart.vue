@@ -29,7 +29,7 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row style="width: 100%; height: 100%">
+    <v-row style="width: 100%; height: 80%">
       <div
         id="home"
         class="home"
