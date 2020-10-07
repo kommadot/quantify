@@ -253,8 +253,8 @@ export default {
       console.log(this.budget_data);
       this.lineSeries.setData(a);
       this.strategy = "" + data.strategy;
-      this.rebalance = data.rebalance;
-      print(this.rebalance)
+      this.rebalance = data.rebalance-1;
+      
       this.budget = data.datas[0].budget;
       this.date1 = data.datas[0].date.substr(0, 10);
       this.date2 = data.datas[data.datas.length - 1].date.substr(0, 10);
