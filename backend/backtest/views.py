@@ -29,6 +29,7 @@ class BackTestView(APIView):
         btm = BacktestModel()
         # btm = BacktestModel(user=request.user)
         btm.strategy = strategy
+        btm.rebalance = rebalance
         for row in logs:
             log = {"date":row['date'],"types":row['types'],"datas":row['datas']}
             log_array.append(log)
