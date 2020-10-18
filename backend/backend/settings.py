@@ -106,9 +106,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'quantify2',
+        'NAME': 'quantify',
         'CLIENT': {
-           'host': 'j3a105.p.ssafy.io',
+           'host': 'url',
            'username':'quantify',
            'password':'qwer1234',
            'authSource': 'admin',
@@ -118,17 +118,17 @@ DATABASES = {
 CACHES = {  
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://j3a105.p.ssafy.io/1", # 1번 DB
+        "LOCATION": "url", # 1번 DB
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": "qwer1234",
+            "PASSWORD": "password",
         }
     }
 }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'ssafy',
+#         'NAME': 'quantify',
 #     }
 # }
 
