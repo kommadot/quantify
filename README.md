@@ -1,9 +1,3 @@
-# SSAFY Bigdata project (5팀: 버핏보다싸핏)
-
-> 배포 URL: http://j3a105.p.ssafy.io/
-
-
-
 ## 프로젝트 소개
 
 ### :name_badge: 프로젝트 이름 : 퀀티파이 (Quantify)
